@@ -1,5 +1,5 @@
 all:
-	gcc -Wextra -Wall src/main.c -o build/mcat
+	gcc -Wextra -Wall src/cat/main.c -o build/mcat
 
 all_run: all
-	./build/mcat
+	python test.py
