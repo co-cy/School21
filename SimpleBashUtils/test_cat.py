@@ -1,12 +1,17 @@
 from itertools import combinations_with_replacement
+from random import shuffle
 from os import system
 
-my_cat = "./build/mcat"
+my_cat = "./build/s21_cat"
 cat = "cat"
 
 files = [
-    'data-samples/t',
-    'b.txt',
+    'data-samples/a',
+    'data-samples/a',
+    'data-samples/k',
+    'data-samples/k',
+    'data-samples/b',
+    'data-samples/c',
 ]
 
 testing_file = 'testing_file'
@@ -25,7 +30,8 @@ for test in range(len(all_var)):
     cur_flags_ = all_var[test]
     for cur_flags in (cur_flags_, set(cur_flags_)):
         # test with all flags
-        print(f"Current test: {test}\t/\t{len(all_var)}")
+        shuffle(files)
+        print(f"Current test: {test + 1}\t/\t{len(all_var)}")
         for i, func in (('0', my_cat), ('1', cat)):
             m_str = f'{func} {" ".join(cur_flags)} {" ".join(files)} > {testing_file+i+testing_file_format}'
             print("Command:", m_str)
@@ -35,12 +41,23 @@ for test in range(len(all_var)):
             with open(testing_file+'1'+testing_file_format) as file_2:
                 a, b = file_1.read(), file_2.read()
                 if a != b:
+
+                    count = 0
+                    for i in range(len(a)):
+                        if a[i] == '\n':
+                            count += 1
+                        if len(b) == i:
+                            break
+                        if a[i] != b[i]:
+                            break
+
                     print("\n\nТУТ ЕСТЬ ОШИБКА ХОЗЯИН ОЗНАКОМТЕСЬ!!!\n\n")
                     print("===============A===============")
-                    print(a[-100:])
+                    print(a[max(0, i-50):min(len(a), i+50)])
                     print("===============B===============")
-                    print(b[-100:])
+                    print(b[max(0, i-50):min(len(b), i+50)])
                     print("===============================")
+                    print("Строка:", count, " символ:", i)
                     input("Нажмите для продолжения...\n")
                     print("Продолжаем!\n\n")
         print()

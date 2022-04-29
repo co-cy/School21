@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     unsigned long long int counter = 0;
 
     char **cur_arg = argv;
-    for (cur_arg++; cur_arg && strspn(*cur_arg, "-"); cur_arg++) {
+    for (cur_arg++, argc--; cur_arg && strspn(*cur_arg, "-"); cur_arg++, argc--) {
         fprintf(stderr, "flags - %s\n", *cur_arg);
         if (!strcmp(*cur_arg, "-b")) {
             is_b += 1;
@@ -29,12 +29,11 @@ int main(int argc, char **argv) {
         }
     }
 
-    for (;*cur_arg; cur_arg++) {
+    for (;argc && cur_arg; argc--,cur_arg++) {
         fprintf(stderr, "files - %s\n", *cur_arg);
         FILE *file = fopen(*cur_arg, "r");
         if (file) {
             char tmp;
-
             // Read file
             while ((tmp = fgetc(file)) != EOF) {
                 if (tmp == '\n') { // End line
@@ -67,6 +66,8 @@ int main(int argc, char **argv) {
                 }
             }
             counter = 0;
+            in_line_was_sim = 0;
+            last_in_line_was_sim = 0;
             fclose(file);
         } else {
             fprintf(stderr, "cat: %s: No such file or directory\n", *cur_arg);
