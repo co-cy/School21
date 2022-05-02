@@ -26,6 +26,33 @@ flags = {
 
 all_var = list(combinations_with_replacement(flags, len(flags)))
 
+
+def check_files(a, b):
+    with open(a) as file_1:
+        with open(b) as file_2:
+            a, b = file_1.read(), file_2.read()
+            if a != b:
+
+                count = 0
+                for i in range(len(a)):
+                    if a[i] == '\n':
+                        count += 1
+                    if len(b) == i:
+                        break
+                    if a[i] != b[i]:
+                        break
+
+                print("\n\nТУТ ЕСТЬ ОШИБКА ХОЗЯИН ОЗНАКОМТЕСЬ!!!\n\n")
+                print("===============A===============")
+                print(a[max(0, i-50):min(len(a), i+50)])
+                print("===============B===============")
+                print(b[max(0, i-50):min(len(b), i+50)])
+                print("===============================")
+                print("Строка:", count, " символ:", i)
+                input("Нажмите для продолжения...\n")
+                print("Продолжаем!\n\n")
+
+
 for test in range(len(all_var)):
     cur_flags_ = all_var[test]
     for cur_flags in (cur_flags_, set(cur_flags_)):
@@ -36,28 +63,7 @@ for test in range(len(all_var)):
             m_str = f'{func} {" ".join(cur_flags)} {" ".join(files)} > {testing_file+i+testing_file_format}'
             print("Command:", m_str)
             system(m_str)
-
-        with open(testing_file+'0'+testing_file_format) as file_1:
-            with open(testing_file+'1'+testing_file_format) as file_2:
-                a, b = file_1.read(), file_2.read()
-                if a != b:
-
-                    count = 0
-                    for i in range(len(a)):
-                        if a[i] == '\n':
-                            count += 1
-                        if len(b) == i:
-                            break
-                        if a[i] != b[i]:
-                            break
-
-                    print("\n\nТУТ ЕСТЬ ОШИБКА ХОЗЯИН ОЗНАКОМТЕСЬ!!!\n\n")
-                    print("===============A===============")
-                    print(a[max(0, i-50):min(len(a), i+50)])
-                    print("===============B===============")
-                    print(b[max(0, i-50):min(len(b), i+50)])
-                    print("===============================")
-                    print("Строка:", count, " символ:", i)
-                    input("Нажмите для продолжения...\n")
-                    print("Продолжаем!\n\n")
+        check_files(testing_file+'0'+testing_file_format,
+                    testing_file+'1'+testing_file_format)
         print()
+
