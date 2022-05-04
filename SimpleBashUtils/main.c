@@ -1,35 +1,7 @@
-//#include "headers/find_all_pattern_in_file.h"
-//#include "headers/flags_parser.h"
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+#include <regex.h>
 
-//int main(int argc, char **argv) {
-//    if (argc > 1) {
-//        argc--;
-//        argv++;
-//
-//        FILE *file;
-//        int flags = flags_parser(&argc, &argv, &file);
-//        if (argc) {
-//            if (!file) {
-//                char *template = *argv;
-//                argc--;
-//
-//                find_all_pattern_in_file(template, stdin);
-//            } else {
-//                free(file);
-//            }
-//        }
-//    } else if (argc == 1) {
-//
-//    } else {
-//
-//    }
-//
-//    return 0;
-//}
-
-// extract substring
 char* getsubstr(char *s, regmatch_t *pmatch)
 {
     static char buf[100] = {0};
@@ -46,7 +18,7 @@ int main(void)
     const char *pattern = "[a-z]+";		// regular expression
     char buf[] = "HELLOsaiYear2012@gmail.com";	// the string to be searched
 
-    regcomp(&reg, pattern, REG_EXTENDED);	/ / Compile the regular expression
+    regcomp(&reg, pattern, REG_EXTENDED);	// Compile the regular expression
     int offset = 0;
     while(offset < strlen(buf))
     {
@@ -58,11 +30,11 @@ int main(void)
         {
             printf("Match:\n");
             char *p = getsubstr(buf + offset, &pmatch);
-            printf("[%d, %d]: %s\n", offset + pmatch.rm_so + 1, offset + pmatch.rm_eo, p);
+            printf("[%lld, %lld]: %s\n", offset + pmatch.rm_so + 1, offset + pmatch.rm_eo, p);
         }
         offset += pmatch.rm_eo;
     }
-    regfree(&reg);		/ / Release the regular expression
+    regfree(&reg);		// Release the regular expression
 
     return 0;
 }
