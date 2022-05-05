@@ -6,7 +6,7 @@ int flags_parser(int *argc, char ***argv) {
     int flags = 0;
 
     size_t type_arg;
-    for (; *argc&& (flags != -1) && (type_arg = strspn(**argv, "-")) > 0; (*argc)--, (*argv)++) {
+    for (; *argc && (flags != -1) && (type_arg = strspn(**argv, "-")) > 0; (*argc)--, (*argv)++) {
         (**argv) += type_arg;
 
         if (type_arg == 1) {
@@ -32,7 +32,7 @@ int flags_parser(int *argc, char ***argv) {
                 }
                 (**argv)++;
             }
-        } else if (type_arg == 2) {
+        } elif (type_arg == 2) {
             if (!strcmp(**argv, "--number-nonblank")) {
                 add_flag(flags, FLAG_B);
             } elif (!strcmp(**argv, "--number")) {
@@ -96,19 +96,21 @@ int main(int argc, char **argv) {
         argv++, argc--;
         int flags = flags_parser(&argc, &argv);
 
-        if (!argc) {
-            print_file(stdin, flags);
-        } else {
-            for (;argc && argv; argc--,argv++) {
-                if (!strcmp(*argv, "-")) {
-                    print_file(stdin, flags);
-                } else {
-                    FILE *file = fopen(*argv, "r");
-                    if (file) {
-                        print_file(file, flags);
-                        fclose(file);
+        if (flags != -1) {
+            if (!argc) {
+                print_file(stdin, flags);
+            } else {
+                for (; argc && argv; argc--, argv++) {
+                    if (!strcmp(*argv, "-")) {
+                        print_file(stdin, flags);
                     } else {
-                        fprintf(stderr, "cat: %s: No such file or directory\n", *argv);
+                        FILE *file = fopen(*argv, "r");
+                        if (file) {
+                            print_file(file, flags);
+                            fclose(file);
+                        } else {
+                            fprintf(stderr, "cat: %s: No such file or directory\n", *argv);
+                        }
                     }
                 }
             }
