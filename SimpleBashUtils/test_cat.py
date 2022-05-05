@@ -12,6 +12,8 @@ files = [
     'data-samples/k',
     'data-samples/b',
     'data-samples/c',
+    'data-samples/text',
+    # 'data-samples/wierdo',
 ]
 
 testing_file = 'testing_file'
@@ -22,6 +24,7 @@ flags = {
     '-e',
     '-n',
     '-s',
+    '-v',
     '-t'}
 
 all_var = list(combinations_with_replacement(flags, len(flags)))
