@@ -70,10 +70,17 @@ void print_all_patterns_in_file(regex_t *regex, FILE *file, int flags) {
     size_t size = 1;
     char *line = calloc(size, sizeof (char));
 
+    short only_count_line = check_flag(flags, FLAG_C);
+    short show_line = check_flag(flags, FLAG_N);
+    size_t counter_line = 0;
+    size_t counter = 0;
+
     if (line) {
         ssize_t len_line;
 
+        short need_was = !check_flag(flags, FLAG_V);
         while ((len_line = getline(&line, &size, file)) > 0) {
+            counter_line++;
             int offset = 0;
             short was = 0;
             while (offset < len_line) {
@@ -86,10 +93,17 @@ void print_all_patterns_in_file(regex_t *regex, FILE *file, int flags) {
                 offset += pmatch.rm_eo;
             }
 
-            if (was) {
-                printf("%s", line);
+            if (was == need_was) {
+                counter++;
+
+                if (show_line)
+                    printf("%zu:%s", counter_line, line);
+                elif (!only_count_line)
+                    printf("%s", line);
             }
         }
+        if (only_count_line)
+            printf("%zu", counter);
         free(line);
     }
 }
@@ -101,9 +115,8 @@ regex_t *get_pattern(int *argc, char ***argv, int flags) {
         reg = malloc(sizeof (reg));
 
         if (reg) {
-            int is_bad_res_comp = 0;
+            int is_bad_res_comp = regcomp(reg, **argv, REG_ICASE * (check_flag(flags, FLAG_I)));
 
-            is_bad_res_comp = regcomp(reg, **argv, 0);
             if (is_bad_res_comp) {
                 regfree(reg);
                 free(reg);
