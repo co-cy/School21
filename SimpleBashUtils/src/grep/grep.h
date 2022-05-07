@@ -3,8 +3,13 @@
 
 #include "../custom.h"
 #include "../flag.h"
+#include <string.h>
 
-enum FLAG {
+#define start_with(string, other_string) (st)
+
+static char error[1024] = {'\0'};
+
+typedef enum flag {
     BAD,
     FLAG_E,
     FLAG_I,
@@ -16,6 +21,22 @@ enum FLAG {
     FLAG_F,
     FLAG_S,
     FLAG_O,
-};
+    FLAG_Z,
+} flag_e;
+
+typedef enum type_error {
+    NO_FILE,
+    BAD_FLAG,
+    BAD_OPTION,
+    MORE_ARGUMENT,
+    OTHER,
+} type_error_e;
+
+typedef enum status_code {
+    ERROR = -1,
+    NOTHING,
+    PATTERNS_FILE,
+    PATTERN,
+} status_code_e;
 
 #endif //SIMPLEBASHUTILS_GREP_H
