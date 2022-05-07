@@ -34,6 +34,11 @@ void print_error(int type_error, char *message) {
         } elif (*message == PATTERN) {
             fprintf(stderr, "grep: option requires an argument -- e");
         }
+    } elif (type_error == EMPTY) {
+        fprintf(stderr, "usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n"
+                        "        [-e pattern] [-f file] [--binary-files=value] [--color=when]\n"
+                        "        [--context[=num]] [--directories=action] [--label] [--line-buffered]\n"
+                        "        [--null] [pattern] [file ...]");
     } elif (type_error == OTHER) {
         fprintf(stderr, "%s", message);
     }
@@ -158,9 +163,49 @@ int parsing_argv(int argc, char **argv, linked_list_t *files, linked_list_t *pat
     if (status != NOTHING && status != ERROR) {
         print_error(MORE_ARGUMENT, (char *) &status);
         status = ERROR;
+    } elif (status == NOTHING) {
+        // TODO REFACTORY
+        short a = !is_empty_linked_list(patterns);
+        short b = !is_empty_linked_list(files);
+
+        if (a) {
+            if (b) {
+                // pass
+            } else {
+                char *file = malloc(sizeof (char) * (1 + 1));
+                strcpy(file, "-");
+                add_to_linked_list(files, file);
+            }
+        } else {
+            if (b) {
+                add_to_linked_list(patterns, files->next_item->data);
+                shift_linked_list(files);
+                b = !is_empty_linked_list(files);
+                if (!b) {
+                    char *file = malloc(sizeof (char) * (1 + 1));
+                    strcpy(file, "-");
+                    add_to_linked_list(files, file);
+                }
+            } else {
+                print_error(EMPTY, "");
+                status = ERROR;
+            }
+        }
     }
 
     return status;
+}
+
+void compile_patterns() {
+
+}
+
+void search_patterns_in_files() {
+
+}
+
+void print_found_pattern() {
+
 }
 
 

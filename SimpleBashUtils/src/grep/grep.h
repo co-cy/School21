@@ -29,6 +29,7 @@ typedef enum type_error {
     BAD_FLAG,
     BAD_OPTION,
     MORE_ARGUMENT,
+    EMPTY,
     OTHER,
 } type_error_e;
 

@@ -40,3 +40,20 @@ linked_list_t *get_from_linked_list(linked_list_t *list, int index) {
     }
     return list;
 }
+
+short is_empty_linked_list(linked_list_t *list) {
+    return !list->next_item && !list->data;
+}
+
+void *shift_linked_list(linked_list_t *list) {
+    linked_list_t *tmp = list->next_item;
+    void *tmp_data = NULL;
+
+    if (tmp) {
+        tmp_data = tmp->data;
+        list->next_item = tmp->next_item;
+        free(tmp);
+    }
+
+    return tmp_data;
+}
