@@ -10,7 +10,6 @@ run_test_cat: cat
 	python test_cat.py
 
 run_test_grep: grep
-	python test_grep.py
-
+	gcc -lcheck -g -fsanitize=address src/grep/test/*.c -o build/s21_grep_test
 test:
 	gcc main.c
