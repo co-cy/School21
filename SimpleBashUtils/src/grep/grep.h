@@ -8,6 +8,7 @@
 #define start_with(string, other_string) (st)
 
 static char error[1024] = {'\0'};
+static char stdin_file[] = "-";
 
 typedef enum flag {
     BAD,

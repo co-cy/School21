@@ -1,8 +1,8 @@
 #include "s21_grep_test.h"
 
 START_TEST(base_test1) {
-    system("grep ./data-samples/void ./data-samples/void > tmp1");
-    system("./build/s21_grep ./data-samples/void ./data-samples/void > tmp2");
+    system("grep void ./data-samples/void > tmp1");
+    system("./build/s21_grep void ./data-samples/void > tmp2");
     ck_assert(system("diff tmp1 tmp2") == 0);
 }
 END_TEST

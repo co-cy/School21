@@ -1,249 +1,407 @@
+//
+// Created by Nana Daughterless on 5/7/22.
+//
+
+#include "../linked_list/linked_list.h"
+#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <regex.h>
 #include "grep.h"
 
+void strip(char *string) {
+    char *a = string;
 
-void skip_arg(int *argc, char ***argv) {
-    if (*argc) {
-        (*argc)--;
-        (*argv)++;
-    }
-}
+    for (; *a;a++)
+        continue;
 
-void print_error(int flags) {
-    if (!check_flag(flags, FLAG_S) && *error) {
-        fputs(error, stderr);
-    }
-}
-
-int parce_c2f(int *argc, char ***argv, FILE **pattern_file, int *flags) {
-    int stop = 0;
-
-    if (***argv == 'i') {
-        add_flag(*flags, FLAG_I);
-    } elif (***argv == 'v') {
-        add_flag(*flags, FLAG_V);
-    } elif (***argv == 'f') {
-        add_flag(*flags, FLAG_F);
-        if (!*(**argv++))
-            skip_arg(argc, argv);
-        if (*argc) {
-            *pattern_file = fopen(**argv, "r");
-            if (!*pattern_file) {
-                sprintf(error, "grep: %s: No such file or directory", **argv);
-            }
-        } else {
-            stop = 1;
-        }
-    } elif (***argv == 'e') {
-        add_flag(*flags, FLAG_E);
-        if (*(++(**argv))) {
-            // revert skip
-            (*argc)++;
-            (*argv)--;
-        }
-        stop = 1;
-    } elif (***argv == 'c') {
-        add_flag(*flags, FLAG_C);
-    } elif (***argv == 'l') {
-        add_flag(*flags, FLAG_L);
-    } elif (***argv == 'n') {
-        add_flag(*flags, FLAG_N);
-    } elif (***argv == 'h') {
-        add_flag(*flags, FLAG_H);
-    } elif (***argv == 's') {
-        add_flag(*flags, FLAG_S);
-    } elif (***argv == 'o') {
-        add_flag(*flags, FLAG_O);
-    } else {
-        sprintf(error, "grep: invalid option -- %s", **argv);
-    }
-
-    return stop;
-}
-
-
-int flags_parser(int *argc, char ***argv, FILE **pattern_file) {
-    int flags = 0;
-
-    short stop = 0;
-    size_t type_arg;
-    for (; !stop && *argc && !(*error) && (type_arg = strspn(**argv, "-")) > 0; skip_arg(argc, argv)) {
-        (**argv) += type_arg;
-
-        if (type_arg == 1) {
-            while (***argv) {
-                stop = parce_c2f(argc, argv, pattern_file, &flags);
-                if (stop)
-                    break;
-                (**argv)++;
-            }
-        } else {
-            sprintf(error, "grep: unrecognized option '--%s'", **argv);
-        }
-    }
-    return flags;
-}
-
-void print_line(char *filename, char *line, size_t counter_line, size_t only_count_line, int flags) {
-    static short beaut_print = 0;
-    short was_shift = 0;
-
-    short stop = 0;
-
-    if (!check_flag(flags, FLAG_C) && only_count_line == -1) {
-        beaut_print = 1;
-
-        if (check_flag(flags, FLAG_L)) {
-            printf("%s", filename);
-            stop = 1;
-        } elif (check_flag(flags, FLAG_Z) && !check_flag(flags, FLAG_H)) {
-            printf("%s:", filename);
-        } elif (check_flag(flags, FLAG_N)) {
-            printf("%zu:", counter_line);
-        }
-
-        if (!stop) {
-            printf("%s", line);
-        }
-    } elif (check_flag(flags, FLAG_C) && only_count_line != -1) {
-        printf("%zu", only_count_line);
+    while (a != string && *(--a) == '\n') {
+        *a = '\0';
     }
 }
 
 
-void print_all_patterns_in_file(regex_t **regex, char* filename, int flags) {
+void print_error(int type_error, char *message) {
+    if (type_error == NO_FILE) {
+        fprintf(stderr, "grep: %s: No such file or directory\n", message);
+    } elif (type_error == BAD_FLAG) {
+        fprintf(stderr, "grep: invalid option -- %c\n", *message);
+    } elif (type_error == BAD_OPTION) {
+        fprintf(stderr, "grep: unrecognized option `%s'\n", message);
+    } elif (type_error == MORE_ARGUMENT) {
+        if (*message == PATTERNS_FILE) {
+            fprintf(stderr, "grep: option requires an argument -- f\n");
+        } elif (*message == PATTERN) {
+            fprintf(stderr, "grep: option requires an argument -- e\n");
+        }
+    } elif (type_error == EMPTY) {
+        fprintf(stderr, "usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n"
+                        "        [-e pattern] [-f file] [--binary-files=value] [--color=when]\n"
+                        "        [--context[=num]] [--directories=action] [--label] [--line-buffered]\n"
+                        "        [--null] [pattern] [file ...]\n");
+    } elif (type_error == OTHER) {
+        fprintf(stderr, "%s\n", message);
+    }
+}
+
+int parsing_file_to_patterns(char *filename, linked_list_t *pattern, status_code_e status) {
     FILE *file = fopen(filename, "r");
     if (file) {
-        regmatch_t pmatch;
+        size_t line_size = 1;
+        char *line = calloc(line_size, sizeof(char));
 
-        size_t size = 1;
-        char *line = calloc(size, sizeof(char));
+        while (getline(&line, &line_size, file) > 0) {
+            strip(line);
 
-        size_t counter_line = 0;
-        size_t counter = 0;
-        if (line) {
-            ssize_t len_line;
+            char *copy_line = malloc(sizeof (char) * (strlen(line) + 1));
+            strcpy(copy_line, line);
+            add_to_linked_list(pattern, copy_line);
+        }
+        status = NOTHING;
+        free(line);
+    } else {
+        print_error(NO_FILE, filename);
+        status = ERROR;
+    }
+    return status;
+}
 
-            short need_was = !check_flag(flags, FLAG_V);
-            while ((len_line = getline(&line, &size, file)) > 0) {
-                counter_line++;
+int parsing_word(char *word, linked_list_t *files, linked_list_t *patterns, status_code_e status) {
+    if (status == NOTHING) {
+        add_to_linked_list(files, word);
+    } elif (status == PATTERNS_FILE) {
+        status = parsing_file_to_patterns(word, patterns, status);
+    } elif (status == PATTERN) {
+        add_to_linked_list(patterns, word);
+        status = NOTHING;
+    } else {
+        print_error(OTHER, "WTF???");
+        status = ERROR;
+    }
+    return status;
+}
 
-                short was = 0;
-                for (regex_t **reg = regex; !was && *reg; reg++) {
+
+int parsing_flag(char *flag, linked_list_t *patterns, int *flags) {
+    status_code_e status = NOTHING;
+
+    char tmp;
+    short flag_exit = 0;
+    while (!flag_exit && (status == NOTHING) && *flag) {
+        tmp = *flag;
+
+        if (tmp == 'i') {
+            add_flag(*flags, FLAG_I);
+        } elif (tmp == 'v') {
+            add_flag(*flags, FLAG_V);
+        } elif (tmp == 'f') {
+            add_flag(*flags, FLAG_F);
+            if (*(flag + 1))
+                status = parsing_file_to_patterns((flag + 1), patterns, status);
+            else
+                status = PATTERNS_FILE;
+            flag_exit = 1;
+        } elif (tmp == 'e') {
+            add_flag(*flags, FLAG_E);
+            if (*(flag + 1))
+                add_to_linked_list(patterns, (flag + 1));
+            else
+                status = PATTERN;
+            flag_exit = 1;
+        } elif (tmp == 'c') {
+            add_flag(*flags, FLAG_C);
+        } elif (tmp == 'l') {
+            add_flag(*flags, FLAG_L);
+        } elif (tmp == 'n') {
+            add_flag(*flags, FLAG_N);
+        } elif (tmp == 'h') {
+            add_flag(*flags, FLAG_H);
+        } elif (tmp == 's') {
+            add_flag(*flags, FLAG_S);
+        } elif (tmp == 'o') {
+            add_flag(*flags, FLAG_O);
+        } else {
+            print_error(BAD_FLAG, &tmp);
+            status = ERROR;
+        }
+        flag++;
+    }
+    return status;
+}
+
+
+int parsing_parameter(char *parameter, linked_list_t *files, linked_list_t *patterns, int *flags, status_code_e status) {
+    if (!strcmp(parameter, "-")) {
+        add_to_linked_list(files, parameter);
+    } else {
+        size_t type_parameter = strspn(parameter, "-");
+        if (type_parameter == 0 || status != NOTHING) {
+            status = parsing_word(parameter, files, patterns, status);
+        } elif (type_parameter == 1) {
+            status = parsing_flag(parameter + type_parameter, patterns, flags);
+        } else {
+            print_error(BAD_OPTION, parameter);
+            status = ERROR;
+        }
+    }
+
+    return status;
+}
+
+int parsing_argv(int argc, char **argv, linked_list_t *files, linked_list_t *patterns, int *flags, status_code_e status) {
+    for (size_t i = 0; i < argc; i++) {
+        char *parameter = argv[i];
+
+        status = parsing_parameter(parameter, files, patterns, flags, status);
+        if (status == ERROR) {
+            break;
+        }
+    }
+
+    if (status != NOTHING && status != ERROR) {
+        print_error(MORE_ARGUMENT, (char *) &status);
+        status = ERROR;
+    } elif (status == NOTHING) {
+        // TODO REFACTORY
+        short a = !is_empty_linked_list(patterns);
+        short b = !is_empty_linked_list(files);
+
+        if (a) {
+            if (b) {
+                // pass
+            } else {
+                add_to_linked_list(files, stdin_file);
+            }
+        } else {
+            if (b) {
+                add_to_linked_list(patterns, files->next_item->data);
+                shift_linked_list(files);
+                b = !is_empty_linked_list(files);
+                if (!b) {
+                    add_to_linked_list(files, stdin_file);
+                }
+            } else {
+                print_error(EMPTY, "");
+                status = ERROR;
+            }
+        }
+    }
+
+    return status;
+}
+
+void compile_patterns(linked_list_t *patterns, int flags) {
+    for (linked_list_t *a = patterns; a; a = a->next_item) {
+        if (a->data) {
+            char *pattern = a->data;
+
+            regex_t *reg = malloc(sizeof (reg));
+            int is_bad_res_comp = regcomp(reg, pattern, REG_ICASE * (check_flag(flags, FLAG_I)));
+
+            if (!is_bad_res_comp) {
+                a->data = reg;
+            } else {
+                regfree(reg);
+                free(reg);
+                a->data = NULL;
+            }
+//            TODO: FIX FREE
+//            free(pattern);
+        }
+    }
+}
+
+void print_found_pattern(char *filename, char *line, int len, int lines_number, int amount_lines_found, int ind_pattern, int flags) {
+    if (check_flag(flags, FLAG_O) && ind_pattern > 0) {
+        if (len == -1)
+            printf("%s\n", line);
+        else {
+            for (int i = 0;len; len--, i++) {
+                putchar(line[i]);
+            }
+            putchar('\n');
+        }
+    } else {
+        if (check_flag(flags, FLAG_Z) &&
+            (check_flag(flags, FLAG_C) || !check_flag(flags, FLAG_L)) && !check_flag(flags, FLAG_H)) {
+            printf("%s:", filename);
+        }
+
+        if (check_flag(flags, FLAG_C)) {
+            printf("%d\n", amount_lines_found);
+        } elif (!check_flag(flags, FLAG_L)) {
+            if (check_flag(flags, FLAG_N)) {
+                printf("%d:", lines_number);
+            }
+            strip(line);
+
+            if (len == -1)
+                printf("%s\n", line);
+            else {
+                for (int i = 0; len; len--, i++) {
+                    putchar(line[i]);
+                }
+                putchar('\n');
+            }
+        }
+
+        if (check_flag(flags, FLAG_L) && amount_lines_found) {
+            printf("%s\n", filename);
+        }
+    }
+}
+
+
+void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filename, int flags) {
+    FILE *file;
+    if (!strcmp(filename, "-"))
+        file = stdin;
+    else
+        file = fopen(filename, "r");
+
+    if (file) {
+        regmatch_t reg_match;
+
+        size_t line_size = 1;
+        char *line = calloc(line_size, sizeof (char));
+
+        int amount_lines_found = 0;
+        int lines_number = 0;
+
+        ssize_t len_line;
+
+        short need_was = !check_flag(flags, FLAG_V);
+        for (linked_list_t *a = patterns; a; a = a->next_item) {
+            if (a->data) {
+                regex_t *cur_reg = a->data;
+                while ((len_line = getline(&line, &line_size, file)) > 0) {
+                    short was = 0;
+                    lines_number++;
+
+                    int ind_pattern = 0;
                     int offset = 0;
                     while (offset < len_line) {
-                        int status = regexec(*reg, line + offset, 1, &pmatch, 0);
-                        if (status == REG_NOMATCH)
+                        int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
+                        if (res_find == REG_NOMATCH)
                             break;
-                        elif (pmatch.rm_so != -1)
+                        elif (reg_match.rm_so != -1)
                             was = 1;
-                        offset += pmatch.rm_eo;
-                    }
+                        else
+                            break;
 
-                    if (was == need_was) {
-                        print_line(filename, line, counter_line, -1, flags);
-                        counter++;
+                        if (was == need_was) {
+                            amount_lines_found++;
+                            print_found_pattern(filename, line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found, ind_pattern, flags);
+                        }
+
+                        offset += reg_match.rm_eo;
+                        ind_pattern++;
+                    }
+                    if (!was && was == need_was) {
+                        amount_lines_found++;
+                        print_found_pattern(filename, line, -1, lines_number, amount_lines_found, ind_pattern, flags);
                     }
                 }
             }
-            print_line(filename, line, -1, counter, flags);
-            free(line);
         }
+
         fclose(file);
     } else {
-        sprintf(error, "grep: %s: No such file or directory\n", filename);
-        print_error(flags);
+        print_error(NO_FILE, filename);
     }
 }
 
-regex_t *get_pattern(char *string, int flags) {
-    regex_t *reg = malloc(sizeof (reg));
+void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags) {
+    FILE *file;
+    if (!strcmp(filename, "-"))
+        file = stdin;
+    else
+        file = fopen(filename, "r");
 
-    if (reg) {
-        int is_bad_res_comp = regcomp(reg, string, REG_ICASE * (check_flag(flags, FLAG_I)));
+    if (file) {
+        regmatch_t reg_match;
 
-        if (is_bad_res_comp) {
-            regfree(reg);
-            free(reg);
+        size_t line_size = 1;
+        char *line = calloc(line_size, sizeof (char));
 
-            reg = NULL;
-        }
-    }
-    return reg;
-}
+        int amount_lines_found = 0;
+        int lines_number = 0;
 
-regex_t ** get_patterns_from_file(FILE *file, int flags) {
-    size_t i = 0;
-    size_t size = 2;
-    regex_t **list_regex = calloc(2, sizeof(regex_t*));
+        short fast_exit = 0;
 
-    size_t size_line = 1;
-    char *line = malloc(sizeof(char));
-    size_t len_line;
-    while ((len_line = getline(&line, &size_line, file)) > 0) {
-        if ((size - 1) == i) {
-            list_regex = realloc(list_regex, sizeof(regex_t) * (size *= 2));
-        }
-        line[len_line] = '\0';
-        list_regex[i++] = get_pattern(line, flags);
-    }
-    list_regex[i] = NULL;
+        short need_was = !check_flag(flags, FLAG_V);
+        while (!fast_exit && (getline(&line, &line_size, file)) > 0) {
+            int find = 0;
+            for (linked_list_t *a = patterns; !fast_exit && !find && a; a = a->next_item) {
+                if (a->data) {
+                    regex_t *cur_reg = a->data;
 
-    return list_regex;
-}
+                    short was = 0;
+                    lines_number++;
 
-regex_t ** get_patterns_from_string(char *string, int flags) {
-    regex_t **regex_list = calloc(2, sizeof(regex_t*));
-    regex_list[0] = get_pattern(string, flags);
-    return regex_list;
-}
+                    int res_find = regexec(cur_reg, line, 1, &reg_match, 0);
+                    if (res_find == REG_NOMATCH)
+                        was = 0;
+                    elif (reg_match.rm_so != -1)
+                        was = 1;
 
-void aboba(int argc, char **argv, regex_t **regex, int flags) {
-    if (argc > 1 && !check_flag(flags, FLAG_H)) {
-        add_flag(flags, FLAG_Z);
-    }
-    for (; argc; skip_arg(&argc, &argv)) {
-            print_all_patterns_in_file(regex, *argv, flags);
-    }
-}
-
-
-// END h, L, f
-// ostalsa s, o
-int main(int argc, char **argv) {
-    if (argc > 1) {
-        // Skip name running file
-        skip_arg(&argc, &argv);
-
-        FILE *file;
-        int flags = flags_parser(&argc, &argv, &file);
-
-        if (!(*error)) {
-            regex_t **regex;
-            if (file) {
-                regex = get_patterns_from_file(file, flags);
-            } else {
-                regex = get_patterns_from_string(*argv, flags);
-                skip_arg(&argc, &argv);
-            }
-
-            if (*regex) {
-                aboba(argc, argv, regex, flags);
-                for (regex_t **a = regex; *a; a++) {
-                    regfree(*a);
-                    free(*a);
+                    if (was == need_was) {
+                        amount_lines_found++;
+                        find = 1;
+                        if (check_flag(flags, FLAG_L)) {
+                            fast_exit = 1;
+                        }
+                    }
                 }
-                free(regex);
             }
+            if (find && !check_flag(flags, FLAG_C))
+                print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
+        }
+        if (check_flag(flags, FLAG_C))
+            print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
 
-            if (file)
-                fclose(file);
+        fclose(file);
+    } else {
+        print_error(NO_FILE, filename);
+    }
+}
+
+void search_patterns_in_files(linked_list_t* list_filenames, linked_list_t *list_pattern, int flags) {
+    for (linked_list_t *f = list_filenames->next_item; f; f = f->next_item) {
+        if (check_flag(flags, FLAG_O) && !check_flag(flags, FLAG_C) && !check_flag(flags, FLAG_L)) {
+            search_patterns_in_file_with_flags_o(list_pattern, f->data, flags);
         } else {
-            print_error(flags);
+            search_patterns_in_file(list_pattern, f->data, flags);
         }
     }
-    return 0;
+}
+
+
+int main(int argc, char **argv) {
+    argc--, argv++;
+    int flags;
+    linked_list_t *list_filenames = linked_list(NULL);
+    linked_list_t *list_pattern = linked_list(NULL);
+
+    status_code_e status = parsing_argv(argc, argv, list_filenames, list_pattern, &flags, NOTHING);
+    if (status != ERROR) {
+        int i = 1;
+        for (linked_list_t *f = list_filenames; f; f = f->next_item, i++) {
+            if (f->data) {
+//                printf("FILES %d: _%s_\n", i, (char *) f->data);
+                if (i > 1) {
+                    add_flag(flags, FLAG_Z);
+                }
+            } else {
+                i--;
+            }
+
+        }
+//        i = 1;
+//        for (linked_list_t *p = list_pattern->next_item; p; p = p->next_item, i++) {
+//            printf("PATTERNS %d: _%s_\n", i, (char *) p->data);
+//        }
+//        puts("\n\n_________RESULT_________");
+        compile_patterns(list_pattern, flags);
+        search_patterns_in_files(list_filenames, list_pattern, flags);
+    }
 }

@@ -1,10 +1,10 @@
 #include "s21_grep_test.h"
 
 START_TEST(test_combinations) {
-    char f_file[] = " void ";
-    char e_pattern[] = " ./data-samples/void ";
-    char search_files[] = " v2 ./data-samples/void ./data-samples/char";
-    char search_pattern[] = " ./data-samples/void ";
+    char f_file[] = " ./data-samples/void ";
+    char e_pattern[] = " void ";
+    char search_files[] = " ./data-samples/v2 ./data-samples/void ./data-samples/char";
+    char search_pattern[] = " void ";
     char grep[512] = "grep ";
     char s21_grep[512] = "./build/s21_grep ";
     char flags[512] = "";
@@ -40,7 +40,11 @@ START_TEST(test_combinations) {
            !val ? GREEN : RED, val, RESET);
     char str[2048];
     sprintf(str, "\nTEST N:%d\n%s%s\n%s%s\n", _i, BLUE, grep, s21_grep, RESET);
+    if (val != 0) {
+        scanf("*s*s*s");
+    }
     ck_assert_msg(val == 0, str);
+
 }
 END_TEST
 
