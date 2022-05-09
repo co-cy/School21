@@ -20,26 +20,35 @@ void strip(char *string) {
 }
 
 
-void print_error(int type_error, char *message) {
-    if (type_error == NO_FILE) {
-        fprintf(stderr, "grep: %s: No such file or directory\n", message);
-    } elif (type_error == BAD_FLAG) {
-        fprintf(stderr, "grep: invalid option -- %c\n", *message);
-    } elif (type_error == BAD_OPTION) {
-        fprintf(stderr, "grep: unrecognized option `%s'\n", message);
-    } elif (type_error == MORE_ARGUMENT) {
-        if (*message == PATTERNS_FILE) {
-            fprintf(stderr, "grep: option requires an argument -- f\n");
-        } elif (*message == PATTERN) {
-            fprintf(stderr, "grep: option requires an argument -- e\n");
+void print_error(int type_error, char *message, short need_print) {
+    static short saved_need_print = 1;
+
+    if (need_print >= 0 && need_print <= 1) {
+        saved_need_print = need_print;
+    }
+    if (saved_need_print) {
+        if (type_error == NO_FILE) {
+            fprintf(stderr, "grep: %s: No such file or directory\n", message);
+        } elif (type_error == BAD_FLAG) {
+            fprintf(stderr, "grep: invalid option -- %c\n", *message);
+        } elif (type_error == BAD_OPTION) {
+            fprintf(stderr, "grep: unrecognized option `%s'\n", message);
+        } elif (type_error == MORE_ARGUMENT) {
+            if (*message == PATTERNS_FILE) {
+                fprintf(stderr, "grep: option requires an argument -- f\n");
+            } elif (*message == PATTERN) {
+                fprintf(stderr, "grep: option requires an argument -- e\n");
+            }
+        } elif (type_error == EMPTY) {
+            fprintf(stderr, "usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n"
+                            "        [-e pattern] [-f file] [--binary-files=value] [--color=when]\n"
+                            "        [--context[=num]] [--directories=action] [--label] [--line-buffered]\n"
+                            "        [--null] [pattern] [file ...]\n");
+        } elif (type_error == OTHER) {
+            fprintf(stderr, "%s\n", message);
+        } elif (type_error == SET_SETTINGS) {
+            // pass
         }
-    } elif (type_error == EMPTY) {
-        fprintf(stderr, "usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n"
-                        "        [-e pattern] [-f file] [--binary-files=value] [--color=when]\n"
-                        "        [--context[=num]] [--directories=action] [--label] [--line-buffered]\n"
-                        "        [--null] [pattern] [file ...]\n");
-    } elif (type_error == OTHER) {
-        fprintf(stderr, "%s\n", message);
     }
 }
 
@@ -59,7 +68,7 @@ int parsing_file_to_patterns(char *filename, linked_list_t *pattern, status_code
         status = NOTHING;
         free(line);
     } else {
-        print_error(NO_FILE, filename);
+        print_error(NO_FILE, filename, -1);
         status = ERROR;
     }
     return status;
@@ -67,14 +76,20 @@ int parsing_file_to_patterns(char *filename, linked_list_t *pattern, status_code
 
 int parsing_word(char *word, linked_list_t *files, linked_list_t *patterns, status_code_e status) {
     if (status == NOTHING) {
-        add_to_linked_list(files, word);
+        char *copy_word = malloc(sizeof (char) * (strlen(word) + 1));
+        strcpy(copy_word, word);
+
+        add_to_linked_list(files, copy_word);
     } elif (status == PATTERNS_FILE) {
         status = parsing_file_to_patterns(word, patterns, status);
     } elif (status == PATTERN) {
-        add_to_linked_list(patterns, word);
+        char *copy_word = malloc(sizeof (char) * (strlen(word) + 1));
+        strcpy(copy_word, word);
+
+        add_to_linked_list(patterns, copy_word);
         status = NOTHING;
     } else {
-        print_error(OTHER, "WTF???");
+        print_error(OTHER, "WTF???", -1);
         status = ERROR;
     }
     return status;
@@ -102,9 +117,12 @@ int parsing_flag(char *flag, linked_list_t *patterns, int *flags) {
             flag_exit = 1;
         } elif (tmp == 'e') {
             add_flag(*flags, FLAG_E);
-            if (*(flag + 1))
-                add_to_linked_list(patterns, (flag + 1));
-            else
+            if (*(flag + 1)) {
+                char *copy_word = malloc(sizeof(char) * (strlen((flag + 1)) + 1));
+                strcpy(copy_word, (flag + 1));
+
+                add_to_linked_list(patterns, copy_word);
+            } else
                 status = PATTERN;
             flag_exit = 1;
         } elif (tmp == 'c') {
@@ -120,7 +138,7 @@ int parsing_flag(char *flag, linked_list_t *patterns, int *flags) {
         } elif (tmp == 'o') {
             add_flag(*flags, FLAG_O);
         } else {
-            print_error(BAD_FLAG, &tmp);
+            print_error(BAD_FLAG, &tmp, -1);
             status = ERROR;
         }
         flag++;
@@ -131,7 +149,10 @@ int parsing_flag(char *flag, linked_list_t *patterns, int *flags) {
 
 int parsing_parameter(char *parameter, linked_list_t *files, linked_list_t *patterns, int *flags, status_code_e status) {
     if (!strcmp(parameter, "-")) {
-        add_to_linked_list(files, parameter);
+        char *copy_parameter = malloc(sizeof (char) * (strlen(parameter) + 1));
+        strcpy(copy_parameter, parameter);
+
+        add_to_linked_list(files, copy_parameter);
     } else {
         size_t type_parameter = strspn(parameter, "-");
         if (type_parameter == 0 || status != NOTHING) {
@@ -139,7 +160,7 @@ int parsing_parameter(char *parameter, linked_list_t *files, linked_list_t *patt
         } elif (type_parameter == 1) {
             status = parsing_flag(parameter + type_parameter, patterns, flags);
         } else {
-            print_error(BAD_OPTION, parameter);
+            print_error(BAD_OPTION, parameter, -1);
             status = ERROR;
         }
     }
@@ -158,29 +179,35 @@ int parsing_argv(int argc, char **argv, linked_list_t *files, linked_list_t *pat
     }
 
     if (status != NOTHING && status != ERROR) {
-        print_error(MORE_ARGUMENT, (char *) &status);
+        print_error(MORE_ARGUMENT, (char *) &status, -1);
         status = ERROR;
     } elif (status == NOTHING) {
-        // TODO REFACTORY
-        short a = !is_empty_linked_list(patterns);
-        short b = !is_empty_linked_list(files);
+        short have_pattern = !is_empty_linked_list(patterns);
+        short have_files = !is_empty_linked_list(files);
 
-        if (a) {
-            if (b) {
-                // pass
-            } else {
-                add_to_linked_list(files, stdin_file);
+        if (have_pattern) {
+            if (!have_files) {
+                char *copy_parameter = malloc(sizeof (char) * (strlen(stdin_file) + 1));
+                strcpy(copy_parameter, stdin_file);
+
+                add_to_linked_list(files, copy_parameter);
             }
         } else {
-            if (b) {
-                add_to_linked_list(patterns, files->next_item->data);
+            if (have_files) {
+                char *copy_parameter = malloc(sizeof (char) * (strlen(files->next_item->data) + 1));
+                strcpy(copy_parameter, files->next_item->data);
+
+                add_to_linked_list(patterns, copy_parameter);
                 shift_linked_list(files);
-                b = !is_empty_linked_list(files);
-                if (!b) {
-                    add_to_linked_list(files, stdin_file);
+                have_files = !is_empty_linked_list(files);
+                if (!have_files) {
+                    char *copy_parameter = malloc(sizeof (char) * (strlen(stdin_file) + 1));
+                    strcpy(copy_parameter, stdin_file);
+
+                    add_to_linked_list(files, copy_parameter);
                 }
             } else {
-                print_error(EMPTY, "");
+                print_error(EMPTY, "", -1);
                 status = ERROR;
             }
         }
@@ -204,8 +231,7 @@ void compile_patterns(linked_list_t *patterns, int flags) {
                 free(reg);
                 a->data = NULL;
             }
-//            TODO: FIX FREE
-//            free(pattern);
+            free(pattern);
         }
     }
 }
@@ -306,7 +332,7 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
 
         fclose(file);
     } else {
-        print_error(NO_FILE, filename);
+        print_error(NO_FILE, filename, -1);
     }
 }
 
@@ -361,7 +387,7 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
 
         fclose(file);
     } else {
-        print_error(NO_FILE, filename);
+        print_error(NO_FILE, filename, -1);
     }
 }
 
@@ -387,7 +413,6 @@ int main(int argc, char **argv) {
         int i = 1;
         for (linked_list_t *f = list_filenames; f; f = f->next_item, i++) {
             if (f->data) {
-//                printf("FILES %d: _%s_\n", i, (char *) f->data);
                 if (i > 1) {
                     add_flag(flags, FLAG_Z);
                 }
@@ -396,12 +421,18 @@ int main(int argc, char **argv) {
             }
 
         }
-//        i = 1;
-//        for (linked_list_t *p = list_pattern->next_item; p; p = p->next_item, i++) {
-//            printf("PATTERNS %d: _%s_\n", i, (char *) p->data);
-//        }
-//        puts("\n\n_________RESULT_________");
+        print_error(SET_SETTINGS, "", !check_flag(flags, FLAG_S));
+
         compile_patterns(list_pattern, flags);
         search_patterns_in_files(list_filenames, list_pattern, flags);
+
+        free_linked_list(list_filenames);
+
+        for (linked_list_t *p = list_pattern; p; p = p->next_item, i++) {
+            if (p->data) {
+                regfree(p->data);
+            }
+        }
+        free_linked_list(list_pattern);
     }
 }

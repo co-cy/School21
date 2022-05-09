@@ -32,6 +32,7 @@ typedef enum type_error {
     MORE_ARGUMENT,
     EMPTY,
     OTHER,
+    SET_SETTINGS,
 } type_error_e;
 
 typedef enum status_code {
