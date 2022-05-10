@@ -1,17 +1,28 @@
+from termios import tcgetattr, tcsetattr, TCSADRAIN
 from random import randrange, choice, shuffle
 from itertools import combinations
+from tty import setcbreak
+from select import select
+from time import sleep
+from sys import stdin
 from os import system
 
-stop = 1
-more = 1
+# 1 или 0 останавливать тесты после ошибки или нет
+stop = 0
+# 1 или 0 показывать расшириный вывод ошибки
+more = 0
+# 1 или 0 если показывать в конце список комманд
+show_log = 0
+# любый символы остановки вывода
+quit_command = ['q', 'z']
 
+# Указать пути до грепов
 s21_grep = "./build/s21_grep"
 grep = "grep"
 
+# Путь где будут распологаться результаты
 tmp_file = '0_{}.res'
-s21_grep_file = tmp_file.format(s21_grep.split('/')[-1])
-grep_file = tmp_file.format(grep)
-diff_file = tmp_file.format('diff')
+
 
 flags = [
     ('-e', 1),
@@ -23,7 +34,7 @@ flags = [
     ('-h', 0),
     ('-s', 0),
     ('-f', 2),
-    ('-o', 0),
+    # ('-o', 0),
 ]
 
 files = [
@@ -32,6 +43,8 @@ files = [
     'data-samples/grep_file3',
     'data-samples/grep_file4',
 ]
+
+files_with_patterns = [] + files
 
 patterns = [
     'permission',
@@ -47,6 +60,18 @@ patterns = [
 #        START PROGRAM
 #
 
+test_error = []
+
+flags += flags
+
+TEST_COUNT = 0
+TEST_COUNT_FAILED = 0
+
+s21_grep_file = tmp_file.format(s21_grep.split('/')[-1])
+grep_file = tmp_file.format(grep)
+diff_file = tmp_file.format('diff')
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -59,15 +84,13 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-flags += flags
-
-TEST_COUNT = 0
-TEST_COUNT_FAILED = 0
+def is_data():
+    return select([stdin], [], [], 0) == ([stdin], [], [])
 
 
 def get_argv(flag: str, type: int) -> str:
     if type == 2:
-        flag += f'{(" " if randrange(0, 1) else "")}{choice(files)}'
+        flag += f'{(" " if randrange(0, 1) else "")}{choice(files_with_patterns)}'
     if type == 1:
         flag += f'{(" " if randrange(0, 1) else "")}{choice(patterns)}'
 
@@ -81,8 +104,11 @@ def run_test(command_1: str, command_2: str) -> None:
 
     system(command_1)
     system(command_2)
+    diff_command = f'diff {s21_grep_file} {grep_file} > {diff_file}'
 
-    if system(f'diff {s21_grep_file} {grep_file} > {diff_file}'):
+    if system(diff_command):
+        if show_log:
+            test_error.append((command_1, command_2))
         print()
         print(f'{bcolors.BOLD}{bcolors.OKCYAN}{"TEST "}{bcolors.ENDC}{bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}{": "}{bcolors.ENDC}{bcolors.FAIL}{"FAILED"}{bcolors.ENDC}')
 
@@ -102,8 +128,10 @@ def run_test(command_1: str, command_2: str) -> None:
         print(f'{bcolors.FAIL}{bcolors.BOLD}{"COMMANDS:"}{bcolors.ENDC}{bcolors.ENDC}')
         print(command_1)
         print(command_2)
+        print(diff_command)
         print()
         print(f'{bcolors.FAIL}DIFF IN:{bcolors.ENDC}')
+        system(diff_command)
         print(diff_file)
         print()
         if stop:
@@ -154,13 +182,47 @@ def hard_test():
 
             run_test(f'{s21_grep} {argv} > {s21_grep_file}',
                      f'{grep} {argv} > {grep_file}')
-    # print(count)
+            if is_data():
+                c = stdin.read(1)
+
+                if c in quit_command:
+                    return
+
+# print(count)
 
 
 if __name__ == '__main__':
-    simple_test()
-    hard_test()
+    old_settings = tcgetattr(stdin)
 
-    print("WAS TEST:\t", TEST_COUNT)
-    print("SUCC:\t", TEST_COUNT - TEST_COUNT_FAILED)
-    print("FAILED:\t", TEST_COUNT_FAILED)
+    try:
+        setcbreak(stdin.fileno())
+
+        print("\t\tEASY TEST:")
+        simple_test()
+
+        print("\n\t\tHARD TEST:\n\n")
+        sleep(0.25)
+        hard_test()
+
+        print(f'{bcolors.BOLD}{bcolors.OKCYAN}WAS TEST: \t{bcolors.ENDC}{bcolors.OKBLUE}{TEST_COUNT}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+        print(f'{bcolors.BOLD}{bcolors.OKBLUE}SUCCESS: \t{bcolors.ENDC}{bcolors.OKGREEN}{TEST_COUNT - TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+        print(f'{bcolors.BOLD}{bcolors.WARNING}FAILED: \t{bcolors.ENDC}{bcolors.FAIL}{TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+
+        if TEST_COUNT_FAILED:
+            persent = ((TEST_COUNT - TEST_COUNT_FAILED) / TEST_COUNT_FAILED) * 100
+        else:
+            persent = 100
+
+        if persent > 80:
+            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.OKGREEN}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+        elif persent > 50:
+            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.WARNING}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+        else:
+            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.FAIL}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+
+        if more:
+            print("\n\n\t\tALL ERRORS\t\t\n\n")
+            for i in range(len(test_error)):
+                run_test(*test_error[i])
+    finally:
+        tcsetattr(stdin, TCSADRAIN, old_settings)
