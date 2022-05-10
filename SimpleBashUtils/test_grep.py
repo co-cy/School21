@@ -3,6 +3,7 @@ from itertools import combinations
 from os import system
 
 stop = 1
+more = 1
 
 s21_grep = "./build/s21_grep"
 grep = "grep"
@@ -46,6 +47,18 @@ patterns = [
 #        START PROGRAM
 #
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 flags += flags
 
 TEST_COUNT = 0
@@ -71,19 +84,33 @@ def run_test(command_1: str, command_2: str) -> None:
 
     if system(f'diff {s21_grep_file} {grep_file} > {diff_file}'):
         print()
-        print(f'TEST {TEST_COUNT}: FAILED')
-        print(f'ARGUMENT {command_1[len(s21_grep) + 1:]}')
+        print(f'{bcolors.BOLD}{bcolors.OKCYAN}{"TEST "}{bcolors.ENDC}{bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}{": "}{bcolors.ENDC}{bcolors.FAIL}{"FAILED"}{bcolors.ENDC}')
+
+        if more:
+            print()
+            print(f'{bcolors.WARNING}{bcolors.BOLD}{"ARGUMENT:"}{bcolors.ENDC}{bcolors.ENDC}')
+            print(command_1[len(s21_grep) + 1:-2])
+            print()
+            print(f'{bcolors.WARNING}{bcolors.BOLD}{"FLAGS:"}{bcolors.ENDC}{bcolors.ENDC}')
+            for flag in filter(lambda x: x[0] == '-', command_1[len(s21_grep) + 1:].split()[:-2]):
+                print(flag)
+            print()
+            print(f'{bcolors.WARNING}{bcolors.BOLD}{"FILES:"}{bcolors.ENDC}{bcolors.ENDC}')
+            for file in filter(lambda x: x[0] != '-', command_1[len(s21_grep) + 1:].split()[:-2]):
+                print(file)
         print()
+        print(f'{bcolors.FAIL}{bcolors.BOLD}{"COMMANDS:"}{bcolors.ENDC}{bcolors.ENDC}')
         print(command_1)
         print(command_2)
         print()
-        print(f'DIFF IN {diff_file}')
+        print(f'{bcolors.FAIL}DIFF IN:{bcolors.ENDC}')
+        print(diff_file)
         print()
         if stop:
             input()
         TEST_COUNT_FAILED += 1
     else:
-        print(f'TEST {TEST_COUNT}: SUCCESS')
+        print(f'{bcolors.BOLD}{bcolors.OKBLUE}TEST{bcolors.ENDC} {bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}: {bcolors.OKGREEN}{"SUCCESS"}{bcolors.ENDC}{bcolors.ENDC}')
         print()
 
 
