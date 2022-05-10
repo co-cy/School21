@@ -222,7 +222,13 @@ void compile_patterns(linked_list_t *patterns, int flags) {
             char *pattern = a->data;
 
             regex_t *reg = malloc(sizeof (reg));
-            int is_bad_res_comp = regcomp(reg, pattern, REG_ICASE * (check_flag(flags, FLAG_I)));
+            int is_bad_res_comp;
+            if (strlen(a->data)) {
+                is_bad_res_comp = regcomp(reg, pattern, REG_ICASE * (check_flag(flags, FLAG_I)));
+            } else {
+                is_bad_res_comp = regcomp(reg, ".", REG_ICASE * (check_flag(flags, FLAG_I)));
+            }
+
 
             if (!is_bad_res_comp) {
                 a->data = reg;
@@ -298,39 +304,40 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
         int fast_exit = 0;
 
         short need_was = !check_flag(flags, FLAG_V);
-            while (!fast_exit && (len_line = getline(&line, &line_size, file)) > 0) {
-                lines_number++;
+        while (!fast_exit && (len_line = getline(&line, &line_size, file)) > 0) {
+            lines_number++;
 
-                short was = 0;
-                for (linked_list_t *a = patterns; a; a = a->next_item) {
-                    if (a->data) {
-                        regex_t *cur_reg = a->data;
+            short was = 0;
+            int offset = 0;
+            for (linked_list_t *a = patterns; a; a = a->next_item) {
+                if (a->data) {
+                    regex_t *cur_reg = a->data;
 
-                        int offset = 0;
-                        while (offset < len_line) {
-                            int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
-                            if (res_find == REG_NOMATCH || reg_match.rm_so == -1)
-                                break;
-                            elif (reg_match.rm_so != -1)
-                                was += 1;
-
-                            if (was && need_was) {
-                                amount_lines_found++;
-                                print_found_pattern(filename, line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found, was, flags);
-                            }
-
-                            offset += reg_match.rm_eo;
+                    while (offset < len_line) {
+                        int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
+                        if (res_find == REG_NOMATCH || reg_match.rm_so == -1) {
+                            break;
+                        } elif (reg_match.rm_so != -1) {
+                            was += 1;
                         }
+                        if (was && need_was) {
+                            amount_lines_found++;
+                            print_found_pattern(filename, line + offset + reg_match.rm_so,
+                                                reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found,
+                                                was, flags);
+                        }
+                        offset += reg_match.rm_eo;
                     }
-                }
-                if (was == need_was && !need_was) {
-                    amount_lines_found++;
-                    if (check_flag(flags, FLAG_L)) {
-                        fast_exit = 1;
+                    if (was == need_was && !need_was) {
+                        amount_lines_found++;
+                        if (check_flag(flags, FLAG_L)) {
+                            fast_exit = 1;
+                        }
+                        print_found_pattern(filename, line, -1, lines_number, amount_lines_found, was, flags);
                     }
-                    print_found_pattern(filename, line, -1, lines_number, amount_lines_found, was, flags);
                 }
             }
+        }
         fclose(file);
     } else {
         print_error(NO_FILE, filename, -1);
@@ -368,6 +375,7 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
                     regex_t *cur_reg = a->data;
 
                     int res_find = regexec(cur_reg, line, 1, &reg_match, 0);
+//                    printf("%d", res_find);
                     if (res_find == REG_NOMATCH)
                         continue;
                     elif (reg_match.rm_so != -1)
@@ -377,11 +385,14 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
                     if (was == need_was && need_was) {
                         find = 1;
                     }
+                } else {
+//                    printf("ABOBA: _%s\n", line);
                 }
             }
-//            printf("END WAS: %d\n", was);
+//            printf("\nLINE: %s", line);
+//            printf("END WAS: %d %d %d\n", was, find, need_was);
             if (was == need_was && find == need_was){
-//                printf("______ABOBA____%d__\n", find);
+//                printf("______ABOBA____%s\n", line);
                 amount_lines_found++;
                 if (check_flag(flags, FLAG_L)) {
                     fast_exit = 1;

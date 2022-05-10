@@ -1,6 +1,6 @@
 from termios import tcgetattr, tcsetattr, TCSADRAIN
+from itertools import combinations_with_replacement
 from random import randrange, choice, shuffle
-from itertools import combinations
 from tty import setcbreak
 from select import select
 from time import sleep
@@ -8,11 +8,11 @@ from sys import stdin
 from os import system
 
 # 1 или 0 останавливать тесты после ошибки или нет
-stop = 0
+stop = 1
 # 1 или 0 показывать расшириный вывод ошибки
 more = 1
 # 1 или 0 если показывать в конце список комманд
-show_log = 0
+show_log = 1
 # любый символы остановки вывода
 quit_command = ['q', 'z']
 
@@ -62,8 +62,6 @@ patterns = [
 
 test_error = []
 
-flags += flags + flags
-
 TEST_COUNT = 0
 TEST_COUNT_FAILED = 0
 
@@ -71,6 +69,8 @@ s21_grep_file = tmp_file.format(s21_grep.split('/')[-1])
 grep_file = tmp_file.format(grep)
 diff_file = tmp_file.format('diff')
 
+_files = []
+_flags = []
 
 class bcolors:
     HEADER = '\033[95m'
@@ -90,9 +90,9 @@ def is_data():
 
 def get_argv(flag: str, type: int) -> str:
     if type == 2:
-        flag += f'{(" " if randrange(0, 1) else "")}{choice(files_with_patterns)}'
+        flag += f'{(" " if randrange(0, 2) else "")}{choice(files_with_patterns)}'
     if type == 1:
-        flag += f'{(" " if randrange(0, 1) else "")}{choice(patterns)}'
+        flag += f'{(" " if randrange(0, 2) else "")}{choice(patterns)}'
 
     return flag
 
@@ -118,13 +118,13 @@ def run_test(command_1: str, command_2: str) -> None:
             print(command_1[len(s21_grep) + 1:-2])
             print()
             print(f'{bcolors.WARNING}{bcolors.BOLD}{"FLAGS:"}{bcolors.ENDC}{bcolors.ENDC}')
-            for flag in filter(lambda x: x[0] == '-', command_1[len(s21_grep) + 1:].split()[:-2]):
+            for flag in _flags:
                 print(flag)
             print()
             print(f'{bcolors.WARNING}{bcolors.BOLD}{"FILES:"}{bcolors.ENDC}{bcolors.ENDC}')
-            for file in filter(lambda x: x[0] != '-', command_1[len(s21_grep) + 1:].split()[:-2]):
+            for file in _files:
                 print(file)
-        print()
+            print()
         print(f'{bcolors.FAIL}{bcolors.BOLD}{"COMMANDS:"}{bcolors.ENDC}{bcolors.ENDC}')
         print(command_1)
         print(command_2)
@@ -159,34 +159,40 @@ def simple_test():
 
 
 def hard_test():
+    global _flags, _files
     # count = 0
-    for _ in range(round(len(flags) / 2), len(flags)):
-        # count += len(list(combinations(flags, i)))
-        for list_arg in combinations(flags, i):
-            list_arg = list(list_arg)
-            shuffle(list_arg)
+    for i in range(round(len(flags) / 2), len(flags)):
+        for list_arg_m in combinations_with_replacement(flags, i):
+            for list_arg in (set(list_arg_m), list_arg_m):
+                list_arg = list(list_arg)
+                shuffle(list_arg)
 
-            was_pattern = 0
-            argv = []
-            for arg_flag, arg_type in list_arg:
-                was_pattern += arg_type
-                argv.append(get_argv(arg_flag, arg_type))
+                _flags = []
+                _files = []
 
-            for _ in range(randrange(1, len(files))):
-                argv.append(choice(files))
+                was_pattern = 0
+                argv = []
+                for arg_flag, arg_type in list_arg:
+                    was_pattern += arg_type
+                    _flags.append(get_argv(arg_flag, arg_type))
+                argv += _flags
 
-            shuffle(argv)
-            if not was_pattern:
-                argv.insert(0, choice(patterns))
-            argv = ' '.join(argv)
+                for _ in range(randrange(1, len(files))):
+                    _files.append(choice(files))
+                argv += _files
 
-            run_test(f'{s21_grep} {argv} > {s21_grep_file}',
-                     f'{grep} {argv} > {grep_file}')
-            if is_data():
-                c = stdin.read(1)
+                shuffle(argv)
+                if not was_pattern:
+                    argv.insert(0, choice(patterns))
+                argv = ' '.join(argv)
 
-                if c in quit_command:
-                    return
+                run_test(f'{s21_grep} {argv} > {s21_grep_file}',
+                         f'{grep} {argv} > {grep_file}')
+                if is_data():
+                    c = stdin.read(1)
+
+                    if c in quit_command:
+                        return
 
 # print(count)
 
@@ -209,7 +215,7 @@ if __name__ == '__main__':
         print(f'{bcolors.BOLD}{bcolors.WARNING}FAILED: \t{bcolors.ENDC}{bcolors.FAIL}{TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
 
         if TEST_COUNT_FAILED:
-            persent = ((TEST_COUNT - TEST_COUNT_FAILED) / TEST_COUNT_FAILED) * 100
+            persent = ((TEST_COUNT - TEST_COUNT_FAILED) / TEST_COUNT) * 100
         else:
             persent = 100
 
