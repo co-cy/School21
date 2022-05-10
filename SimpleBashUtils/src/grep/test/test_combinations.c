@@ -41,7 +41,7 @@ START_TEST(test_combinations) {
     char str[2048];
     sprintf(str, "\nTEST N:%d\n%s%s\n%s%s\n", _i, BLUE, grep, s21_grep, RESET);
     if (val != 0) {
-        scanf("*s*s*s");
+        while (fgetc(stdin));
     }
     ck_assert_msg(val == 0, str);
 
