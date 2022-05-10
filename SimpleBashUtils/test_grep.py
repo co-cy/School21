@@ -10,7 +10,7 @@ from os import system
 # 1 или 0 останавливать тесты после ошибки или нет
 stop = 0
 # 1 или 0 показывать расшириный вывод ошибки
-more = 0
+more = 1
 # 1 или 0 если показывать в конце список комманд
 show_log = 0
 # любый символы остановки вывода
@@ -34,7 +34,7 @@ flags = [
     ('-h', 0),
     ('-s', 0),
     ('-f', 2),
-    # ('-o', 0),
+    ('-o', 0),
 ]
 
 files = [
@@ -62,7 +62,7 @@ patterns = [
 
 test_error = []
 
-flags += flags
+flags += flags + flags
 
 TEST_COUNT = 0
 TEST_COUNT_FAILED = 0
@@ -160,7 +160,7 @@ def simple_test():
 
 def hard_test():
     # count = 0
-    for i in range(1, len(flags)):
+    for _ in range(round(len(flags) / 2), len(flags)):
         # count += len(list(combinations(flags, i)))
         for list_arg in combinations(flags, i):
             list_arg = list(list_arg)
