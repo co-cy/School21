@@ -237,7 +237,7 @@ void compile_patterns(linked_list_t *patterns, int flags) {
 }
 
 void print_found_pattern(char *filename, char *line, int len, int lines_number, int amount_lines_found, int ind_pattern, int flags) {
-    if (check_flag(flags, FLAG_O) && ind_pattern > 0) {
+    if (check_flag(flags, FLAG_O) && ind_pattern > 1) {
         if (len == -1)
             printf("%s\n", line);
         else {
@@ -295,41 +295,42 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
 
         ssize_t len_line;
 
+        int fast_exit = 0;
+
         short need_was = !check_flag(flags, FLAG_V);
-        for (linked_list_t *a = patterns; a; a = a->next_item) {
-            if (a->data) {
-                regex_t *cur_reg = a->data;
-                while ((len_line = getline(&line, &line_size, file)) > 0) {
-                    short was = 0;
-                    lines_number++;
+            while (!fast_exit && (len_line = getline(&line, &line_size, file)) > 0) {
+                lines_number++;
 
-                    int ind_pattern = 0;
-                    int offset = 0;
-                    while (offset < len_line) {
-                        int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
-                        if (res_find == REG_NOMATCH)
-                            break;
-                        elif (reg_match.rm_so != -1)
-                            was = 1;
-                        else
-                            break;
+                short was = 0;
+                for (linked_list_t *a = patterns; a; a = a->next_item) {
+                    if (a->data) {
+                        regex_t *cur_reg = a->data;
 
-                        if (was == need_was) {
-                            amount_lines_found++;
-                            print_found_pattern(filename, line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found, ind_pattern, flags);
+                        int offset = 0;
+                        while (offset < len_line) {
+                            int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
+                            if (res_find == REG_NOMATCH || reg_match.rm_so == -1)
+                                break;
+                            elif (reg_match.rm_so != -1)
+                                was += 1;
+
+                            if (was && need_was) {
+                                amount_lines_found++;
+                                print_found_pattern(filename, line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found, was, flags);
+                            }
+
+                            offset += reg_match.rm_eo;
                         }
-
-                        offset += reg_match.rm_eo;
-                        ind_pattern++;
-                    }
-                    if (!was && was == need_was) {
-                        amount_lines_found++;
-                        print_found_pattern(filename, line, -1, lines_number, amount_lines_found, ind_pattern, flags);
                     }
                 }
+                if (was == need_was && !need_was) {
+                    amount_lines_found++;
+                    if (check_flag(flags, FLAG_L)) {
+                        fast_exit = 1;
+                    }
+                    print_found_pattern(filename, line, -1, lines_number, amount_lines_found, was, flags);
+                }
             }
-        }
-
         fclose(file);
     } else {
         print_error(NO_FILE, filename, -1);
@@ -355,32 +356,39 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
         short fast_exit = 0;
 
         short need_was = !check_flag(flags, FLAG_V);
+        int find;
+        short was;
         while (!fast_exit && (getline(&line, &line_size, file)) > 0) {
-            int find = 0;
-            for (linked_list_t *a = patterns; !fast_exit && !find && a; a = a->next_item) {
+            was = 0;
+            find = 0;
+
+            lines_number++;
+            for (linked_list_t *a = patterns; !find && a; a = a->next_item) {
                 if (a->data) {
                     regex_t *cur_reg = a->data;
 
-                    short was = 0;
-                    lines_number++;
-
                     int res_find = regexec(cur_reg, line, 1, &reg_match, 0);
                     if (res_find == REG_NOMATCH)
-                        was = 0;
+                        continue;
                     elif (reg_match.rm_so != -1)
-                        was = 1;
+                        was += 1;
+//                    printf("WAS: %d\n", was);
 
-                    if (was == need_was) {
-                        amount_lines_found++;
+                    if (was == need_was && need_was) {
                         find = 1;
-                        if (check_flag(flags, FLAG_L)) {
-                            fast_exit = 1;
-                        }
                     }
                 }
             }
-            if (find && !check_flag(flags, FLAG_C))
-                print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
+//            printf("END WAS: %d\n", was);
+            if (was == need_was && find == need_was){
+//                printf("______ABOBA____%d__\n", find);
+                amount_lines_found++;
+                if (check_flag(flags, FLAG_L)) {
+                    fast_exit = 1;
+                }
+                if (!check_flag(flags, FLAG_C))
+                    print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
+            }
         }
         if (check_flag(flags, FLAG_C))
             print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
