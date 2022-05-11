@@ -8,7 +8,7 @@ from sys import stdin
 from os import system
 
 # 1 или 0 останавливать тесты после ошибки или нет
-stop = 1
+stop = 0
 # 1 или 0 показывать расшириный вывод ошибки
 more = 1
 # 1 или 0 если показывать в конце список комманд
@@ -42,6 +42,14 @@ files = [
     'data-samples/grep_file2',
     'data-samples/grep_file3',
     'data-samples/grep_file4',
+    'data-samples/a',
+    'data-samples/c',
+    'data-samples/new',
+    'data-samples/v2',
+    'data-samples/void',
+    'data-samples/pat',
+    'data-samples/char',
+    'data-samples/text',
 ]
 
 files_with_patterns = [] + files
@@ -50,6 +58,12 @@ patterns = [
     'permission',
     'Permission',
     'is',
+    'void',
+    'voiD',
+    'aboba',
+    'abob',
+    'boba',
+    'Lorem',
     'modify',
     'Back-Cover',
     '.Texts',
@@ -98,16 +112,34 @@ def get_argv(flag: str, type: int) -> str:
     return flag
 
 
-def run_test(command_1: str, command_2: str) -> None:
+def get_persent() -> str:
+    res = f'{bcolors.BOLD}\t{bcolors.OKBLUE}{TEST_COUNT}{bcolors.ENDC}\t/\t{bcolors.OKGREEN}{TEST_COUNT - TEST_COUNT_FAILED}{bcolors.ENDC}\t/\t{bcolors.FAIL}{TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}\n'
+    if TEST_COUNT_FAILED:
+        persent = ((TEST_COUNT - TEST_COUNT_FAILED) / TEST_COUNT) * 100
+    else:
+        persent = 100
+
+    if persent > 80:
+        res += f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.OKGREEN}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}'
+    elif persent > 50:
+        res += f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.WARNING}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}'
+    else:
+        res += f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.FAIL}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}'
+    return res
+
+
+def run_test(command_1: str, command_2: str) -> int:
     global TEST_COUNT, TEST_COUNT_FAILED
 
     TEST_COUNT += 1
 
-    system(command_1)
-    system(command_2)
+    a = system(command_1)
+    b = system(command_2)
+    if b == 256:
+        b = 0
     diff_command = f'diff {s21_grep_file} {grep_file} > {diff_file}'
 
-    if system(diff_command):
+    if a == b and system(diff_command):
         if show_log:
             test_error.append((command_1, command_2))
         print()
@@ -135,10 +167,20 @@ def run_test(command_1: str, command_2: str) -> None:
         system(diff_command)
         print(diff_file)
         print()
-        if stop:
-            input()
+        if stop and input() in quit_command:
+            return -1
         TEST_COUNT_FAILED += 1
+    elif a != b:
+        print(f"{bcolors.BOLD}{bcolors.OKBLUE}\t\tCRASH\t\t{bcolors.ENDC}{bcolors.ENDC}")
+        print(command_1)
+        print(command_2)
+        print(diff_command)
+        print(f'\ns21_grep={a}\t'
+              f'grep={b}\n')
+        print('\t\tWAIT 3 SEC\t\t')
+        sleep(3)
     else:
+        print(get_persent())
         print(f'{bcolors.BOLD}{bcolors.OKBLUE}TEST{bcolors.ENDC} {bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}: {bcolors.OKGREEN}{"SUCCESS"}{bcolors.ENDC}{bcolors.ENDC}')
         print()
 
@@ -160,7 +202,7 @@ def simple_test():
         argv = ' '.join(argv)
 
         run_test(f'{s21_grep} {argv} > {s21_grep_file}',
-                 f'{grep} {argv} > {grep_file}')
+                 f'{grep} --color=never {argv} > {grep_file}')
 
 
 def hard_test():
@@ -191,8 +233,9 @@ def hard_test():
                     argv.insert(0, choice(patterns))
                 argv = ' '.join(argv)
 
-                run_test(f'{s21_grep} {argv} > {s21_grep_file}',
-                         f'{grep} {argv} > {grep_file}')
+                res = run_test(f'{s21_grep} {argv} > {s21_grep_file}', f'{grep} --color=never {argv} > {grep_file}')
+                if res == -1:
+                    return
                 if is_data():
                     c = stdin.read(1)
 
@@ -219,17 +262,7 @@ if __name__ == '__main__':
         print(f'{bcolors.BOLD}{bcolors.OKBLUE}SUCCESS: \t{bcolors.ENDC}{bcolors.OKGREEN}{TEST_COUNT - TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
         print(f'{bcolors.BOLD}{bcolors.WARNING}FAILED: \t{bcolors.ENDC}{bcolors.FAIL}{TEST_COUNT_FAILED}{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
 
-        if TEST_COUNT_FAILED:
-            persent = ((TEST_COUNT - TEST_COUNT_FAILED) / TEST_COUNT) * 100
-        else:
-            persent = 100
-
-        if persent > 80:
-            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.OKGREEN}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
-        elif persent > 50:
-            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.WARNING}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
-        else:
-            print(f'{bcolors.BOLD}{bcolors.WARNING}PERCENT: \t{bcolors.ENDC}{bcolors.FAIL}{persent}%{bcolors.ENDC}{bcolors.ENDC}{bcolors.ENDC}')
+        print(get_persent())
 
         if more:
             print("\n\n\t\tALL ERRORS\t\t\n\n")

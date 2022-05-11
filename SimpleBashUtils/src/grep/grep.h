@@ -4,6 +4,7 @@
 #include "../custom.h"
 #include "../flag.h"
 #include <string.h>
+#include <regex.h>
 
 #define start_with(string, other_string) (st)
 
@@ -41,5 +42,11 @@ typedef enum status_code {
     PATTERNS_FILE,
     PATTERN,
 } status_code_e;
+
+typedef struct {
+    regex_t *reg;
+    int was;
+    int BIG;
+} gopa;
 
 #endif //SIMPLEBASHUTILS_GREP_H

@@ -8,6 +8,7 @@
 typedef struct linked_list {
     void *data;
     struct linked_list *next_item;
+    int was;
 } linked_list_t;
 
 linked_list_t *linked_list(void *data);

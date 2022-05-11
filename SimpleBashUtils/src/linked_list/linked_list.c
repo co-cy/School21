@@ -10,6 +10,7 @@ linked_list_t *linked_list(void *data) {
     if (new_list) {
         new_list->data = data;
         new_list->next_item = NULL;
+        new_list->was = 1;
     }
     return new_list;
 }
