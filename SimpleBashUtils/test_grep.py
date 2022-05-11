@@ -72,6 +72,7 @@ diff_file = tmp_file.format('diff')
 _files = []
 _flags = []
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -140,6 +141,10 @@ def run_test(command_1: str, command_2: str) -> None:
     else:
         print(f'{bcolors.BOLD}{bcolors.OKBLUE}TEST{bcolors.ENDC} {bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}: {bcolors.OKGREEN}{"SUCCESS"}{bcolors.ENDC}{bcolors.ENDC}')
         print()
+
+    system(f"rm -f {grep_file}")
+    system(f"rm -f {s21_grep_file}")
+    system(f"rm -f {tmp_file}")
 
 
 def simple_test():

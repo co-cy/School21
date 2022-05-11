@@ -415,6 +415,7 @@ void search_patterns_in_files(linked_list_t* list_filenames, linked_list_t *list
         if (check_flag(flags, FLAG_O) && !check_flag(flags, FLAG_C) && !check_flag(flags, FLAG_L)) {
             search_patterns_in_file_with_flags_o(list_pattern, f->data, flags);
         } else {
+            printf("FILES: %d\n", flags);
             search_patterns_in_file(list_pattern, f->data, flags);
         }
     }
@@ -423,7 +424,7 @@ void search_patterns_in_files(linked_list_t* list_filenames, linked_list_t *list
 
 int main(int argc, char **argv) {
     argc--, argv++;
-    int flags;
+    int flags = 0;
     linked_list_t *list_filenames = linked_list(NULL);
     linked_list_t *list_pattern = linked_list(NULL);
 
@@ -434,6 +435,7 @@ int main(int argc, char **argv) {
             if (f->data) {
                 if (i > 1) {
                     add_flag(flags, FLAG_Z);
+
                 }
             } else {
                 i--;
