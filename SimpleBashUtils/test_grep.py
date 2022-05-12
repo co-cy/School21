@@ -17,7 +17,7 @@ show_log = 1
 quit_command = ['q', 'z']
 
 # Указать пути до грепов
-s21_grep = "./build/s21_grep"
+s21_grep = "./s21_grep"
 grep = "grep"
 
 # Путь где будут распологаться результаты
@@ -38,18 +38,18 @@ flags = [
 ]
 
 files = [
-    'data-samples/grep_file1',
-    'data-samples/grep_file2',
-    'data-samples/grep_file3',
-    'data-samples/grep_file4',
-    'data-samples/a',
-    'data-samples/c',
-    'data-samples/new',
-    'data-samples/v2',
-    'data-samples/void',
-    'data-samples/pat',
-    'data-samples/char',
-    'data-samples/text',
+    '../data-samples/grep_file1',
+    '../data-samples/grep_file2',
+    '../data-samples/grep_file3',
+    '../data-samples/grep_file4',
+    '../data-samples/a',
+    '../data-samples/c',
+    '../data-samples/new',
+    '../data-samples/v2',
+    '../data-samples/void',
+    '../data-samples/pat',
+    '../data-samples/char',
+    '../data-samples/text',
 ]
 
 files_with_patterns = [] + files

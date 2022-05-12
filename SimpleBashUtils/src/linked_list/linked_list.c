@@ -34,16 +34,9 @@ void free_linked_list(linked_list_t *list) {
     }
 }
 
-linked_list_t *get_from_linked_list(linked_list_t *list, int index) {
-    while (index > 0 && list) {
-        list = list->next_item;
-        index--;
-    }
-    return list;
-}
 
 short is_empty_linked_list(linked_list_t *list) {
-    return !list->next_item && !list->data;
+    return (short)( !list->next_item && !list->data);
 }
 
 void *shift_linked_list(linked_list_t *list) {

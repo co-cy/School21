@@ -1,17 +1,12 @@
 #ifndef SIMPLEBASHUTILS_GREP_H
 #define SIMPLEBASHUTILS_GREP_H
 
-#include "../custom.h"
-#include "../flag.h"
-#include <string.h>
-#include <regex.h>
-
-#define start_with(string, other_string) (st)
+#include "regex.h"
 
 static char error[1024] = {'\0'};
 static char stdin_file[] = "-";
 
-typedef enum flag {
+typedef enum {
     BAD,
     FLAG_E,
     FLAG_I,
@@ -26,7 +21,7 @@ typedef enum flag {
     FLAG_Z,
 } flag_e;
 
-typedef enum type_error {
+typedef enum {
     NO_FILE,
     BAD_FLAG,
     BAD_OPTION,
@@ -36,7 +31,7 @@ typedef enum type_error {
     SET_SETTINGS,
 } type_error_e;
 
-typedef enum status_code {
+typedef enum {
     ERROR = -1,
     NOTHING,
     PATTERNS_FILE,
@@ -45,9 +40,9 @@ typedef enum status_code {
 
 typedef struct {
     regex_t *reg;
-    int was;
     int BIG;
-    char *aboba;
 } gopa;
 
-#endif //SIMPLEBASHUTILS_GREP_H
+void print_error(int type_error, char *message, int need_print);
+
+#endif  // SIMPLEBASHUTILS_GREP_H
