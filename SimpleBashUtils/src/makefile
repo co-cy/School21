@@ -21,8 +21,11 @@ OBJ_DIR = build/obj
 RM = rm -f
 MK = mkdir -p
 
-.PHONY = all run_test_cat run_test_grep clean re rebuild
+.PHONY = all run_test_cat run_test_grep clean re rebuild s21_cat s21_grep
 all: $(TARGET_CAT) $(TARGET_GREP)
+
+s21_cat: $(TARGET_CAT)
+s21_grep: $(TARGET_GREP)
 
 $(TARGET_CAT): $(OBJ_CAT)
 	$(CC) $(OBJ_CAT) -o $(TARGET_CAT)
