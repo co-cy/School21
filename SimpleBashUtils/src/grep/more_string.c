@@ -8,7 +8,7 @@
 
 
 char* strip(char *string) {
-    for (size_t i = strlen(string); i && string[i] == '\n'; i--)
+    for (size_t i = strlen(string) - 1; i != -1 && string[i] == '\n'; i--)
         string[i] = '\0';
     return string;
 }
