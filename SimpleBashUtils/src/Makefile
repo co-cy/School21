@@ -25,10 +25,10 @@ MK = mkdir -p
 all: s21_cat s21_grep
 
 s21_cat: $(OBJ_CAT)
-	$(CC) $(OBJ_CAT) -o s21_cat
+	$(CC) $(OBJ_CAT) -o cat/s21_cat
 
 s21_grep: $(OBJ_GREP) $(OBJ_LIB)
-	$(CC) $(OBJ_GREP) $(OBJ_LIB) -o s21_grep
+	$(CC) $(OBJ_GREP) $(OBJ_LIB) -o grep/s21_grep
 
 $(OBJ_DIR):
 	$(MK) $(OBJ_DIR)
