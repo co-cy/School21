@@ -311,5 +311,8 @@ int main(int argc, char **argv) {
             }
         }
         free_linked_list(list_pattern);
+    } else {
+        free_linked_list(list_filenames);
+        free_linked_list(list_pattern);
     }
 }
