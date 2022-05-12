@@ -20,7 +20,7 @@ RM = rm -f
 MK = mkdir -p
 
 .PHONY = all run_test_cat run_test_grep clean re rebuild
-all: s21_cat s21_grep
+all:
 
 s21_cat: $(OBJ_CAT)
 	$(CC) $(OBJ_CAT) -o s21_cat
