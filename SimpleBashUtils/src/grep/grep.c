@@ -199,6 +199,7 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
                 print_found_pattern(filename, line, -1, lines_number, amount_lines_found, was, flags);
             }
         }
+        free(line);
         fclose(file);
     } else {
         print_error(NO_FILE, filename, -1);
@@ -305,6 +306,7 @@ int main(int argc, char **argv) {
         for (linked_list_t *p = list_pattern; p; p = p->next_item, i++) {
             if (p->data) {
                 regfree(((gopa*)p->data)->reg);
+                free(((gopa*)p->data)->reg);
             }
         }
         free_linked_list(list_pattern);

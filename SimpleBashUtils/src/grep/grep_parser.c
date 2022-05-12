@@ -25,6 +25,7 @@ static status_code_e parsing_file_to_patterns(char *filename, linked_list_t *pat
             add_to_linked_list(pattern, new_strcpy(strip(line)));
         }
         free(line);
+        fclose(file);
     } else {
         print_error(NO_FILE, filename, -1);
         status = ERROR;
