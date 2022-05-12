@@ -20,13 +20,14 @@ RM = rm -f
 MK = mkdir -p
 
 .PHONY = all run_test_cat run_test_grep clean re rebuild
-all:
 
 s21_cat: $(OBJ_CAT)
 	$(CC) $(OBJ_CAT) -o s21_cat
 
 s21_grep: $(OBJ_GREP) $(OBJ_LIB)
 	$(CC) $(OBJ_GREP) $(OBJ_LIB) -o s21_grep
+
+all: s21_cat s21_grep
 
 $(OBJ_DIR):
 	$(MK) $(OBJ_DIR)
@@ -47,9 +48,7 @@ run_test_grep: $(TARGET_GREP)
 	$(PY) ../test_grep.py
 
 clean:
-	$(RM) $(TARGET_CAT)
-	$(RM) $(TARGET_GREP)
-	$(RM) $(OBJ_CAT) $(OBJ_GREP) $(OBJ_LIB)
+	$(RM) $(OBJ_CAT) $(OBJ_GREP) $(OBJ_LIB) s21_cat s21_grep
 
 re: clean all
 rebuild: clean all
