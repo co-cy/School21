@@ -47,6 +47,7 @@ typedef struct {
     regex_t *reg;
     int was;
     int BIG;
+    char *aboba;
 } gopa;
 
 #endif //SIMPLEBASHUTILS_GREP_H

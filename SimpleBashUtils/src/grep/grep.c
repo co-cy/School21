@@ -258,7 +258,7 @@ void compile_patterns(linked_list_t *patterns, int flags) {
     for (linked_list_t *a = patterns; a; a = a->next_item) {
         if (a->data) {
             char *pattern = a->data;
-//            printf("PATTERNS: %s\n", pattern);
+//            printf("ALL PATTERNS: %s\n", pattern);
 
             regex_t *reg = malloc(sizeof (regex_t));
             int is_bad_res_comp;
@@ -289,6 +289,7 @@ void compile_patterns(linked_list_t *patterns, int flags) {
 //                    printf("PAT %d %s\n", a->was, pattern);
                     gop->was = a->was;
                     gop->BIG = point;
+                    gop->aboba = pattern;
                     a->data = gop;
 //                }
 //                printf("%d\n", ((gopa*)a->data)->was);
@@ -297,7 +298,7 @@ void compile_patterns(linked_list_t *patterns, int flags) {
                 free(reg);
                 a->data = NULL;
             }
-            free(pattern);
+//            free(pattern);
         }
     }
 }
@@ -342,7 +343,7 @@ void print_found_pattern(char *filename, char *line, int len, int lines_number, 
     }
 }
 
-void find_pattern_in_patterns(char *line, size_t len_pattern, linked_list_t *cur_pat, linked_list_t *patterns, int lines_number, int flags) {
+void find_pattern_in_patterns(char *line, size_t len_pattern, linked_list_t *cur_pat, int lines_number, int flags) {
     char *beb = calloc(len_pattern + 1, sizeof(char));
     if (beb) {
 
@@ -353,29 +354,41 @@ void find_pattern_in_patterns(char *line, size_t len_pattern, linked_list_t *cur
 //        printf("BOB: _%s_\n", beb);
         regmatch_t reg_match;
         int i =-2;
-        for (linked_list_t *a = patterns; a; a = a->next_item) {
+        for (linked_list_t *a = cur_pat->next_item; a; a = a->next_item) {
             i++;
             if (a != cur_pat && a->data) {
 //                printf("LSIT %d\n", i);
                 gopa *gop = a->data;
                 regex_t *cur_reg = gop->reg;
 
-                int res_find = regexec(cur_reg, beb, 1, &reg_match, 0);
+                size_t offset = 0;
+                while (offset < len_pattern) {
+
+                    int res_find = regexec(cur_reg, beb + offset, 1, &reg_match, 0);
 //                if (!strcmp(beb, "permission") && i == 2) {
 //                    printf("AASODPAS: %d\n", res_find);
 //                }
-                if (res_find == REG_NOMATCH || reg_match.rm_so == -1) {
-                    continue;
-                } elif (!res_find) {
+                    if (res_find == REG_NOMATCH || reg_match.rm_so == -1) {
+                        break;
+                    } elif (!res_find) {
 //                    printf("FINDED\n");
 //                    printf("ABSSS: %lld %lld\n", reg_match.rm_so, reg_match.rm_eo);
-                    print_found_pattern("", beb + reg_match.rm_so,
-                                        reg_match.rm_eo - reg_match.rm_so, lines_number, 0,
-                                        2, flags);
-                    find_pattern_in_patterns(beb + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, a, patterns,
-                                             lines_number, flags);
-                }
+//                        printf("REC PATERNS: %s\n", gop->aboba);
+                        print_found_pattern("", beb + offset + reg_match.rm_so,
+                                            reg_match.rm_eo - reg_match.rm_so, lines_number, 0,
+                                            2, flags);
+                        find_pattern_in_patterns(beb +  + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, a,
+                                                 lines_number, flags);
+                        if (a->next_item) {
+                            a = a->next_item;
+                        } else {
+                            offset = len_pattern;
+                        }
+//                        break;
+                    }
+                    offset += reg_match.rm_eo;
 
+                }
             }
         }
         free(beb);
@@ -413,12 +426,14 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
             short was = 0;
             int offset = 0;
             int fast_boom = 0;
-            int bomg = 0;
+//            int bomg = 0;
             for (linked_list_t *a = patterns; !fast_boom && a; a = a->next_item) {
                 if (a->data) {
                     gopa *gor = a->data;
                     regex_t *cur_reg = gor->reg;
 //                    printf("ABOBAS %d\n", a->was);
+                    printf("PATERNS: %s\n", gor->aboba);
+
 
 
                     if (gor->BIG) {
@@ -436,8 +451,8 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
                     while (!fast_boom && !hor_boom && offset < len_line) {
                         int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
                         if (res_find == REG_NOMATCH || reg_match.rm_so == -1) {
-                            offset -= bomg;
-                            bomg = 0;
+//                            offset -= bomg;
+//                            bomg = 0;
                             break;
                         } elif (!res_find) {
                             was += 1;
@@ -446,15 +461,13 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
 //                            printf("WAS: %d\n", gor->was);
                             was--;
                             for (int i = 0; i < gor->was; i++) {
+//                                printf("ABOBA %d\n", gor->was);
                                 was++;
-                                if (!gor->BIG) {
-                                    print_found_pattern(filename, line + offset + reg_match.rm_so,
-                                                        reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found,
-                                                        was, flags);
-                                    find_pattern_in_patterns(line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, a, patterns, lines_number, flags);
-                                } else {
-                                    offset = len_line;
-                                }
+//                                printf("BEBRA: %lld %lld\n", reg_match.rm_eo, reg_match.rm_so);
+                                print_found_pattern(filename, line + offset + reg_match.rm_so,
+                                                    reg_match.rm_eo - reg_match.rm_so, lines_number, amount_lines_found,
+                                                    was, flags);
+//                                find_pattern_in_patterns(line + offset + reg_match.rm_so, reg_match.rm_eo - reg_match.rm_so, a, lines_number, flags);
                             }
 //
 //
@@ -471,7 +484,9 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
                         }
 //                        else {
 //                            bomg = reg_match.rm_eo - reg_match.rm_so;
-                            offset += reg_match.rm_eo;
+//                        printf("OFFSET: %d %d\n", was, offset);
+                        offset += reg_match.rm_eo;
+//                        printf("OFFSET NED: %d %d\n", was, offset);
 //                        }
                     }
 
