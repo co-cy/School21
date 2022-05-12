@@ -259,6 +259,7 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
         if (check_flag(flags, FLAG_C))
             print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
 
+        free(line);
         fclose(file);
     } else {
         print_error(NO_FILE, filename, -1);
