@@ -138,9 +138,9 @@ status_code_e parsing_argv(int argc, char **argv, linked_list_t *files,
                 add_to_linked_list(files, new_strcpy(stdin_file));
         } else {
             if (have_files) {
-                add_to_linked_list(patterns, new_strcpy(files->next_item->data));
-
-                shift_linked_list(files);
+                char *a = shift_linked_list(files);
+                add_to_linked_list(patterns, new_strcpy(a));
+                free(a);
 
                 have_files = !is_empty_linked_list(files);
                 if (!have_files)
