@@ -14,12 +14,14 @@ int flags_parser(int *argc, char ***argv) {
                 if (***argv == 'b') {
                     add_flag(flags, FLAG_B);
                 } elif (***argv == 'e') {
+                    add_flag(flags, FLAG_V);
                     add_flag(flags, FLAG_E);
                 } elif (***argv == 'n') {
                     add_flag(flags, FLAG_N);
                 } elif (***argv == 's') {
                     add_flag(flags, FLAG_S);
                 } elif (***argv == 't') {
+                    add_flag(flags, FLAG_V);
                     add_flag(flags, FLAG_T);
                 } elif (***argv == 'v') {
                     add_flag(flags, FLAG_V);
@@ -86,7 +88,6 @@ void print_file(FILE *file, int flags) {
             putchar(tmp);
         }
     }
-    counter = 0;
     in_line_was_sim = 0;
     last_in_line_was_sim = 0;
 }

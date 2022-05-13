@@ -5,10 +5,10 @@
 #include "../flag.h"
 #include <string.h>
 
-#define start_with(string, other_string) (st)
 
-static char error[1024] = {'\0'};
 static char stdin_file[] = "-";
+static int is_point = 0;
+
 
 typedef enum flag {
     BAD,
@@ -24,6 +24,7 @@ typedef enum flag {
     FLAG_O,
     FLAG_Z,
 } flag_e;
+
 
 typedef enum type_error {
     NO_FILE,
@@ -42,4 +43,5 @@ typedef enum status_code {
     PATTERN,
 } status_code_e;
 
-#endif //SIMPLEBASHUTILS_GREP_H
+
+#endif  // SIMPLEBASHUTILS_GREP_H

@@ -14,6 +14,7 @@ linked_list_t *linked_list(void *data) {
     return new_list;
 }
 
+
 void add_to_linked_list(linked_list_t *list, void *data) {
     while (list->next_item) {
         list = list->next_item;
@@ -33,15 +34,8 @@ void free_linked_list(linked_list_t *list) {
     }
 }
 
-linked_list_t *get_from_linked_list(linked_list_t *list, int index) {
-    while (index > 0 && list) {
-        list = list->next_item;
-        index--;
-    }
-    return list;
-}
 
-short is_empty_linked_list(linked_list_t *list) {
+int is_empty_linked_list(linked_list_t *list) {
     return !list->next_item && !list->data;
 }
 

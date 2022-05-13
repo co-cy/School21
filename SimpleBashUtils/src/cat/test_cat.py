@@ -2,18 +2,24 @@ from itertools import combinations_with_replacement
 from random import shuffle
 from os import system
 
-my_cat = "./build/s21_cat"
+my_cat = "./s21_cat"
 cat = "cat"
 
 files = [
-    'data-samples/a',
-    'data-samples/a',
-    'data-samples/k',
-    'data-samples/k',
-    'data-samples/b',
-    'data-samples/c',
-    'data-samples/text',
-    # 'data-samples/wierdo',
+    '../../data-samples/a',
+    '../../data-samples/a',
+    '../../data-samples/k',
+    '../../data-samples/k',
+    '../../data-samples/b',
+    '../../data-samples/c',
+    '../../data-samples/grep_file1',
+    '../../data-samples/grep_file2',
+    '../../data-samples/grep_file3',
+    '../../data-samples/grep_file4',
+    '../../data-samples/new',
+    '../../data-samples/pat',
+    '../../data-samples/v2',
+    '../../data-samples/void',
 ]
 
 testing_file = 'testing_file'
@@ -22,6 +28,13 @@ testing_file_format = ".ntesting"
 flags = {
     '-b',
     '-e',
+    '-n',
+    '-nb',
+    '-en',
+    '-bs',
+    '-T',
+    '-n',
+    '-Eb',
     '-n',
     '-s',
     '-v',

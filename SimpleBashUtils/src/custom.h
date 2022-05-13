@@ -7,4 +7,4 @@
 
 #define elif else if
 
-#endif //SIMPLEBASHUTILS_CUSTOM_H
+#endif  // SIMPLEBASHUTILS_CUSTOM_H
