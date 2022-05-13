@@ -62,7 +62,6 @@ void compile_patterns(linked_list_t *patterns, int flags) {
                 is_bad_res_comp = regcomp(reg, ".", REG_ICASE * (check_flag(flags, FLAG_I)));
             }
 
-
             if (!is_bad_res_comp) {
                 for (linked_list_t *b = patterns; b != a; b = b->next_item) {
                     if (b->data) {
@@ -72,19 +71,19 @@ void compile_patterns(linked_list_t *patterns, int flags) {
                 gopa *gop = malloc(sizeof(gopa));
                 gop->reg = reg;
                 gop->BIG = point;
+                gop->file = pattern;
                 a->data = gop;
             } else {
                 regfree(reg);
                 free(reg);
                 a->data = NULL;
             }
-            free(pattern);
+//            free(pattern);
         }
     }
 }
 
-void print_found_pattern(char *filename,
-                         char *line, long long len,
+void print_found_pattern(char *filename, char *line, long long len,
                          int lines_number, int amount_lines_found,
                          int ind_pattern, int flags) {
     if (check_flag(flags, FLAG_O) && ind_pattern > 1) {
@@ -135,8 +134,6 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
         file = fopen(filename, "r");
 
     if (file) {
-        regmatch_t reg_match;
-
         size_t line_size = 1;
         char *line = calloc(line_size, sizeof (char));
 
@@ -159,44 +156,47 @@ void search_patterns_in_file_with_flags_o(linked_list_t *patterns, char *filenam
             int fast_boom = 0;
             for (linked_list_t *a = patterns; !fast_boom && a; a = a->next_item) {
                 if (a->data) {
+                    regmatch_t *reg_match = calloc(1, sizeof (regmatch_t));
                     gopa *gor = a->data;
-                    regex_t *cur_reg = gor->reg;
+                    regex_t cur_reg;
+                    regcomp(&cur_reg, gor->file, REG_ICASE * (check_flag(flags, FLAG_I)));
 
                     if (gor->BIG) {
-                        if (need_was) {
-                            amount_lines_found++;
+                        if (need_was)
                             print_found_pattern(filename, line,
-                                                -1, lines_number, amount_lines_found,
+                                                -1, lines_number, ++amount_lines_found,
                                                 was, flags);
-                        } else {
+                        else
                             fast_exit = 1;
-                        }
                         fast_boom = 1;
                     }
                     while (!fast_boom && offset < len_line) {
-                        int res_find = regexec(cur_reg, line + offset, 1, &reg_match, 0);
-                        if (res_find == REG_NOMATCH || reg_match.rm_so == -1) {
-                            break;
-                        } elif (!res_find) {
-                            was += 1;
+                        if (!strcmp(gor->file, "Permission") && !strcmp(line + offset, "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled “GNU Free Documentation License”.")) {
+                            int poaskd = 0;
+                            fprintf(stderr, "%d", poaskd);
+                            poaskd++;
                         }
-                        if (was && need_was) {
-                            print_found_pattern(filename, line + offset + reg_match.rm_so,
-                                                reg_match.rm_eo - reg_match.rm_so,
+                        int res_find = regexec(&cur_reg, line + offset, 1, reg_match, 0);
+                        if (res_find == REG_NOMATCH || reg_match->rm_so == -1)
+                            break;
+                        elif (!res_find)
+                            was += 1;
+
+                        if (was && need_was)
+                            print_found_pattern(filename, line + offset + reg_match->rm_so,
+                                                reg_match->rm_eo - reg_match->rm_so,
                                                 lines_number, amount_lines_found,
                                                 was, flags);
-                        }
 
-                        offset += reg_match.rm_eo;
+                        offset += reg_match->rm_eo;
                     }
+                    free(reg_match);
                 }
             }
             if (!fast_boom && was == need_was && !need_was) {
-                amount_lines_found++;
-                if (check_flag(flags, FLAG_L)) {
+                if (check_flag(flags, FLAG_L))
                     fast_exit = 1;
-                }
-                print_found_pattern(filename, line, -1, lines_number, amount_lines_found, was, flags);
+                print_found_pattern(filename, line, -1, lines_number, ++amount_lines_found, was, flags);
             }
         }
         free(line);
@@ -241,19 +241,15 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
                     elif (!res_find)
                         was += 1;
 
-                    if (was == need_was && need_was) {
+                    if (was == need_was && need_was)
                         find = 1;
-                    }
-                } else {
                 }
             }
             if (was == need_was && find == need_was) {
-                amount_lines_found++;
-                if (check_flag(flags, FLAG_L)) {
+                if (check_flag(flags, FLAG_L))
                     fast_exit = 1;
-                }
                 if (!check_flag(flags, FLAG_C))
-                    print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
+                    print_found_pattern(filename, line, -1, lines_number, ++amount_lines_found, 0, flags);
             }
         }
         if (check_flag(flags, FLAG_C))
@@ -268,17 +264,17 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
 
 void search_patterns_in_files(linked_list_t* list_filenames, linked_list_t *list_pattern, int flags) {
     for (linked_list_t *f = list_filenames->next_item; f; f = f->next_item) {
-        if (check_flag(flags, FLAG_O) && !check_flag(flags, FLAG_C) && !check_flag(flags, FLAG_L)) {
+        if (check_flag(flags, FLAG_O) && !check_flag(flags, FLAG_C) && !check_flag(flags, FLAG_L))
             search_patterns_in_file_with_flags_o(list_pattern, f->data, flags);
-        } else {
+        else
             search_patterns_in_file(list_pattern, f->data, flags);
-        }
     }
 }
 
 
 int main(int argc, char **argv) {
     argc--, argv++;
+
     int flags = 0;
     linked_list_t *list_filenames = linked_list(NULL);
     linked_list_t *list_pattern = linked_list(NULL);

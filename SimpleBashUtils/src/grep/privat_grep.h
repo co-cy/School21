@@ -13,4 +13,6 @@ status_code_e parsing_argv(int argc, char **argv, linked_list_t *files, linked_l
 char* strip(char *string);
 char *new_strcpy(char *str);
 
+
+
 #endif  // SIMPLEBASHUTILS_GREP_PARSER_H

@@ -7,13 +7,12 @@ from time import sleep
 from sys import stdin
 from os import system
 
-
 # 1 или 0 останавливать тесты после ошибки или нет
 stop = 0
 # 1 или 0 показывать расшириный вывод ошибки
-more = 1
+more = 0
 # 1 или 0 если показывать в конце список комманд
-show_log = 1
+show_log = 0
 # любый символы остановки вывода
 quit_command = ['q', 'z']
 
@@ -131,11 +130,14 @@ def get_persent() -> str:
 
 def run_test(command_1: str, command_2: str) -> int:
     
-    system(f"valgrind --leak-check=full \
+    system(f'valgrind --leak-check=full \
          --show-leak-kinds=all \
          --track-origins=yes \
-         --verbose \ {command_1}")
-    sleep(3);
+         --verbose \
+           --log-file=valgrind-out.txt \
+        {command_1}; grep -e "ERROR SUMMARY" valgrind-out.txt | grep -v -e "ERROR SUMMARY: 0"')
+    print(command_1, '\n')
+    # sleep(0.1)
 
     return
     global TEST_COUNT, TEST_COUNT_FAILED
@@ -146,6 +148,8 @@ def run_test(command_1: str, command_2: str) -> int:
     b = system(command_2)
     if b == 256:
         b = 0
+    if a:
+        TEST_COUNT_FAILED += 1
     diff_command = f'diff {s21_grep_file} {grep_file} > {diff_file}'
 
     if a == b and system(diff_command):
@@ -187,7 +191,7 @@ def run_test(command_1: str, command_2: str) -> int:
         print(f'\ns21_grep={a}\t'
               f'grep={b}\n')
         print('\t\tWAIT 3 SEC\t\t')
-        sleep(3)
+        sleep(0)
     else:
         print(get_persent())
         print(f'{bcolors.BOLD}{bcolors.OKBLUE}TEST{bcolors.ENDC} {bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}: {bcolors.OKGREEN}{"SUCCESS"}{bcolors.ENDC}{bcolors.ENDC}')
@@ -216,12 +220,16 @@ def simple_test():
 
 def hard_test():
     global _flags, _files
-    # count = 0
+    count = 0
     for i in range(round(len(flags) / 2), len(flags)):
         for list_arg_m in combinations_with_replacement(flags, i):
             for list_arg in (set(list_arg_m), list_arg_m):
                 list_arg = list(list_arg)
                 shuffle(list_arg)
+
+                # count += 1
+                # if count > 1000:
+                #     return
 
                 _flags = []
                 _files = []

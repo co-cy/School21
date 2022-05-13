@@ -41,6 +41,7 @@ typedef enum {
 typedef struct {
     regex_t *reg;
     int BIG;
+    char *file;
 } gopa;
 
 void print_error(int type_error, char *message, int need_print);
