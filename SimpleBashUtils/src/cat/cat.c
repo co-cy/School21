@@ -88,6 +88,7 @@ void print_file(FILE *file, int flags) {
             putchar(tmp);
         }
     }
+    counter = 0;
     in_line_was_sim = 0;
     last_in_line_was_sim = 0;
 }
