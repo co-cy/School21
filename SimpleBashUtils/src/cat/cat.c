@@ -58,13 +58,13 @@ void print_file(FILE *file, int flags) {
     static short last_in_line_was_sim = 0;
     static short in_line_was_sim = 0;
 
-    static unsigned long long int counter = 0;
+    static long long int counter = 0;
 
 
     char tmp;
     // Read file
     while ((tmp = fgetc(file)) != EOF) {
-        if (tmp == '\n') { // End line
+        if (tmp == '\n') {  // End line
             if (check_flag(flags, FLAG_S) && (!in_line_was_sim && !last_in_line_was_sim))
                 continue;
 
