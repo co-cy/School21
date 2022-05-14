@@ -33,11 +33,11 @@ int flags_parser(int *argc, char ***argv) {
                 (**argv)++;
             }
         } elif (type_arg == 2) {
-            if (!strcmp(**argv, "--number-nonblank")) {
+            if (!strcmp(**argv, "number-nonblank")) {
                 add_flag(flags, FLAG_B);
-            } elif (!strcmp(**argv, "--number")) {
+            } elif (!strcmp(**argv, "number")) {
                 add_flag(flags, FLAG_N);
-            } elif (!strcmp(**argv, "--squeeze-blank")) {
+            } elif (!strcmp(**argv, "squeeze-blank")) {
                 add_flag(flags, FLAG_S);
             } else {
                 flags = -1;
