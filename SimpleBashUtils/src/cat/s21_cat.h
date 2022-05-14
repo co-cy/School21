@@ -3,6 +3,8 @@
 
 #include "../custom.h"
 #include "../flag.h"
+#include <string.h>
+#include <stdio.h>
 
 enum FLAG {
     FLAG_B,

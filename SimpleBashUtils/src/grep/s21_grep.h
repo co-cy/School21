@@ -3,7 +3,10 @@
 
 #include "../custom.h"
 #include "../flag.h"
+#include <stdlib.h>
 #include <string.h>
+#include <regex.h>
+#include <stdio.h>
 
 
 static char stdin_file[] = "-";
@@ -26,7 +29,7 @@ typedef enum flag {
 } flag_e;
 
 
-typedef enum type_error {
+typedef enum {
     NO_FILE,
     BAD_FLAG,
     BAD_OPTION,
@@ -36,12 +39,17 @@ typedef enum type_error {
     SET_SETTINGS,
 } type_error_e;
 
-typedef enum status_code {
+typedef enum {
     ERROR = -1,
     NOTHING,
     PATTERNS_FILE,
     PATTERN,
 } status_code_e;
+
+typedef struct linked_list_c {
+    void *data;
+    struct linked_list_c *next_item;
+} linked_list_t;
 
 
 #endif  // SIMPLEBASHUTILS_GREP_H

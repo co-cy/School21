@@ -9,11 +9,11 @@ from os import system
 
 
 # 1 или 0 останавливать тесты после ошибки или нет
-stop = 0
+stop = 1
 # 1 или 0 показывать расшириный вывод ошибки
-more = 0
+more = 1
 # 1 или 0 если показывать в конце список комманд
-show_log = 1
+show_log = 0
 # любый символы остановки вывода
 quit_command = ['q', 'z']
 
@@ -267,7 +267,8 @@ if __name__ == '__main__':
         setcbreak(stdin.fileno())
 
         print("\t\tEASY TEST:")
-        simple_test()
+        for _ in range(10):
+            simple_test()
 
         print("\n\t\tHARD TEST:\n\n")
         sleep(0.25)

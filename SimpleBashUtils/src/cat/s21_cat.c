@@ -1,6 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include "cat.h"
+#include "s21_cat.h"
 
 int flags_parser(int *argc, char ***argv) {
     int flags = 0;
