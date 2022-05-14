@@ -1,6 +1,6 @@
 CC=gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
 TARGET_CAT=cat/s21_cat
 SOURCE_CAT=cat/s21_cat.c
 

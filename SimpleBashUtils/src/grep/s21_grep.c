@@ -411,7 +411,7 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
             lines_number++;
             if (is_point) {
                     was += 1;
-                    if (was == need_was && need_was) {
+                    if (need_was) {
                         find = 1;
                     }
             } else {
