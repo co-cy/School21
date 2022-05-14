@@ -68,7 +68,7 @@ patterns = [
                'modify',
                'Back-Cover',
                '.Texts',
-                '.',
+               # '.',
            ] + files
 
 
@@ -142,7 +142,7 @@ def run_test(command_1: str, command_2: str) -> int:
     # print()
     #
     # return
-    global TEST_COUNT, TEST_COUNT_FAILED
+    global TEST_COUNT, TEST_COUNT_FAILED, _flags, _files
 
     TEST_COUNT += 1
 
@@ -199,6 +199,9 @@ def run_test(command_1: str, command_2: str) -> int:
         print(f'{bcolors.BOLD}{bcolors.OKBLUE}TEST{bcolors.ENDC} {bcolors.OKGREEN}{TEST_COUNT}{bcolors.ENDC}: {bcolors.OKGREEN}{"SUCCESS"}{bcolors.ENDC}{bcolors.ENDC}')
         print()
 
+    _flags = []
+    _files = []
+
     system(f"rm -f {grep_file}")
     system(f"rm -f {s21_grep_file}")
     system(f"rm -f {tmp_file}")
@@ -206,14 +209,20 @@ def run_test(command_1: str, command_2: str) -> int:
 
 def simple_test():
     for flag, type in flags:
-        argv = [get_argv(flag, type)]
+        f = get_argv(flag, type)
+        _flags.append(f)
+        argv = [f]
 
         for _ in range(randrange(1, len(files))):
-            argv.append(choice(files))
+            g = choice(files)
+            argv.append(g)
+            _files.append(g)
 
         shuffle(argv)
         if not type:
-            argv.insert(0, choice(patterns))
+            g = choice(patterns)
+            argv.insert(0, g)
+            _flags.append(f'-e {g}')
         argv = ' '.join(argv)
 
         run_test(f'{s21_grep} {argv} > {s21_grep_file}',

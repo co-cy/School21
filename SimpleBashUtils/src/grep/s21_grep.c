@@ -407,26 +407,26 @@ void search_patterns_in_file(linked_list_t *patterns, char *filename, int flags)
             short was = 0;
             int find = 0;
 
+
             lines_number++;
             if (is_point) {
-                if (need_was) {
-                    amount_lines_found++;
-                    print_found_pattern(filename, line, -1, lines_number, amount_lines_found, 0, flags);
-                }
-                continue;
-            }
-            for (linked_list_t *a = patterns; !find && a; a = a->next_item) {
-                if (a->data) {
-                    regex_t *cur_reg = a->data;
-
-                    int res_find = regexec(cur_reg, line, 1, &reg_match, 0);
-//                    printf("%d", res_find);
-                    if (res_find == REG_NOMATCH)
-                        continue;
-                    elif (reg_match.rm_so != -1)was += 1;
-
+                    was += 1;
                     if (was == need_was && need_was) {
                         find = 1;
+                    }
+            } else {
+                for (linked_list_t *a = patterns; !find && a; a = a->next_item) {
+                    if (a->data) {
+                        regex_t *cur_reg = a->data;
+
+                        int res_find = regexec(cur_reg, line, 1, &reg_match, 0);
+                        if (res_find == REG_NOMATCH)
+                            continue;
+                        elif (reg_match.rm_so != -1)was += 1;
+
+                        if (was == need_was && need_was) {
+                            find = 1;
+                        }
                     }
                 }
             }
