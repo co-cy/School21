@@ -8,7 +8,7 @@
 #include <math.h>
 
 #define elif else if
-#define EPS 1e-10
+#define EPS 1e-7
 
 int ldouble_eq(long double a, long double b);
 
