@@ -23,11 +23,7 @@ int get_exponent(s21_decimal a) {
 int set_exponent(s21_decimal *a, int new_exponent) {
     /// Set exponent in decimal return 0
     for (int i = START_EXP_BIT; i <= END_EXP_BIT; i++) {
-        int tmp = _2(i);
-        if (new_exponent & 1)
-            a->bits[DECIMAL_INFO] |= tmp;
-        elif (a->bits[DECIMAL_INFO] & tmp)
-            a->bits[DECIMAL_INFO] -= tmp;
+        SET_BIT(a->bits[DECIMAL_INFO], i, new_exponent & 1);
         new_exponent >>= 1;
     }
 
