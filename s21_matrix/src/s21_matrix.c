@@ -125,3 +125,91 @@ int s21_transpose(matrix_t *A, matrix_t *result) {
     }
     return status;
 }
+
+
+int s21_crop_matrix(matrix_t *A, int rows_s, int columns_s, int rows_e, int columns_e, matrix_t *R) {
+    int status = s21_create_matrix((rows_e - rows_s), (columns_e - columns_s), R);
+    
+    if (!status) {
+        for (int row = rows_s; row < rows_e; row++) {
+            for (int col = columns_s; col < columns_e; col++) {
+                R->matrix[row][col] = A->matrix[row][col];
+            }
+        }
+    }
+
+    return status;
+}
+
+int s21_iv_crop_matrix(matrix_t *A, int del_row, int del_col, matrix_t *R) {
+    int status = s21_create_matrix(A->rows - 1, A->columns - 1, R);
+    
+    if (!status) {
+        for (int row = 0, row1 = 0; row < A->rows; row++) {
+            if (row == del_row)
+                continue;
+            for (int col = 0, col1 = 0; col < A->columns; col++) {
+                if (col == del_col)
+                    continue;
+
+                R->matrix[row1][col1] = A->matrix[row][col];
+                col1++;
+            }
+            row1++;
+        }
+    }
+
+    return status;
+}
+
+int s21_calc_complements(matrix_t *A, matrix_t *result) {
+    if (!s21_is_square(A)) 
+        return CALC_ERROR;
+    
+    int status = s21_create_matrix(A->rows, A->columns, result);
+
+    if (!status) {
+        double tmp_res;
+        matrix_t tmp_matrix;
+        for (int row = 0; status == OK && row < A->rows; row++) {
+            for (int col = 0; status == OK && col < A->columns; col++) {
+                
+                s21_iv_crop_matrix(A, row, col, &tmp_matrix);
+
+                status = s21_determinant(&tmp_matrix, &tmp_res);
+
+                result->matrix[row][col] = tmp_res * ((row + col) % 2? -1 : 1);
+
+                s21_remove_matrix(&tmp_matrix);
+            }
+        }
+    }
+
+    return status;
+}
+
+int s21_determinant(matrix_t *A, double *result) {
+    if (!s21_is_square(A)) 
+        return CALC_ERROR;
+
+    int status = OK;
+
+    if (A->rows == 1) {
+        *result = A->matrix[0][0];
+    } elif (A->rows == 2) {
+        *result = A->matrix[0][0] * A->matrix[1][1] - A->matrix[0][1] * A->matrix[1][0];
+    } else {
+        *result = 0;
+
+        matrix_t tmp_matrix2;
+        
+        double tmp;
+        for (int row = 0; row < A->rows; row++) {
+            status = s21_iv_crop_matrix(A, row, 0, &tmp_matrix2);
+            status = s21_determinant(&tmp_matrix2, &tmp);
+            *result += tmp * A->matrix[row][0] * ((row %2)? -1 : 1);
+        }
+    }
+
+    return status;
+}
