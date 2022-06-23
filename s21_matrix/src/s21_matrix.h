@@ -10,13 +10,17 @@
 #include <stdio.h>
 #include <math.h>
 
-enum { OK = 0,
+enum {
+    OK = 0,
     INCORRECT_MATRIX = 1,
     CALC_ERROR = 2,
-    MALLOC_FAILED = 3 };
+    MALLOC_FAILED = 3,
+};
 
-enum { FAILURE = 0,
-    SUCCESS = 1 };
+enum {
+    FAILURE = 0,
+    SUCCESS = 1,
+};
 
 typedef struct matrix_struct {
     double **matrix;
@@ -37,5 +41,6 @@ int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
 int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
 int s21_mult_number(matrix_t *A, double number, matrix_t *result);
 int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
+int s21_transpose(matrix_t *A, matrix_t *result);
 
 #endif //S21_MATRIX_S21_MATRIX_H
