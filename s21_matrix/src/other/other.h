@@ -15,7 +15,6 @@ int s21_calc_complements(matrix_t *A, matrix_t *result);
 int s21_determinant(matrix_t *A, double *result);
 int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
-int s21_crop_matrix(matrix_t *A, int rows_s, int columns_s, int rows_e, int columns_e, matrix_t *R);
 int s21_iv_crop_matrix(matrix_t *A, int del_row, int del_col, matrix_t *R);
 
 #endif //S21_MATRIX_OTHER_H

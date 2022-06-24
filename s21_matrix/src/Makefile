@@ -2,19 +2,41 @@ CC := gcc
 AR := ar rc
 RAN := ranlib
 
-CFLAGS = -Wall -Wextra -Werror -std=c11
+FLAGS := -g -fsanitize=address -Wall -Wextra -Werror -std=c11 -lcheck --coverage
 
-SOURCE := s21_matrix.c common/features.c
-beba := ${SOURCE:c=o}
+SOURCE := $(shell find . -name '*.c' -not -path './test/*')
+SOURCE_TEST := $(shell find test -name '*.c')
 
-all: $(beba) s21_matrix
+OBJS := ${SOURCE:.c=.o}
+OBJS_TEST := ${SOURCE_TEST:.c=.o}
+
+TARGET := s21_matrix.a
+TARGET_TEST := test.out
+
 .PHONY : all
+all: $(TARGET)
 
-%.o: %.c Makefile
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-s21_matrix: $(SOURCE)
-	$(AR) -r lib.a $(beba)
-	$(RAN) lib.a
+$(TARGET): $(OBJS)
+	$(AR) -r $@ $^
 
-s21_matrix_d: $(CC += -g -fsanitize=address) s21_matrix
+.PHONY : clean
+clean:
+	rm -rf $(OBJS) $(TARGET) $(TARGET_TEST) $(OBJS_TEST) $(shell find . -name '*.gcda' -or -name '*.gcno') bebra coverage
+
+
+.PHONY : test
+test: CFLAGS+=$(FLAGS)
+test: $(TARGET) $(OBJS_TEST)
+	$(CC) $(CFLAGS) $(TARGET) $(OBJS_TEST) -o $(TARGET_TEST)
+
+.PHONY : gcov_report
+gcov_report: test
+	geninfo $(shell find . -name '*.gcda' -or -name '*.gcno') -b . -o bebra
+	genhtml bebra -o coverage
+
+.PHONY : gcov_report
+open: gcov_report
+	open coverage/index.html

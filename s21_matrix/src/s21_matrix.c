@@ -5,3 +5,6 @@
 #include "s21_matrix.h"
 
 // ALL FUNC DONE
+void aboba_flex() {
+    system("SAY ABOBA");
+}
