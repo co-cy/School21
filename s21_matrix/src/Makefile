@@ -37,6 +37,14 @@ gcov_report: test
 	geninfo $(shell find . -name '*.gcda' -or -name '*.gcno') -b . -o bebra
 	genhtml bebra -o coverage
 
-.PHONY : gcov_report
+.PHONY : open
 open: gcov_report
 	open coverage/index.html
+
+.PHONY : lint
+lint:
+	cp ../materials/linters/CPPLINT.cfg .
+	python3 ../materials/linters/cpplint.py --extensions=c $(shell find . -name '*.c' -not -path './test/*')
+
+	rm CPPLINT.cfg
+	cppcheck --enable=all --suppress=missingIncludeSystem $(shell find . -name '*.c' -not -path './test/*')
