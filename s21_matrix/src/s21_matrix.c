@@ -39,7 +39,7 @@ void s21_print_matrix(matrix_t *A) {
 
 
 
-int s21_create_matrix(const int rows, const int columns, matrix_t *result) {
+int s21_create_matrix(int rows, int columns, matrix_t *result) {
     int status = OK;
 
     if (rows >= 0 && columns >= 0) {
@@ -218,6 +218,30 @@ int s21_determinant(matrix_t *A, double *result) {
                 if (status == OK) {
                     *result += tmp * A->matrix[row][0] * ((row % 2) ? -1 : 1);
                 }
+            }
+        }
+    }
+
+    return status;
+}
+
+int s21_inverse_matrix(matrix_t *A, matrix_t *result) {
+    double det = 0;
+
+    int status = s21_create_matrix(A->rows, A->columns, result);
+    if (status == OK) {
+        status = s21_determinant(A, &det);
+        if (status == OK) {
+            if (!ldouble_eq(det, 0)) {
+                matrix_t tmp_com;
+                status = s21_calc_complements(A, &tmp_com);
+                if (status == OK) {
+                    matrix_t tmp_tranpose;
+                    status = s21_transpose(&tmp_com, &tmp_tranpose);
+                    s21_mult_number(&tmp_tranpose, 1.0 / det, result);
+                }
+            } else {
+                status = CALC_ERROR;
             }
         }
     }
