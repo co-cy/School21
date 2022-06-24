@@ -1,5 +1,5 @@
 CC := gcc
-AR := ar rc
+AR := ar -rc
 RAN := ranlib
 
 FLAGS := -g -fsanitize=address -Wall -Wextra -Werror -std=c11 -lcheck --coverage
@@ -20,7 +20,7 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS)
-	$(AR) -r $@ $^
+	$(AR) $@ $^
 
 .PHONY : clean
 clean:
