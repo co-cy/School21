@@ -47,10 +47,16 @@ int s21_create_matrix(const int rows, const int columns, matrix_t *result) {
         result->columns = columns;
 
         result->matrix = malloc(rows * sizeof(double*));
-        for (int i = 0; i < rows; i++)
-            result->matrix[i] = calloc(columns, sizeof (double));
+        if (!result->matrix)
+            exit(666);
+
+        for (int i = 0; i < rows; i++) {
+            result->matrix[i] = calloc(columns, sizeof(double));
+            if (!result->matrix[i])
+                exit(666);
+        }
     } else {
-        status = MALLOC_FAILED;
+        status = INCORRECT_MATRIX;
     }
     return status;
 }
@@ -168,7 +174,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
     
     int status = s21_create_matrix(A->rows, A->columns, result);
 
-    if (!status) {
+    if (status == OK) {
         double tmp_res;
         matrix_t tmp_matrix;
         for (int row = 0; status == OK && row < A->rows; row++) {
@@ -178,8 +184,9 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
 
                 status = s21_determinant(&tmp_matrix, &tmp_res);
 
-                result->matrix[row][col] = tmp_res * ((row + col) % 2? -1 : 1);
-
+                if (status == OK) {
+                    result->matrix[row][col] = tmp_res * ((row + col) % 2 ? -1 : 1);
+                }
                 s21_remove_matrix(&tmp_matrix);
             }
         }
@@ -204,10 +211,14 @@ int s21_determinant(matrix_t *A, double *result) {
         matrix_t tmp_matrix2;
         
         double tmp;
-        for (int row = 0; row < A->rows; row++) {
+        for (int row = 0; status == OK && row < A->rows; row++) {
             status = s21_iv_crop_matrix(A, row, 0, &tmp_matrix2);
-            status = s21_determinant(&tmp_matrix2, &tmp);
-            *result += tmp * A->matrix[row][0] * ((row %2)? -1 : 1);
+            if (status == OK) {
+                status = s21_determinant(&tmp_matrix2, &tmp);
+                if (status == OK) {
+                    *result += tmp * A->matrix[row][0] * ((row % 2) ? -1 : 1);
+                }
+            }
         }
     }
 
