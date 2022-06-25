@@ -5,7 +5,7 @@
 #include "arithmetic.h"
 
 int s21_merge_matrix(matrix_t *A, matrix_t *B, matrix_t *result, int sign) {
-    int status = s21_eq_size_matrix(A, B);
+    int status = !s21_eq_size_matrix(A, B);
 
     if (status == OK) {
         status = s21_create_matrix(A->rows, A->columns, result);

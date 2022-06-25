@@ -10,7 +10,9 @@ int s21_determinant(matrix_t *A, double *result) {
 
     int status = OK;
 
-    if (A->rows == 1) {
+    if (A->rows == 0) {
+        status = CALC_ERROR;
+    } elif (A->rows == 1) {
         *result = A->matrix[0][0];
     } elif (A->rows == 2) {
         *result = A->matrix[0][0] * A->matrix[1][1] - A->matrix[0][1] * A->matrix[1][0];
@@ -28,6 +30,7 @@ int s21_determinant(matrix_t *A, double *result) {
                     *result += tmp * A->matrix[row][0] * ((row % 2) ? -1 : 1);
                 }
             }
+            s21_remove_matrix(&tmp_matrix2);
         }
     }
 

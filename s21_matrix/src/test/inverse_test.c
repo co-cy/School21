@@ -40,13 +40,13 @@ START_TEST(inverse_test_2) {
     s21_inverse_matrix(&A, &R);
 
     B.matrix[0][0] = -0.5;
-    B.matrix[1][0] = -11.0/18.0;
-    B.matrix[2][0] = 10.0/9.0;
-    B.matrix[0][1] = 0;
+    B.matrix[0][1] = -11.0/18.0;
+    B.matrix[0][2] = 10.0/9.0;
+    B.matrix[1][0] = 0;
     B.matrix[1][1] = 1.0/9.0;
-    B.matrix[2][1] = -1.0/9.0;
-    B.matrix[0][2] = 0.5;
-    B.matrix[1][2] = 0.5;
+    B.matrix[1][2] = -1.0/9.0;
+    B.matrix[2][0] = 0.5;
+    B.matrix[2][1] = 0.5;
     B.matrix[2][2] = 0;
 
 

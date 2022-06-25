@@ -18,6 +18,9 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
 
 
 int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+    if (A->columns < 0 || B->rows < 0)
+        return INCORRECT_MATRIX;
+
     int status = s21_create_matrix(A->rows, B->columns, result);
 
     if (status == OK) {

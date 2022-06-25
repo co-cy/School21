@@ -9,8 +9,8 @@ START_TEST(eq_test_1) {
     s21_create_matrix(1, 1, &A);
     s21_create_matrix(1, 1, &B);
 
-    A.matrix[0][0] = 1.25;
-    B.matrix[0][0] = 2.25;
+    A.matrix[0][0] = 1.2500005;
+    B.matrix[0][0] = 2.2500005;
 
     ck_assert_int_eq(s21_eq_matrix(&A, &B), 0);
     s21_remove_matrix(&A);

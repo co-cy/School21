@@ -23,15 +23,14 @@ START_TEST(transpose_test_1) {
     s21_calc_complements(&A, &R);
 
     B.matrix[0][0] = 9;
-    B.matrix[1][0] = -2;
-    B.matrix[2][0] = -3;
-    B.matrix[0][1] = 3;
+    B.matrix[0][1] = -2;
+    B.matrix[0][2] = -3;
+    B.matrix[1][0] = 3;
     B.matrix[1][1] = 14;
-    B.matrix[2][1] = -1;
-    B.matrix[0][2] = -7;
-    B.matrix[1][2] = -18;
-    B.matrix[2][2] = -17;
-
+    B.matrix[1][2] = -1;
+    B.matrix[2][0] = -7;
+    B.matrix[2][1] = -18;
+    B.matrix[2][2] = 17;
 
     ck_assert_int_eq(s21_eq_matrix(&R, &B), 1);
     s21_remove_matrix(&A);
