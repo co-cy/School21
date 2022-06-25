@@ -4,7 +4,7 @@ RAN := ranlib
 
 FLAGS := -g -fsanitize=address -Wall -Wextra -Werror -std=c11 -lcheck --coverage
 
-SOURCE := $(shell find . -name '*.c' -not -path './test/*')
+SOURCE := $(shell find . -name '*.c' -not -path './test/*' -and -not -path './debug/*')
 SOURCE_TEST := $(shell find test -name '*.c')
 
 OBJS := ${SOURCE:.c=.o}
