@@ -8,7 +8,6 @@ START_TEST(transpose_test_1) {
     matrix_t A, B, R;
     s21_create_matrix(3, 3, &A);
     s21_create_matrix(3, 3, &B);
-    s21_create_matrix(3, 3, &R);
 
     A.matrix[0][0] = 5;
     A.matrix[0][1] = -1;

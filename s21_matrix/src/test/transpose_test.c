@@ -8,7 +8,6 @@ START_TEST(transpose_test_1) {
     matrix_t A, B, R;
     s21_create_matrix(1, 1, &A);
     s21_create_matrix(1, 1, &B);
-    s21_create_matrix(1, 1, &R);
 
     A.matrix[0][0] = 1.25;
     B.matrix[0][0] = 1.25;
@@ -24,7 +23,6 @@ START_TEST(transpose_test_2) {
     matrix_t A, B, R;
     s21_create_matrix(3, 3, &A);
     s21_create_matrix(3, 3, &B);
-    s21_create_matrix(3, 3, &R);
 
     A.matrix[0][0] = 0.25;
     A.matrix[0][1] = 1.25;
