@@ -4,7 +4,7 @@
 
 #include "stack.h"
 
-t_s21_stack* create_stack(void* value, size_t type) {
+t_s21_stack* create_stack(void* value, type_stack type) {
     ///    Creates a stack and returns a pointer to it,
     ///    "type" - what type is currently stored in the stack
     ///    "value" - pointer to data
@@ -18,7 +18,7 @@ t_s21_stack* create_stack(void* value, size_t type) {
     return new_stack;
 }
 
-t_s21_stack* add2stack(t_s21_stack *stack, void* value, size_t type) {
+t_s21_stack* add2stack(t_s21_stack *stack, void* value, type_stack type) {
     /// Add a new segment to the stack
     /// "value" - the value that will be written to the new stack
     /// "type" - type of the newly added segment
