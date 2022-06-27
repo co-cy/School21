@@ -17,15 +17,11 @@ bool isoperator(char symbol) {
 
 bool string_is_operator(char *string) {
     /// Checks whether the string is an operator
-    int is = 0;
-
-    if (*string == '-')
-        string++;
+    bool is = False;
 
     for (t_s21_operator *cur_operator = list_operators; !is && cur_operator->short_name; cur_operator++) {
         if (!strcmp(string, list_operators->long_name))
-            is = 1;
+            is = True;
     }
 
-    return is;
-}
+    return is;}
