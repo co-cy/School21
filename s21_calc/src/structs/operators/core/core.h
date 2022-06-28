@@ -5,11 +5,13 @@
 #ifndef S21_CALC_OPERATORS_CORE_H
 #define S21_CALC_OPERATORS_CORE_H
 
+
 typedef struct {
     char short_name;
     char *long_name;
     int priority;
 } t_operator;
+
 
 static t_operator list_operators[] = {
         {'(', "(", 1},
@@ -32,5 +34,6 @@ static t_operator list_operators[] = {
         // A string that signals us about the end of the list
         {0, 0, 0},
 };
+
 
 #endif //S21_CALC_OPERATORS_CORE_H
