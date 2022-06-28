@@ -9,7 +9,7 @@ int string_to_priority_operator(char *string) {
     int priority = 0;
 
     for (int i = 0; !priority && list_operators[i].short_name; i++) {
-        if (!strcmp(string, list_operators->long_name))
+        if (!strcmp(string, list_operators[i].long_name))
             priority = list_operators[i].priority;
     }
 

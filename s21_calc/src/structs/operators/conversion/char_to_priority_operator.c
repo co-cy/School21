@@ -9,7 +9,7 @@ int char_to_priority_operator(char symbol) {
     int priority = 0;
 
     for (int i = 0; !priority && list_operators[i].short_name; i++) {
-        if (symbol == list_operators->short_name)
+        if (symbol == list_operators[i].short_name)
             priority = list_operators[i].priority;
     }
 

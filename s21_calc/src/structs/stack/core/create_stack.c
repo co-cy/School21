@@ -10,6 +10,9 @@ t_stack* create_stack(t_lexeme* lexeme) {
 
     t_stack *new_stack = malloc(sizeof(t_stack));
 
+    if (!new_stack)
+        exit(666);
+
     new_stack->lexeme = lexeme;
     new_stack->lower = NULL;
 
