@@ -18,13 +18,9 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
         *operators = add_to_stack(*operators, lexeme);
     } elif (lexeme->type == type_lexeme_operator) {
         if (!strcmp(lexeme->string, ")")) {
-            t_stack *tmp = *operators;
             while (*operators) {
                 if (strcmp((*operators)->lexeme->string, "(") != 0) {
-                    *polish = add_to_stack(*polish, (*operators)->lexeme);
-                    *operators = (*operators)->lower;
-                    free(tmp);
-                    tmp = *operators;
+                    *polish = add_to_stack(*polish, pop_stack(operators));
                 } else {
                     break;
                 }
@@ -34,13 +30,9 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
                 dump_stack(operators);
                 free_lexeme(&lexeme);
 
-                tmp = *operators;
                 while (*operators) {
                     if ((*operators)->lexeme->type == type_lexeme_command) {
-                        *polish = add_to_stack(*polish, (*operators)->lexeme);
-                        *operators = (*operators)->lower;
-                        free(tmp);
-                        tmp = *operators;
+                        *polish = add_to_stack(*polish, pop_stack(operators));
                     } else {
                         break;
                     }
@@ -50,15 +42,11 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
             }
 
         } else {
-            t_stack *tmp = *operators;
             int cur_priority = char_to_priority_operator(*word);
             while (*operators) {
                 int tmp_priority = char_to_priority_operator(*((*operators)->lexeme->string));
                 if (cur_priority <=tmp_priority) {
-                    *polish = add_to_stack(*polish, (*operators)->lexeme);
-                    *operators = (*operators)->lower;
-                    free(tmp);
-                    tmp = *operators;
+                    *polish = add_to_stack(*polish, pop_stack(operators));
                 } else {
                     break;
                 }
@@ -98,12 +86,8 @@ t_stack * string_to_polish(char *string) {
 
         polish = NULL;
     } else {
-        t_stack *tmp = operators;
-        while (tmp) {
-            polish = add_to_stack(polish,operators->lexeme);
-            operators = operators->lower;
-            free(tmp);
-            tmp = operators;
+        while (operators) {
+            polish = add_to_stack(polish, pop_stack(&operators));
         }
     }
 

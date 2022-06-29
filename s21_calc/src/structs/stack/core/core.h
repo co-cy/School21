@@ -26,5 +26,9 @@ void free_stack(t_stack** stack);
 t_stack* add_to_stack(t_stack *stack, t_lexeme* lexeme);
 void dump_stack(t_stack **stack);
 
+t_stack *reverse_stack(t_stack *stack);
+
+t_lexeme *pop_stack(t_stack **stack);
+
 
 #endif //S21_CALC_STACK_CORE_H
