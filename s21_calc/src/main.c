@@ -17,12 +17,12 @@ int main() {
 
 //    string[ - 1] = '\0';
 
-    t_stack *aboba = string_to_polish(string);
-    print_stack(aboba);
+    long double res;
+    int status = calc(string, &res);
 
-    free_stack(&aboba);
-
-    printf("_%s_", string);
+    printf("_STATUS - %d_\n", status);
+    printf("_%s_\n", string);
+    printf("_RESULT - %Lf_\n", res);
 
     free(string);
     return 0;

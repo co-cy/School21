@@ -6,6 +6,7 @@
 #define S21_CALC_S21_CALC_H
 
 #include "structs/operators/operators.h"
+#include "structs/ld_stack/ld_stack.h"
 #include "structs/lexeme/lexem.h"
 #include "structs/stack/stack.h"
 
