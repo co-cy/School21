@@ -6,7 +6,6 @@
 #include "math.h"
 
 
-
 int calc(char *string, long double *result) {
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
