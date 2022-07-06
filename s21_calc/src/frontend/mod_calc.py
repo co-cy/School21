@@ -7,8 +7,8 @@ import numpy as np
 
 
 class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
-    bracket_count = 0
-    lexemes = []
+    # bracket_count = 0
+    # lexemes = []
 
     def __init__(self):
         super().__init__()
@@ -76,7 +76,7 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         # elif text.isalnum() or text == '.':
         #     if self.lexemes
 
-        self.lexemes.append(text)
+        # self.lexemes.append(text)
         if self.is_result:
             self.is_result = 0
             cur_exp = ""
@@ -84,7 +84,7 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             cur_exp = self.expression.text()
         last_symbol = cur_exp[-1] if cur_exp else ""
 
-        if not last_symbol or ((last_symbol.isalnum() or last_symbol == '.') and (text.isalnum() or text == '.')):
+        if (not last_symbol) or ((last_symbol.isdigit() or last_symbol == '.') and (text.isdigit() or text == '.')):
             cur_exp += text
         else:
             cur_exp = f'{cur_exp} {text}'
@@ -95,18 +95,26 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.expression.setText("")
 
     def cancel_expression(self):
-        cur_text = self.expression.text()
-        i = len(cur_text) - 1
-        for i in range(i, -1, -1):
-            if cur_text[i] == " ":
-                break
-        self.expression.setText(cur_text[:i])
+        if self.is_result:
+            self.clear_expression()
+        else:
+            cur_text = self.expression.text()
+            i = len(cur_text) - 1
+            for i in range(i, -1, -1):
+                if cur_text[i] == " ":
+                    break
+            self.expression.setText(cur_text[:i])
 
     def calc(self):
         self.is_result = 1
-        self.expression.setText(f"= {Backend.calc_exp(self.expression.text())}")
+        old_text = self.expression.text()
+        self.expression.setText(f"= {Backend.calc_exp(old_text)}")
+
+        if 'x' in old_text.split():
+            self.tabWidget.setCurrentWidget(self.graph_grid)
 
     def change_tab_bar(self, index: int):
         if self.tabWidget.widget(index).objectName() == self.graph_grid.objectName():
-            random_array = np.random.random_sample(20)
-            self.curve.setData(random_array)
+            hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
+            self.curve.setData(hour, temperature)
