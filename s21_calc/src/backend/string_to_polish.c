@@ -12,9 +12,9 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
     int status = 0;
     t_lexeme *lexeme = create_lexeme(word, type_lexeme_bad);
 
-    if (lexeme->type == type_lexeme_number || lexeme->type == type_lexeme_command) {
+    if (lexeme->type == type_lexeme_number) {
         *polish = add_to_stack(*polish, lexeme);
-    } elif (!strcmp(word, "(")) {
+    } elif (!strcmp(word, "(") || lexeme->type == type_lexeme_command) {
         *operators = add_to_stack(*operators, lexeme);
     } elif (lexeme->type == type_lexeme_operator) {
         if (!strcmp(lexeme->string, ")")) {

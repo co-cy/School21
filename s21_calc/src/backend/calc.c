@@ -7,6 +7,7 @@
 
 
 int calc(char *string, long double *result) {
+    printf("STRING: _%s_\n", string);
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
 
@@ -73,6 +74,7 @@ int calc(char *string, long double *result) {
                 }
 
                 if (status) {
+                    print_stack(polish);
                     break;
                 }
 
