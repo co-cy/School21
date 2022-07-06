@@ -1,12 +1,25 @@
 from src.frontend.calc import Ui_MainWindow
 from src.backend.translator import Backend
 from PyQt6 import QtWidgets
+import pyqtgraph as pg
+
+import numpy as np
 
 
 class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
+    bracket_count = 0
+    lexemes = []
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        self.view = view = pg.PlotWidget()
+        self.curve = view.plot(name="Graph")
+
+        self.graph_verticalLayout.addWidget(view)
+
+        self.tabWidget.tabBarClicked.connect(self.change_tab_bar)
 
         self.is_result = 0
 
@@ -53,6 +66,17 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.nat_log.clicked.connect(lambda _: self.add_text_to_expression("ln ("))
 
     def add_text_to_expression(self, text):
+        # if text == '(':
+        #     self.bracket_count += 1
+        #     self.lexemes.append(text)
+        # elif text == ')':
+        #     if self.bracket_count != 0:
+        #         self.bracket_count -= 1
+        #         self.lexemes.append(text)
+        # elif text.isalnum() or text == '.':
+        #     if self.lexemes
+
+        self.lexemes.append(text)
         if self.is_result:
             self.is_result = 0
             cur_exp = ""
@@ -71,15 +95,18 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.expression.setText("")
 
     def cancel_expression(self):
-        self.expression.setText(self.expression.text()[:-1])
-
-    # def negate_last_word(self):
-    #     cur_text = self.expression.text()
-    #     find_pos = cur_text.find(" ")
-    #     if find_pos != -1:
-    #         if cur_text[find_pos + 1] == '-':
-    #             self.expression.setText(f"{cur_text[:find_pos]}{cur_text[find_pos + 2:]}")
+        cur_text = self.expression.text()
+        i = len(cur_text) - 1
+        for i in range(i, -1, -1):
+            if cur_text[i] == " ":
+                break
+        self.expression.setText(cur_text[:i])
 
     def calc(self):
         self.is_result = 1
         self.expression.setText(f"= {Backend.calc_exp(self.expression.text())}")
+
+    def change_tab_bar(self, index: int):
+        if self.tabWidget.widget(index).objectName() == self.graph_grid.objectName():
+            random_array = np.random.random_sample(20)
+            self.curve.setData(random_array)
