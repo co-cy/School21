@@ -6,7 +6,7 @@
 #include "math.h"
 
 
-int calc(char *string, long double *result) {
+int calc(char *string, long double x, long double *result) {
     printf("STRING: _%s_\n", string);
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
@@ -18,7 +18,12 @@ int calc(char *string, long double *result) {
 
         while (polish) {
             if (polish->lexeme->type == type_lexeme_number) {
-                long double value = strtold(polish->lexeme->string, NULL);
+                long double value;
+                if (!strcmp(polish->lexeme->string, "x"))
+                    value = x;
+                else
+                    value = strtold(polish->lexeme->string, NULL);
+
                 numbers = add_to_ld_stack(numbers, value);
             } else {
                 status = numbers == NULL;

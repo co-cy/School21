@@ -15,6 +15,6 @@ t_stack *string_to_polish(char *string);
 
 int word_to_polish(char *word, t_stack **polish, t_stack **operators);
 
-int calc(char *string, long double *result);
+int calc(char *string, long double x, long double *result);
 
 #endif //S21_CALC_S21_CALC_H

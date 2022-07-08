@@ -2,8 +2,9 @@
 #include <stdio.h>
 
 //int main() {
-//    char string[] = "( 1 + 1 )";
+//    char string[] = "2e-1 + e";
 //    long double res;
-//    printf("%d\n", calc(string, &res));
+//    printf("%Lf\n", strtold(string, NULL));
+//    printf("%d\n", calc(string, 0, &res));
 //    printf("%Lf\n", res);
 //}

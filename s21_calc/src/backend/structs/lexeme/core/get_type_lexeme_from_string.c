@@ -11,7 +11,7 @@ type_lexeme get_type_lexeme_from_string(char *string) {
     if ((string[0] == '+' || string[0] == '-') && strlen(string) > 1)
         string++;
 
-    if (isdigit(string[0])) {
+    if (isdigit(string[0]) || string[0] == 'e' || string[0] == 'x') {
         result = type_lexeme_number;
     } elif (!strcmp(string, "mod") || char_is_operator(string[0])) {
         result = type_lexeme_operator;
