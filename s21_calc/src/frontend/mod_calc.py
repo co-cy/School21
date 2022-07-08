@@ -1,27 +1,24 @@
 from src.frontend.calc import Ui_MainWindow
 from src.backend.translator import Backend
+from pyqtgraph import PlotWidget
 from PyQt6 import QtWidgets
-import pyqtgraph as pg
-
-import numpy as np
 
 
 class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
-    # bracket_count = 0
-    # lexemes = []
-
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.__init2__()
 
-        self.view = view = pg.PlotWidget()
+        self.is_result = 0
+
+    def __init2__(self):
+        self.view = view = PlotWidget()
         self.curve = view.plot(name="Graph")
 
         self.graph_verticalLayout.addWidget(view)
 
         self.tabWidget.tabBarClicked.connect(self.change_tab_bar)
-
-        self.is_result = 0
 
         self.number_0.clicked.connect(lambda _: self.add_text_to_expression("0"))
         self.number_1.clicked.connect(lambda _: self.add_text_to_expression("1"))
@@ -66,17 +63,6 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.nat_log.clicked.connect(lambda _: self.add_text_to_expression("ln ("))
 
     def add_text_to_expression(self, text):
-        # if text == '(':
-        #     self.bracket_count += 1
-        #     self.lexemes.append(text)
-        # elif text == ')':
-        #     if self.bracket_count != 0:
-        #         self.bracket_count -= 1
-        #         self.lexemes.append(text)
-        # elif text.isalnum() or text == '.':
-        #     if self.lexemes
-
-        # self.lexemes.append(text)
         if self.is_result:
             self.is_result = 0
             cur_exp = ""
