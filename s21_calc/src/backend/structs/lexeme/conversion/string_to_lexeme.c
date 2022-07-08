@@ -5,7 +5,7 @@
 #include "conversion.h"
 
 
-int string_to_lexeme(char *string, t_lexeme** lexeme) {
+int string_to_lexeme(char *string, t_lexeme **lexeme) {
     /// Converts a string to a lexeme
 
     if (string[0] == '+' || string[0] == '-')

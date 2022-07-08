@@ -15,6 +15,7 @@
 
 
 int char_to_priority_operator(char symbol);
+
 int string_to_priority_operator(char *string);
 
 

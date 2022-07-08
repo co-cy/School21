@@ -16,4 +16,3 @@ class Backend:
             result = double_res.value
 
         return result
-

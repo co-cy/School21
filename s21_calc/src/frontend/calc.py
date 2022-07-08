@@ -18,7 +18,8 @@ class Ui_MainWindow(object):
         self.gridLayout_4 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
+                                           QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
@@ -35,7 +36,8 @@ class Ui_MainWindow(object):
         self.calculator_verticalLayout = QtWidgets.QVBoxLayout(self.calculator_grid)
         self.calculator_verticalLayout.setObjectName("calculator_verticalLayout")
         self.expression = QtWidgets.QLineEdit(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
+                                           QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.expression.sizePolicy().hasHeightForWidth())
@@ -48,7 +50,8 @@ class Ui_MainWindow(object):
         self.calculator_buttons = QtWidgets.QGridLayout()
         self.calculator_buttons.setObjectName("calculator_buttons")
         self.point = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.point.sizePolicy().hasHeightForWidth())
@@ -57,7 +60,8 @@ class Ui_MainWindow(object):
         self.point.setObjectName("point")
         self.calculator_buttons.addWidget(self.point, 6, 3, 1, 1)
         self.number_7 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_7.sizePolicy().hasHeightForWidth())
@@ -66,7 +70,8 @@ class Ui_MainWindow(object):
         self.number_7.setObjectName("number_7")
         self.calculator_buttons.addWidget(self.number_7, 3, 1, 1, 1)
         self.div = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.div.sizePolicy().hasHeightForWidth())
@@ -75,7 +80,8 @@ class Ui_MainWindow(object):
         self.div.setObjectName("div")
         self.calculator_buttons.addWidget(self.div, 2, 4, 1, 1)
         self.number_8 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_8.sizePolicy().hasHeightForWidth())
@@ -84,7 +90,8 @@ class Ui_MainWindow(object):
         self.number_8.setObjectName("number_8")
         self.calculator_buttons.addWidget(self.number_8, 3, 2, 1, 1)
         self.number_2 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_2.sizePolicy().hasHeightForWidth())
@@ -93,7 +100,8 @@ class Ui_MainWindow(object):
         self.number_2.setObjectName("number_2")
         self.calculator_buttons.addWidget(self.number_2, 5, 2, 1, 1)
         self.number_3 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_3.sizePolicy().hasHeightForWidth())
@@ -102,7 +110,8 @@ class Ui_MainWindow(object):
         self.number_3.setObjectName("number_3")
         self.calculator_buttons.addWidget(self.number_3, 5, 1, 1, 1)
         self.atan = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.atan.sizePolicy().hasHeightForWidth())
@@ -111,7 +120,8 @@ class Ui_MainWindow(object):
         self.atan.setObjectName("atan")
         self.calculator_buttons.addWidget(self.atan, 1, 2, 1, 1)
         self.number_5 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_5.sizePolicy().hasHeightForWidth())
@@ -120,7 +130,8 @@ class Ui_MainWindow(object):
         self.number_5.setObjectName("number_5")
         self.calculator_buttons.addWidget(self.number_5, 4, 2, 1, 1)
         self.negate = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.negate.sizePolicy().hasHeightForWidth())
@@ -129,7 +140,8 @@ class Ui_MainWindow(object):
         self.negate.setObjectName("negate")
         self.calculator_buttons.addWidget(self.negate, 6, 1, 1, 1)
         self.sqrt = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sqrt.sizePolicy().hasHeightForWidth())
@@ -138,7 +150,8 @@ class Ui_MainWindow(object):
         self.sqrt.setObjectName("sqrt")
         self.calculator_buttons.addWidget(self.sqrt, 3, 0, 1, 1)
         self.number_6 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_6.sizePolicy().hasHeightForWidth())
@@ -147,7 +160,8 @@ class Ui_MainWindow(object):
         self.number_6.setObjectName("number_6")
         self.calculator_buttons.addWidget(self.number_6, 4, 3, 1, 1)
         self.nat_log = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.nat_log.sizePolicy().hasHeightForWidth())
@@ -156,7 +170,8 @@ class Ui_MainWindow(object):
         self.nat_log.setObjectName("nat_log")
         self.calculator_buttons.addWidget(self.nat_log, 6, 0, 1, 1)
         self.mod = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mod.sizePolicy().hasHeightForWidth())
@@ -165,7 +180,8 @@ class Ui_MainWindow(object):
         self.mod.setObjectName("mod")
         self.calculator_buttons.addWidget(self.mod, 1, 4, 1, 1)
         self.number_0 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_0.sizePolicy().hasHeightForWidth())
@@ -174,7 +190,8 @@ class Ui_MainWindow(object):
         self.number_0.setObjectName("number_0")
         self.calculator_buttons.addWidget(self.number_0, 6, 2, 1, 1)
         self.sin = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sin.sizePolicy().hasHeightForWidth())
@@ -183,7 +200,8 @@ class Ui_MainWindow(object):
         self.sin.setObjectName("sin")
         self.calculator_buttons.addWidget(self.sin, 0, 0, 1, 1)
         self.pow = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pow.sizePolicy().hasHeightForWidth())
@@ -192,7 +210,8 @@ class Ui_MainWindow(object):
         self.pow.setObjectName("pow")
         self.calculator_buttons.addWidget(self.pow, 4, 0, 1, 1)
         self.number_4 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_4.sizePolicy().hasHeightForWidth())
@@ -201,7 +220,8 @@ class Ui_MainWindow(object):
         self.number_4.setObjectName("number_4")
         self.calculator_buttons.addWidget(self.number_4, 4, 1, 1, 1)
         self.log = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.log.sizePolicy().hasHeightForWidth())
@@ -210,7 +230,8 @@ class Ui_MainWindow(object):
         self.log.setObjectName("log")
         self.calculator_buttons.addWidget(self.log, 5, 0, 1, 1)
         self.cos = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.cos.sizePolicy().hasHeightForWidth())
@@ -219,7 +240,8 @@ class Ui_MainWindow(object):
         self.cos.setObjectName("cos")
         self.calculator_buttons.addWidget(self.cos, 0, 1, 1, 1)
         self.tan = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tan.sizePolicy().hasHeightForWidth())
@@ -228,7 +250,8 @@ class Ui_MainWindow(object):
         self.tan.setObjectName("tan")
         self.calculator_buttons.addWidget(self.tan, 0, 2, 1, 1)
         self.sub = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sub.sizePolicy().hasHeightForWidth())
@@ -237,7 +260,8 @@ class Ui_MainWindow(object):
         self.sub.setObjectName("sub")
         self.calculator_buttons.addWidget(self.sub, 4, 4, 1, 1)
         self.acos = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.acos.sizePolicy().hasHeightForWidth())
@@ -246,7 +270,8 @@ class Ui_MainWindow(object):
         self.acos.setObjectName("acos")
         self.calculator_buttons.addWidget(self.acos, 1, 1, 1, 1)
         self.open_bracket = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.open_bracket.sizePolicy().hasHeightForWidth())
@@ -255,7 +280,8 @@ class Ui_MainWindow(object):
         self.open_bracket.setObjectName("open_bracket")
         self.calculator_buttons.addWidget(self.open_bracket, 2, 1, 1, 1)
         self.cancel = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.cancel.sizePolicy().hasHeightForWidth())
@@ -264,7 +290,8 @@ class Ui_MainWindow(object):
         self.cancel.setObjectName("cancel")
         self.calculator_buttons.addWidget(self.cancel, 0, 3, 1, 1)
         self.clear = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.clear.sizePolicy().hasHeightForWidth())
@@ -273,7 +300,8 @@ class Ui_MainWindow(object):
         self.clear.setObjectName("clear")
         self.calculator_buttons.addWidget(self.clear, 0, 4, 1, 1)
         self.close_bracket = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.close_bracket.sizePolicy().hasHeightForWidth())
@@ -282,7 +310,8 @@ class Ui_MainWindow(object):
         self.close_bracket.setObjectName("close_bracket")
         self.calculator_buttons.addWidget(self.close_bracket, 2, 2, 1, 1)
         self.asin = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.asin.sizePolicy().hasHeightForWidth())
@@ -291,7 +320,8 @@ class Ui_MainWindow(object):
         self.asin.setObjectName("asin")
         self.calculator_buttons.addWidget(self.asin, 1, 0, 1, 1)
         self.number_9 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_9.sizePolicy().hasHeightForWidth())
@@ -300,7 +330,8 @@ class Ui_MainWindow(object):
         self.number_9.setObjectName("number_9")
         self.calculator_buttons.addWidget(self.number_9, 3, 3, 1, 1)
         self.mul = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mul.sizePolicy().hasHeightForWidth())
@@ -309,7 +340,8 @@ class Ui_MainWindow(object):
         self.mul.setObjectName("mul")
         self.calculator_buttons.addWidget(self.mul, 3, 4, 1, 1)
         self.sum = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sum.sizePolicy().hasHeightForWidth())
@@ -318,7 +350,8 @@ class Ui_MainWindow(object):
         self.sum.setObjectName("sum")
         self.calculator_buttons.addWidget(self.sum, 5, 4, 1, 1)
         self.exponent = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.exponent.sizePolicy().hasHeightForWidth())
@@ -327,7 +360,8 @@ class Ui_MainWindow(object):
         self.exponent.setObjectName("exponent")
         self.calculator_buttons.addWidget(self.exponent, 1, 3, 1, 1)
         self.empty_2 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.empty_2.sizePolicy().hasHeightForWidth())
@@ -337,7 +371,8 @@ class Ui_MainWindow(object):
         self.empty_2.setObjectName("empty_2")
         self.calculator_buttons.addWidget(self.empty_2, 2, 0, 1, 1)
         self.number_x = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_x.sizePolicy().hasHeightForWidth())
@@ -346,7 +381,8 @@ class Ui_MainWindow(object):
         self.number_x.setObjectName("number_x")
         self.calculator_buttons.addWidget(self.number_x, 2, 3, 1, 1)
         self.calc_exp = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.calc_exp.sizePolicy().hasHeightForWidth())
@@ -355,7 +391,8 @@ class Ui_MainWindow(object):
         self.calc_exp.setObjectName("calc_exp")
         self.calculator_buttons.addWidget(self.calc_exp, 6, 4, 1, 1)
         self.number_1 = QtWidgets.QPushButton(self.calculator_grid)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.number_1.sizePolicy().hasHeightForWidth())
@@ -424,6 +461,7 @@ class Ui_MainWindow(object):
         self.number_x.setText(_translate("MainWindow", "x"))
         self.calc_exp.setText(_translate("MainWindow", "="))
         self.number_1.setText(_translate("MainWindow", "1"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.calculator_grid), _translate("MainWindow", "Калькулятор"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.calculator_grid),
+                                  _translate("MainWindow", "Калькулятор"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.graph_grid), _translate("MainWindow", "График"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))

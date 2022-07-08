@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_lexeme *create_lexeme(char* string, type_lexeme type) {
+t_lexeme *create_lexeme(char *string, type_lexeme type) {
     /// Creates a new lexeme based on the string and the type of the lexeme
     /// "string" - pointer to the allocated string in memory
     /// "type" - the type of the new lexeme

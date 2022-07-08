@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-void free_stack(t_stack** stack) {
+void free_stack(t_stack **stack) {
     /// The function cleans up the entire stack except for its segments
 
     while (*stack) {

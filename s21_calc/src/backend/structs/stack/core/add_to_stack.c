@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_stack* add_to_stack(t_stack *stack, t_lexeme* lexeme) {
+t_stack *add_to_stack(t_stack *stack, t_lexeme *lexeme) {
     /// Add a new segment to the lexeme stack
     /// Returns a pointer to the beginning of the stack
 

@@ -70,7 +70,8 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             cur_exp = self.expression.text()
         last_symbol = cur_exp[-1] if cur_exp else ""
 
-        if (not last_symbol) or ((last_symbol.isdigit() or last_symbol == '.') and (text.isdigit() or text == '.')):
+        if (not last_symbol) or (
+                (last_symbol.isdigit() or last_symbol == '.') and (text.isdigit() or text == '.')):
             cur_exp += text
         else:
             cur_exp = f'{cur_exp} {text}'

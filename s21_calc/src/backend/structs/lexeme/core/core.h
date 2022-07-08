@@ -26,12 +26,14 @@ typedef enum {
 
 typedef struct {
     type_lexeme type;
-    char* string;
+    char *string;
 } t_lexeme;
 
 
-t_lexeme *create_lexeme(char* string, type_lexeme type);
+t_lexeme *create_lexeme(char *string, type_lexeme type);
+
 void free_lexeme(t_lexeme **lexeme);
+
 type_lexeme get_type_lexeme_from_string(char *string);
 
 #endif //S21_CALC_LEXEME_CORE_H

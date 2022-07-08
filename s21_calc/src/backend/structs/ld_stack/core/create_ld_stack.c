@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_ld_stack * create_ld_stack(long double value) {
+t_ld_stack *create_ld_stack(long double value) {
     ///    Creates a stack and returns a pointer to it,
     ///    "value" - the number that will be stored in the stack
 

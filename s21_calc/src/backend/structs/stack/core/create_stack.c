@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_stack* create_stack(t_lexeme* lexeme) {
+t_stack *create_stack(t_lexeme *lexeme) {
     ///    Creates a stack and returns a pointer to it,
     ///    "lexeme" - pointer to the allocated memory containing the lexeme
 

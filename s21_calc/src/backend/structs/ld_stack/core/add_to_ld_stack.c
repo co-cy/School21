@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_ld_stack* add_to_ld_stack(t_ld_stack *stack, long double value) {
+t_ld_stack *add_to_ld_stack(t_ld_stack *stack, long double value) {
     /// Add a new segment to the stack
     /// Returns a pointer to the beginning of the stack
 

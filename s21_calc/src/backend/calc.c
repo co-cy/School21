@@ -31,22 +31,16 @@ int calc(char *string, long double *result) {
                         numbers = add_to_ld_stack(numbers, sinl(number1));
                     } elif (!strcmp(polish->lexeme->string, "tan")) {
                         numbers = add_to_ld_stack(numbers, tanl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "acos")) {
                         numbers = add_to_ld_stack(numbers, acosl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "asin")) {
                         numbers = add_to_ld_stack(numbers, asinl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "atan")) {
                         numbers = add_to_ld_stack(numbers, atanl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "sqrt")) {
                         numbers = add_to_ld_stack(numbers, sqrtl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "ln")) {
                         numbers = add_to_ld_stack(numbers, logl(number1));
-
                     } elif (!strcmp(polish->lexeme->string, "log")) {
                         numbers = add_to_ld_stack(numbers, log10l(number1));
                     } else {

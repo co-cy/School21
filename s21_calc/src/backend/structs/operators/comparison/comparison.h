@@ -15,6 +15,7 @@
 
 
 int char_is_operator(char symbol);
+
 int string_is_command(char *string);
 
 

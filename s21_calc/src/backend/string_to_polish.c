@@ -45,7 +45,7 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
             int cur_priority = char_to_priority_operator(*word);
             while (*operators) {
                 int tmp_priority = char_to_priority_operator(*((*operators)->lexeme->string));
-                if (cur_priority <=tmp_priority) {
+                if (cur_priority <= tmp_priority) {
                     *polish = add_to_stack(*polish, pop_stack(operators));
                 } else {
                     break;
@@ -62,7 +62,7 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
 }
 
 
-t_stack * string_to_polish(char *string) {
+t_stack *string_to_polish(char *string) {
     t_stack *polish = NULL;
     t_stack *operators = NULL;
 
