@@ -95,18 +95,21 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             self.expression.setText(cur_text[:i])
 
     def calc(self):
-        self.is_result = 1
         old_text = self.expression.text()
+        if self.is_result:
+            old_text = old_text.split(" =")[0].strip()
+        self.is_result = 1
 
         if 'x' in old_text.split():
             list_x = []
             list_y = []
-            step_x = 0.1
-            for i in range(-10000, 10001):
-                tmp_x = step_x * i
+            step_x = self.step_x.value()
+            x = self.min_x.value()
+            while x <= self.max_x.value():
+                x += step_x
 
-                list_x.append(tmp_x)
-                res = Backend.calc_exp(old_text, x=tmp_x)
+                list_x.append(x)
+                res = Backend.calc_exp(old_text, x=x)
                 if not isinstance(res, float):
                     text = str(Backend.calc_exp(old_text))
                     break

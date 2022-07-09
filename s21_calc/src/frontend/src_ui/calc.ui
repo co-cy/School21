@@ -30,7 +30,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -671,7 +671,7 @@
                <double>100000000000.000000000000000</double>
               </property>
               <property name="value">
-               <double>10000.000000000000000</double>
+               <double>100.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -704,7 +704,7 @@
                <double>100000000000.000000000000000</double>
               </property>
               <property name="value">
-               <double>-10000.000000000000000</double>
+               <double>-100.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -737,7 +737,7 @@
                <double>10000000.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>0.010000000000000</double>
+               <double>0.000100000000000</double>
               </property>
               <property name="value">
                <double>0.010000000000000</double>
