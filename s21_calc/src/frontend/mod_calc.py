@@ -1,7 +1,7 @@
 from src.frontend.calc import Ui_MainWindow
 from src.backend.translator import Backend
-from pyqtgraph import PlotWidget
-from PyQt6 import QtWidgets
+from pyqtgraph import PlotWidget, mkPen
+from PyQt6 import QtWidgets, QtCore
 
 
 class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -14,7 +14,9 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def __init2__(self):
         self.view = view = PlotWidget()
-        self.curve = view.plot(name="Graph")
+        self.view.showGrid(x=True, y=True)
+        self.graph_pen = mkPen(color=(0, 255, 0), width=15, style=QtCore.Qt.PenStyle.NoPen)
+        self.curve = view.plot(name="Graph", pen=self.graph_pen,  symbol='o', symbolSize=8)
 
         self.graph_verticalLayout.addWidget(view)
 
@@ -95,13 +97,31 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def calc(self):
         self.is_result = 1
         old_text = self.expression.text()
-        self.expression.setText(f"= {Backend.calc_exp(old_text)}")
 
         if 'x' in old_text.split():
-            self.tabWidget.setCurrentWidget(self.graph_grid)
+            list_x = []
+            list_y = []
+            step_x = 0.1
+            for i in range(-10000, 10001):
+                tmp_x = step_x * i
+
+                list_x.append(tmp_x)
+                res = Backend.calc_exp(old_text, x=tmp_x)
+                if not isinstance(res, float):
+                    text = str(Backend.calc_exp(old_text))
+                    break
+
+                list_y.append(res)
+            else:
+                text = "График построен"
+                self.curve.setData(list_x, list_y)
+
+                self.tabWidget.setCurrentWidget(self.graph_grid)
+        else:
+            text = str(Backend.calc_exp(old_text))
+
+        self.expression.setText(f" {old_text} = {text}")
 
     def change_tab_bar(self, index: int):
         if self.tabWidget.widget(index).objectName() == self.graph_grid.objectName():
-            hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
-            self.curve.setData(hour, temperature)
+            pass
