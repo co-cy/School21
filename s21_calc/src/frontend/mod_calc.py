@@ -16,7 +16,7 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.view = view = PlotWidget()
         self.curve = view.plot(name="Graph")
 
-        self.graph_verticalLayout.addWidget(view)
+        self.graph_verticalLayout.insertWidget(0, view)
 
         self.tabWidget.tabBarClicked.connect(self.change_tab_bar)
 
