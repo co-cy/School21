@@ -30,7 +30,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -570,7 +570,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QPushButton" name="empty_2">
+           <widget class="QPushButton" name="pi">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
@@ -581,7 +581,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
-             <string/>
+             <string>pi</string>
             </property>
            </widget>
           </item>
@@ -641,7 +641,114 @@
        <attribute name="title">
         <string>График</string>
        </attribute>
-       <layout class="QVBoxLayout" name="graph_verticalLayout"/>
+       <layout class="QVBoxLayout" name="graph_verticalLayout">
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Max: x</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="max_x">
+              <property name="minimum">
+               <double>-100000000000.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100000000000.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>10000.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Min: x</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="min_x">
+              <property name="minimum">
+               <double>-100000000000.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100000000000.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>-10000.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="2">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Step: x</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="step_x">
+              <property name="minimum">
+               <double>-10000000.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>10000000.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

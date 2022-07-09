@@ -18,7 +18,7 @@ class CalcMainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.graph_pen = mkPen(color=(0, 255, 0), width=15, style=QtCore.Qt.PenStyle.NoPen)
         self.curve = view.plot(name="Graph", pen=self.graph_pen,  symbol='o', symbolSize=8)
 
-        self.graph_verticalLayout.addWidget(view)
+        self.graph_verticalLayout.insertWidget(0, view)
 
         self.tabWidget.tabBarClicked.connect(self.change_tab_bar)
 
