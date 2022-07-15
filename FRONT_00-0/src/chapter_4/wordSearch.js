@@ -5,7 +5,7 @@
 // - Слова могут быть записаны слева направо и наоборот.
 
 function pos_is_good(puzzle, row, col) {
-    return puzzle.length && row < puzzle.length && col < puzzle[0].length;
+    return row >= 0 && col >= 0 && puzzle.length && row < puzzle.length && col < puzzle[0].length;
 }
 
 
@@ -23,7 +23,7 @@ function findWordAtPoint(puzzle, word, row, col) {
         }
     }
 
-    // Vertical
+    // Diagonal
     cur_symbol = 0;
     for (let t_row = row, t_col = col; t_row < puzzle.length && t_col < puzzle[0].length; t_row++, t_col++) {
         if (pos_is_good(puzzle, t_row, t_col) && puzzle[t_row][t_col] === word[cur_symbol]) {
@@ -36,7 +36,21 @@ function findWordAtPoint(puzzle, word, row, col) {
         }
     }
 
-    // Diagonal
+    // Diagonal2
+    cur_symbol = 0;
+    for (let t_row = row, t_col = col; t_row < puzzle.length && t_col < puzzle[0].length; t_row++, t_col--) {
+        if (pos_is_good(puzzle, t_row, t_col) && puzzle[t_row][t_col] === word[cur_symbol]) {
+            cur_symbol++;
+            if (cur_symbol === word.length) {
+                return true;
+            }
+        } else {
+            break;
+        }
+    }
+
+
+    // Vertical
     cur_symbol = 0;
     for (let t_row = row; t_row < puzzle.length; t_row++) {
         if (pos_is_good(puzzle, t_row, col) && puzzle[t_row][col] === word[cur_symbol]) {
@@ -78,7 +92,7 @@ const examplePuzzle = [
     ["k", "q", "j", "c", "c", "m", "r"],
 ];
 
-console.log(searchSubString(examplePuzzle, "like"));
+console.log(searchSubString(examplePuzzle, "gka"));
 
 // Level 1
 console.log(searchSubString(examplePuzzle, "like")); // true
