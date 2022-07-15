@@ -10,7 +10,6 @@ function pos_is_good(puzzle, row, col) {
 
 
 function findWordAtPoint(puzzle, word, row, col) {
-    console.log(word);
     // Horizontal
     let cur_symbol = 0;
     for (let t_col = col; t_col < puzzle[0].length; t_col++) {
