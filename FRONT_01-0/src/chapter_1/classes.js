@@ -16,5 +16,23 @@
 
 
 export class Empleyee {
+    constructor(name, grade, hardSkills, company) {
+        this.name = name;
+        this.grade = grade;
+        this.hardSkills = hardSkills;
+        this.company = company;
+    }
+
+    changeCompany(companyName) {
+        this.company = companyName
+    }
+
+    upGrade(newGradeName) {
+        this.grade = newGradeName;
+    }
+
+    addSkill(newSkillName) {
+        this.hardSkills.push(newSkillName);
+    }
 
 }
