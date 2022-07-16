@@ -10,7 +10,7 @@
 Так же должны иметься три метода:
 
 -changeCompany(newCompanyName) - сотрудник может сменить компанию, либо же просто уволиться
--upGrade(newGradeName) - сотрудник может повысить квалификацию
+-upGrade() - сотрудник может повысить квалификацию
 -addSkill(newSkillName) - сотрудник может дополнить список своих скиллов.
 */
 
@@ -18,7 +18,10 @@
 export class Empleyee {
     constructor(name, grade, hardSkills, company) {
         this.name = name;
-        this.grade = grade;
+        if (grade === "L4" || grade === "L3" || grade === "L4" || grade === "L4")
+            this.grade = grade;
+        else
+            this.grad = null;
         this.hardSkills = hardSkills;
         this.company = company;
     }
@@ -27,8 +30,14 @@ export class Empleyee {
         this.company = companyName
     }
 
-    upGrade(newGradeName) {
-        this.grade = newGradeName;
+    upGrade() {
+        if (!this.grade) {
+            this.grade = "L1";
+        } else if (this.grade === "L2") {
+            this.grade = 'L2';
+        } else if (this.grade === "L3") {
+            this.grade = 'L4';
+        }
     }
 
     addSkill(newSkillName) {
