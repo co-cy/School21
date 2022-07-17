@@ -45,38 +45,49 @@
 
 */
 
-import { Empleyee } from "./classes";
+import { Empleyee } from "./classes.js";
 
-/* Св-ва и методы класса
-companyName - string
-currentProjects - Массив экземпляров класса Project
-completedProjects -  Массив экземпляров класса Project
-staff - {
-    developers :  {
-    frontend : массив содержащий экземпляры класса FrontendDeveloper
-    backend : массив содержащий экземпляры класса DackendDeveloper
-    },
-    managers: массив содержащий экземпляры класса Manager
-}
-
-addNewCompanyMember(Developer/Manager) - в кач-ве аргумента принимает экземляр класса FrontendDeveloper, Backend Developer или Manager
-addProject(Project) - в кач-ве аргумента принимает экземляр класса Project
-getMembersQuantity()
-*/
 export class Company {
+    constructor(companyName, currentProjects, completedProjects, staff) {
+        this.companyName = companyName;
+        this.currentProjects = currentProjects;
+        this.completedProjects = completedProjects;
+        this.staff = staff;
+    }
 
+    addProject(Project) {
+        this.currentProjects.push(Project);
+    }
+
+    addNewCompanyMember(member) {
+        member.changeCompany(this.companyName);
+
+        if (member instanceof Manager) {
+            this.staff["managers"].push(member);
+        } else if (member in FrontendDeveloper) {
+            this.staff["developers"]["frontend"].push(member);
+        } else {
+            this.staff["developers"]["backend"].push(member);
+        }
+    }
+
+    getMembersQuantity() {
+        return this.staff["managers"].length
+            + this.staff["developers"]["frontend"].length
+            + this.staff["developers"]["backend"].length;
+    }
 }
 
 
- /*
+/*
 - projectName - string
 - minQualification -number
 - Team -  {
-    manager : экземпляр класса Manager
-    developers: {
-    frontend : массив содержащий экземпляры класса FrontendDeveloper
-    backend : массив содержащий экземпляры класса DackendDeveloper
-    }
+   manager : экземпляр класса Manager
+   developers: {
+   frontend : массив содержащий экземпляры класса FrontendDeveloper
+   backend : массив содержащий экземпляры класса DackendDeveloper
+   }
 }
 
 
@@ -85,23 +96,76 @@ addNewProjectMember(Developer/Manager) - Метод внутри которог�
 */
 
 export class Project {
+    constructor(projectName, minQualification, team) {
+        this.projectName = projectName;
+        this.minQualification = minQualification;
+        this.team = team;
+    }
 
+    completeProject() {
+        this.team["manager"].projectQuantity++;
+        for (let person of this.team["developers"]["fronted"])
+            person.projectQuantity++;
+        for (let person of this.team["developers"]["backend"])
+            person.projectQuantity++;
+    }
+
+    addNewProjectMember(member) {
+
+        if (!this.team["manager"].checkMember(this.minQualification, member))
+            return;
+
+        if (member instanceof Manager) {
+            this.team["manager"] = member;
+        } else if (member instanceof FrontendDeveloper) {
+            this.team["developers"]["fronted"].push(member);
+        } else if (member instanceof BackendDeveloper) {
+            this.team["developers"]["backend"].push(member);
+        }
+    }
 }
-/*
-projectQuantity - number
-checkMember(minQuantity) - в качестве аргумента принимается строка ('L1'/'L2'/'L3'/'L4')
-*/
+
 export class Manager extends Empleyee {
+    constructor(projectQuantity, ...other) {
+        super(...other);
 
+        this.projectQuantity = projectQuantity;
+    }
+
+    checkMember(minQuantity, member) {
+        if (member instanceof FrontendDeveloper) {
+            return this.company === member.company && member.grade >= minQuantity;
+        } else if (member instanceof  BackendDeveloper) {
+            return this.company === member.company && member.grade >= minQuantity;
+        }
+        return false;
+    }
 }
-
-/*
-stack - массив строк
-- developerSide - строка ('frontend')
-- projectQuantity - number
-expandStack(newTech) - в кач-ве аргумента принимает строку
-*/
 
 export class FrontendDeveloper extends Empleyee {
+    constructor(stack, developerSide, projectQuantity, ...other) {
+        super(...other);
 
+        this.stack = stack;
+        this.developerSide = developerSide;
+        this.projectQuantity = projectQuantity;
+    }
+
+    expandStack(someTech) {
+        this.stack.push(someTech);
+    }
+}
+
+export class BackendDeveloper extends Empleyee {
+    constructor(stack, developerSide, projectQuantity, ...other) {
+        super(...other);
+
+        this.stack = stack;
+        this.developerSide = developerSide;
+        this.projectQuantity = projectQuantity;
+    }
+
+    expandStack(someTech) {
+        this.stack.push(someTech);
+    }
 }
