@@ -1,5 +1,5 @@
 
-.container-item {
+.Mycontainer-item {
     font-family: sans-serif;
     border-radius: 10px;
     border-style: none;
@@ -13,7 +13,7 @@
     background: gray;
 }
 
-.container {
+.Mycontainer {
     display: grid;
     gap: 2%;
     background: #6ce4dc;
