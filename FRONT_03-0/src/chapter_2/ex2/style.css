@@ -1,0 +1,29 @@
+
+.container-item {
+    font-family: sans-serif;
+    border-radius: 10px;
+    border-style: none;
+    font-weight: bold;
+    font-size: 100%;
+    color: gray;
+    background: white;
+}
+
+.button:target {
+    background: gray;
+}
+
+.container {
+    display: grid;
+    gap: 2%;
+    background: #6ce4dc;
+    padding: 15px;
+
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+
+    justify-items : stretch;
+    align-items: stretch;
+    width: 295px;
+    height: 405px;
+}
