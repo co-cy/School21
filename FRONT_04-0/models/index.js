@@ -34,4 +34,12 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.user.hasMany(db.order);
+db.order.belongsTo(db.user);
+
+db.order.belongsToMany(db.menuItem, { through: 'OrderMenultem' });
+db.menuItem.belongsToMany(db.order, { through: 'OrderMenultem' });
+
+db.sequelize.sync({alter: true});
+
 module.exports = db;

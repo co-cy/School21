@@ -8,6 +8,3 @@ const db = require("../../models");
         console.error('Unable to connect to the database:', error);
     }
 })()
-
-
-db.sequelize.sync({alter: true});
