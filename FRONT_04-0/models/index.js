@@ -37,8 +37,8 @@ db.Sequelize = Sequelize;
 db.user.hasMany(db.order);
 db.order.belongsTo(db.user);
 
-db.order.belongsToMany(db.menuItem, { through: 'OrderMenultem' });
-db.menuItem.belongsToMany(db.order, { through: 'OrderMenultem' });
+db.order.belongsToMany(db.menuItem, { through: 'OrderMenuItem' });
+db.menuItem.belongsToMany(db.order, { through: 'OrderMenuItem' });
 
 db.sequelize.sync({alter: true});
 
