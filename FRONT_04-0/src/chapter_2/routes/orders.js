@@ -19,12 +19,15 @@ async function create(req, res) {
 async function update(req, res) {
 	const id = getIdParam(req);
 
-	if (parseInt(req.body.id) === id) {
+	if (req.body.id === id) {
 		await models.order.update(req.body, {
 			where: {
 				id: id
 			}
 		});
+		const order = await models.order.findByPk(id);
+		if (order)
+			order.setMenuItems(req.body.items)
 		res.status(200).end();
 	} else {
 		res.status(400).send(`Bad request: param ID (${id}) does not match body ID (${req.body.id}).`);
