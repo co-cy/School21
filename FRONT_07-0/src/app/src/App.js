@@ -2,18 +2,18 @@ import {useEffect, useState} from "react";
 
 function Time(prop) {
     return (
-        <p>{Math.round(prop.time / 3600)}:{Math.round(prop.time / 60) % 60}:{prop.time % 60}</p>
+        <div>{Math.round(prop.time / 3600)}:{Math.round(prop.time / 60) % 60}:{prop.time % 60}</div>
     )
 }
 
 
 function SomeList(props) {
     return  (
-        <div>
-            {props.items.map((time) => (
-                <Time time={time}/>
+        <ul>
+            {props.items.map((time, index) => (
+                <li key={index}><Time time={time}/></li>
             ))}
-        </div>
+        </ul>
     )
 }
 
@@ -28,10 +28,6 @@ function Timer() {
           return () => clearTimeout(timer);
       }
   }, [isActive, time]);
-
-  useEffect(() => {
-      console.log(listFreeze);
-  }, [listFreeze]);
 
   return (
       <div className="App">
