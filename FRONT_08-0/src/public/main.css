@@ -1,0 +1,37 @@
+.image {
+    border-color: gray;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 0 1px;
+    background-color: white;
+    height: 80%;
+
+    justify-self: center;
+    align-self: center;
+}
+
+html {
+    background: gray;
+}
+
+.container {
+    display: grid;
+    border-radius: 5px;
+    background: brown;
+    margin: 2%
+}
+
+.test_container {
+    padding-top: 1%;
+    justify-self: left;
+}
+
+.button_container {
+    border-radius: 5px;
+
+    width: 50%;
+    height: 50%;
+
+    justify-self: center;
+    align-self: center;
+}
