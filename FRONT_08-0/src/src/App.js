@@ -53,8 +53,10 @@ function App() {
 
     return (
         <div>
-            <input ref={inputText} placeholder="Введите покемона"/>
-            <button onClick={aboba}>Найти</button>
+            <div style={{margin: "auto"}}>
+                <input ref={inputText} placeholder="Введите покемона"/>
+                <button onClick={aboba}>Найти</button>
+            </div>
             <p>{(find === null? "": (find? "Найден" : "Не найден"))}</p>
             <PokemonList pokemon={addedPokemon} deletePokemon={deletePokemon}/>
         </div>

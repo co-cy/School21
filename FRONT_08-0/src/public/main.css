@@ -24,6 +24,7 @@ html {
 .test_container {
     padding-top: 1%;
     justify-self: left;
+    word-wrap: break-word;
 }
 
 .button_container {
