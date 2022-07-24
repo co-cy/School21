@@ -1,15 +1,15 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, memo, useCallback} from "react";
 
 function findPokemon(pokemon, curPokemonName) {
     let tmp = curPokemonName.toLowerCase();
     return pokemon.find(onePokemon => onePokemon.name.toLowerCase() === tmp);
 }
 
-function Pokemon(prop) {
+const Pokemon = memo((prop) => {
     let pokemon = prop.pokemon;
-    console.log("POKEMON RENDER");
+    console.log("POKEMON RENDER", pokemon.name);
     return (
-        <div style={{"display": "grid", "grid-template-columns": "10% 70% 20%", "border-style": "solid", "border-width": "1px", "margin": "2%"}}>
+        <div style={{display: "grid", gridTemplateColumns: "10% 70% 20%", borderStyle: "solid", borderWidth: "1px", "margin": "2%"}}>
             <img alt={pokemon.name} src={pokemon.info.sprites.front_default}/>
             <div>
                 Имя: {pokemon.name}<br/>
@@ -20,12 +20,12 @@ function Pokemon(prop) {
                     ))}
                 </ol>
             </div>
-            <button onClick={() => {console.log(prop.le); prop.deletePokemon(prop.le)}}>Удалить</button>
+            <button onClick={() => prop.deletePokemon(prop.le)}>Удалить</button>
         </div>
     )
-}
+});
 
-function PokemonList(prop) {
+const PokemonList = memo((prop) => {
     let pokemon = prop.pokemon;
     console.log("LIST POKEMON RENDER");
     return (
@@ -35,8 +35,7 @@ function PokemonList(prop) {
             ))}
         </div>
     )
-
-}
+});
 
 function App() {
     const [pokemon, setPokemon] = useState([]);
@@ -69,12 +68,12 @@ function App() {
         }
     }, [find])
 
-    const deletePokemon = (index) => {
+    const deletePokemon = useCallback((index) => {
         let a = [...addedPokemon];
         a.splice(index, 1);
         setAddedPokemon(a);
         setFind(null);
-    }
+    }, [addedPokemon]);
 
     return (
         <div>
