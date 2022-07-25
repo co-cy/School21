@@ -31,12 +31,6 @@ function App() {
             })
     }, [])
 
-    useEffect(() => {
-        if (find) {
-            setAddedPokemon(addedPokemon => [find, ...addedPokemon]);
-        }
-    }, [find])
-
     const deletePokemon = useCallback((index) => {
         let a = [...addedPokemon];
         a.splice(index, 1);
@@ -45,11 +39,13 @@ function App() {
     }, [addedPokemon]);
 
     const aboba = useCallback(() => {
-        let a = findPokemon(pokemon, inputText.current.value);
-        if (a !== find) {
-            setFind(a);
+        let resFind = findPokemon(pokemon, inputText.current.value);
+        if (resFind !== find) {
+            if (resFind)
+                setAddedPokemon([resFind, ...addedPokemon]);
+            setFind(resFind);
         }
-        }, [pokemon, find]);
+        }, [pokemon, find, addedPokemon]);
 
     return (
         <div>
