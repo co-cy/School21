@@ -19,21 +19,28 @@ function App() {
     console.log("APP RENDER");
 
     useEffect(() => {
-        fetch("https://pokeapi.co/api/v2/pokemon")
-            .then(res => res.json())
-            .then(res => res.results)
-            .then(async (res) => {
-                let list_pokemon = [];
-                for (let one_pokemon of res) {
-                    await fetch(one_pokemon.url)
-                        .then(res2 => res2.json())
-                        .then(res2 => {
-                            one_pokemon["info"] = res2;
-                            list_pokemon.push(one_pokemon)
-                        })
-                }
-                setPokemon(list_pokemon);
-            })
+        let res = localStorage.getItem("pokemon")
+        if (res) {
+            setPokemon(JSON.parse(res))
+        } else {
+            fetch("https://pokeapi.co/api/v2/pokemon")
+                .then(res => res.json())
+                .then(res => res.results)
+                .then(async (res) => {
+                    let list_pokemon = [];
+                    for (let one_pokemon of res) {
+                        await fetch(one_pokemon.url)
+                            .then(res2 => res2.json())
+                            .then(res2 => {
+                                one_pokemon["info"] = res2;
+                                list_pokemon.push(one_pokemon)
+                            })
+                    }
+                    setPokemon(list_pokemon);
+                    localStorage.setItem("pokemon", JSON.stringify(list_pokemon));
+
+                })
+        }
     }, [])
 
     const deletePokemon = useCallback((index) => {
