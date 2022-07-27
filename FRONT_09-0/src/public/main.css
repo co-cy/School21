@@ -94,6 +94,11 @@ body {
     font-size: 11px;
     vertical-align:middle;
 }
+
+button {
+    cursor: pointer;
+}
+
 .box-2 input:checked ~ .toogle{
     margin-left:35px;
 }

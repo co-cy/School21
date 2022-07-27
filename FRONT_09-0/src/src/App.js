@@ -1,5 +1,7 @@
 import {useState, useEffect, useRef, useCallback} from "react";
 import ThemeContext from "./context"
+import {useDispatch} from "react-redux";
+import store from "./store";
 
 
 import PokemonList from "./component/pokemonList";
@@ -12,9 +14,9 @@ function findPokemon(pokemon, curPokemonName) {
 function App() {
     const [pokemon, setPokemon] = useState([]);
     const [find, setFind] = useState(null);
-    const [addedPokemon, setAddedPokemon] = useState([]);
     const [isLight, setIsLight] = useState(true);
 
+    const dispatch = useDispatch()
     const inputText = useRef();
     console.log("APP RENDER");
 
@@ -38,26 +40,18 @@ function App() {
                     }
                     setPokemon(list_pokemon);
                     localStorage.setItem("pokemon", JSON.stringify(list_pokemon));
-
                 })
         }
     }, [])
-
-    const deletePokemon = useCallback((index) => {
-        let a = [...addedPokemon];
-        a.splice(index, 1);
-        setAddedPokemon(a);
-        setFind(null);
-    }, [addedPokemon]);
 
     const aboba = useCallback(() => {
         let resFind = findPokemon(pokemon, inputText.current.value);
         if (resFind !== find) {
             if (resFind)
-                setAddedPokemon([resFind, ...addedPokemon]);
+                dispatch(store.addPokemon(resFind));
             setFind(resFind);
         }
-        }, [pokemon, find, addedPokemon]);
+        }, [pokemon, find, dispatch]);
 
     return (
         <div className={isLight ? "app" : "app-dark"} style={{height: "100vh"}}>
@@ -72,9 +66,8 @@ function App() {
                 <button onClick={aboba}>Найти</button>
             </div>
             <p>{(find === null? "": (find? "Найден" : "Не найден"))}</p>
-
             < ThemeContext.Provider value={isLight}>
-                <PokemonList pokemon={addedPokemon} deletePokemon={deletePokemon}/>
+                <PokemonList/>
             </ ThemeContext.Provider>
         </div>
     );

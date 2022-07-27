@@ -1,10 +1,17 @@
 import ThemeContext from "../context"
 import {memo, useContext} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import store from "../store";
 
 const Pokemon = memo((prop) => {
-    let pokemon = prop.pokemon;
-    const isLight = useContext(ThemeContext);
+    let index = prop.index;
+
+    let pokemon = useSelector(state => state.value[index]);
     console.log("POKEMON RENDER", pokemon.name);
+    const isLight = useContext(ThemeContext);
+
+    const dispatcher = useDispatch();
+
     return (
         <div className={isLight ? "container" : "container-dark"} style={{gridTemplateColumns: "10% 70% 20%"}}>
             <img className="image" alt={pokemon.name} src={pokemon.info.sprites.front_default}/>
@@ -17,7 +24,7 @@ const Pokemon = memo((prop) => {
                     ))}
                 </ol>
             </div>
-            <button className="button_container" onClick={() => prop.deletePokemon(prop.le)}>Удалить</button>
+            <button className="button_container" onClick={() => dispatcher(store.removePokemon(index))}>Удалить</button>
         </div>
     )
 });
