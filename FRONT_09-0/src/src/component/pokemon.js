@@ -1,10 +1,12 @@
-import {memo} from "react";
+import ThemeContext from "../context"
+import {memo, useContext} from "react";
 
 const Pokemon = memo((prop) => {
     let pokemon = prop.pokemon;
+    const isLight = useContext(ThemeContext);
     console.log("POKEMON RENDER", pokemon.name);
     return (
-        <div className="container" style={{gridTemplateColumns: "10% 70% 20%"}}>
+        <div className={isLight ? "container" : "container-dark"} style={{gridTemplateColumns: "10% 70% 20%"}}>
             <img className="image" alt={pokemon.name} src={pokemon.info.sprites.front_default}/>
             <div className="test_container">
                 Имя: <b>{pokemon.name}</b><br/>

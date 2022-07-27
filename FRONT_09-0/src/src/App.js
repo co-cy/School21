@@ -1,4 +1,7 @@
 import {useState, useEffect, useRef, useCallback} from "react";
+import ThemeContext from "./context"
+
+
 import PokemonList from "./component/pokemonList";
 
 function findPokemon(pokemon, curPokemonName) {
@@ -10,6 +13,8 @@ function App() {
     const [pokemon, setPokemon] = useState([]);
     const [find, setFind] = useState(null);
     const [addedPokemon, setAddedPokemon] = useState([]);
+    const [isLight, setIsLight] = useState(true);
+
     const inputText = useRef();
     console.log("APP RENDER");
 
@@ -48,13 +53,22 @@ function App() {
         }, [pokemon, find, addedPokemon]);
 
     return (
-        <div>
+        <div className={isLight ? "app" : "app-dark"} style={{height: "100vh"}}>
+            <div style={{position: "relative", display: "flex", justifyContent: "right", right: "3%", top: "3%"}}>
+                <div className="box-2">
+                    <input type='checkbox' onClick={() => setIsLight(!isLight)} defaultChecked={!isLight}/>
+                    <span className="toogle"></span>
+                </div>
+            </div>
             <div style={{margin: "auto"}}>
                 <input ref={inputText} placeholder="Введите покемона"/>
                 <button onClick={aboba}>Найти</button>
             </div>
             <p>{(find === null? "": (find? "Найден" : "Не найден"))}</p>
-            <PokemonList pokemon={addedPokemon} deletePokemon={deletePokemon}/>
+
+            < ThemeContext.Provider value={isLight}>
+                <PokemonList pokemon={addedPokemon} deletePokemon={deletePokemon}/>
+            </ ThemeContext.Provider>
         </div>
     );
 }
