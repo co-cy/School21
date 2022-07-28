@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define(
-        "vacancy",
+        "user",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -8,17 +8,12 @@ module.exports = function(sequelize, DataTypes) {
                 primaryKey: true,
                 allowNull: false
             },
-            title: {
+            login: {
                 type: DataTypes.STRING,
+                unique: true
             },
-            description: {
-                type: DataTypes.STRING,
-            },
-            grade: {
-                type: DataTypes.INTEGER,
-            },
-            english: {
-                type: DataTypes.INTEGER,
+            password: {
+                type: DataTypes.STRING
             }
         }
     )

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define(
-        "vacancy",
+        "company",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -8,18 +8,10 @@ module.exports = function(sequelize, DataTypes) {
                 primaryKey: true,
                 allowNull: false
             },
-            title: {
+            name: {
                 type: DataTypes.STRING,
+                unique: true
             },
-            description: {
-                type: DataTypes.STRING,
-            },
-            grade: {
-                type: DataTypes.INTEGER,
-            },
-            english: {
-                type: DataTypes.INTEGER,
-            }
         }
     )
 }
