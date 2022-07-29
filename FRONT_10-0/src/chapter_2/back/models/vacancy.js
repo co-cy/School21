@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
                 type: DataTypes.INTEGER,
             },
             english: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
             }
         }
     )

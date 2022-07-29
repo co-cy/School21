@@ -91,6 +91,21 @@ app.get("/vacancies", async (req, res) => {
     res.status(200).json(await db.vacancy.findAll());
 })
 
+app.get("/vacancies/:id", async (req, res) => {
+    res.status(200).json(await db.vacancy.findByPk(parseInt(req.params.id)));
+})
+
+app.post("/create-vacancy", async (req, res) => {
+    await db.vacancy.create({
+        title: req.body.title,
+        description: req.body.description,
+        grade: req.body.grade,
+        english: req.body.english
+    });
+
+    res.status(200).json({"status": true});
+})
+
 
 const host = "localhost"
 const port = 3000;
