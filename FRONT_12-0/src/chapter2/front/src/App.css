@@ -1,0 +1,62 @@
+.App {
+  text-align: center;
+  height: 1000vh;
+  background: url(../public/backgr.jpeg);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.Login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 10%;
+}
+
+.Menu {
+  /* position: fixed; */
+  display: grid;
+  grid-template-columns: 10% 90%;
+  height: 100vh;
+}
+
+.vertical-menu {
+  flex-direction: column;
+  display: flex;
+  height: 100vh;
+  grid-column: 1 / 2;
+  border-right: 8px double black;
+  border-bottom: 8px double black;
+  background-color: rgba(16, 19, 20, 80%);
+}
+
+.vertical-menu a {
+  color: #a19191;
+  text-decoration: none;
+}
+
+.vacan {
+  width: 95%;
+  margin: auto;
+  margin-top: 5%;
+  color: #fff;
+  border: 8px double black;
+  background-color: rgba(150, 130, 176, 70%);
+}
+
+.vacancy {
+  background-color: rgba(150, 130, 176, 70%);
+  padding: 30px 30px 30px 30px;
+  border: 8px double black;
+}
+
+.create {
+  margin: 5%;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 5% 30% 30% 15% 15% 5%;
+  grid-template-rows: 5% 15% 30% 10% 10% 15% 10% 5%;
+  border: 8px double black;
+  background-color: rgba(16, 19, 20, 80%);
+}
