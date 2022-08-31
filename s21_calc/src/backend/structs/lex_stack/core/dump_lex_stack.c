@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-void dump_stack(t_stack **stack) {
+void dump_lex_stack(t_stack **stack) {
     /// Removes only the top block from the stack
 
     t_stack *tmp = (*stack)->lower;

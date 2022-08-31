@@ -14,7 +14,7 @@ int calc(char *string, long double x, long double *result) {
     int status = 0;
     t_ld_stack *numbers = NULL;
     if (polish) {
-        polish = reverse_stack(polish);
+        polish = reverse_lex_stack(polish);
 
         while (polish) {
             if (polish->lexeme->type == type_lexeme_number) {
@@ -73,13 +73,13 @@ int calc(char *string, long double x, long double *result) {
                 }
 
                 if (status) {
-                    print_stack(polish);
+                    print_lex_stack(polish);
                     break;
                 }
 
             }
 
-            dump_stack(&polish);
+            dump_lex_stack(&polish);
         }
     }
 
@@ -98,7 +98,7 @@ int calc(char *string, long double x, long double *result) {
     }
 
     if (polish) {
-        free_stack(&polish);
+        free_lex_stack(&polish);
         status = 1;
     }
 

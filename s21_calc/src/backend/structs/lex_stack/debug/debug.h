@@ -14,7 +14,7 @@
 #include "../core/core.h"
 
 
-void print_stack(t_stack *stack);
+void print_lex_stack(t_stack *stack);
 
 
 #endif //S21_CALC_STACK_DEBUG_H
