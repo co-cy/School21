@@ -2,7 +2,7 @@
 // Created by Nana Daughterless on 6/29/22.
 //
 
-#include "calc.h"
+#include "calculator.h"
 #include "math.h"
 
 

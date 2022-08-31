@@ -5,7 +5,7 @@
 #include <string.h>
 #include "structs/lex_stack/lex_stack.h"
 #include "structs/lexeme/lexem.h"
-#include "calc.h"
+#include "calculator.h"
 
 
 t_stack *string_to_polish(char *string) {
