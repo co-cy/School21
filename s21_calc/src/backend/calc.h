@@ -11,9 +11,8 @@
 #include "structs/lex_stack/lex_stack.h"
 
 
-t_stack *string_to_polish(char *string);
-
 int word_to_polish(char *word, t_stack **polish, t_stack **operators);
+t_stack *string_to_polish(char *string);
 
 int calc(char *string, long double x, long double *result);
 

@@ -17,6 +17,7 @@
 
 
 typedef enum {
+    type_lexeme_undefined = -2,
     type_lexeme_bad = -1,
     type_lexeme_number = 0,
     type_lexeme_command = 1,
