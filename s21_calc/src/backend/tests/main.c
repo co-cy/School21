@@ -21,8 +21,8 @@ int main() {
 
 //    long double res;
 //    char a[256];
-//    sprintf(a, "");
-//    calc(a, 0, &res);
+//    sprintf(a, "sin ( x )");
+//    calc(a, 10, &res);
 //    printf("RES - %Lf", res);
 
     if (failed_tests) {

@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "./backend/calculator.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -66,6 +67,43 @@ MainWindow::MainWindow(QWidget *parent)
     ui->exponent->setDisabled(true);
 
     connect(ui->pi, SIGNAL(clicked()), this, SLOT(pressing_button()));
+
+    ui->customPlot->addGraph();
+    ui->customPlot->graph(0)->setPen(QPen(Qt::red)); // line color blue for first graph
+    ui->customPlot->graph(0)->setLineStyle(QCPGraph::LineStyle::lsNone);
+    ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ScatterShape::ssCircle,5));
+
+    ui->customPlot->xAxis2->setVisible(true);
+    ui->customPlot->xAxis2->setTickLabels(false);
+    ui->customPlot->yAxis2->setVisible(true);
+    ui->customPlot->yAxis2->setTickLabels(false);
+
+    // make left and bottom axes always transfer their ranges to right and top axes:
+    connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
+    connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
+    // let the ranges scale themselves so graph 0 fits perfectly in the visible area:
+    ui->customPlot->graph(0)->rescaleAxes(true);
+    // Note: we could have also just called customPlot->rescaleAxes(); instead
+    // Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
+    ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
+    ui->customPlot->setBackground(ui->graph_grid->palette().color(ui->graph_grid->backgroundRole()));
+
+    ui->customPlot-> xAxis-> setBasePen (QPen (Qt :: white, 1)); // Перо оси
+    ui->customPlot-> xAxis-> setTickPen (QPen (Qt :: white, 1)); // Перо отметки оси
+    ui->customPlot-> xAxis-> setSubTickPen (QPen (Qt :: white, 1)); // Перо отметки оси
+    ui->customPlot-> xAxis-> setTickLabelColor (Qt :: white); // цвет текста шкалы оси
+    ui->customPlot-> xAxis-> setLabelColor (Qt :: white); // Цвет метки оси
+    ui->customPlot-> xAxis-> setTickLengthIn (3); // Длина шкалы по оси
+    ui->customPlot-> xAxis-> setTickLengthOut (5); // Длина шкалы вне оси
+
+    ui->customPlot-> yAxis-> setBasePen (QPen (Qt :: white, 1)); // Перо оси
+    ui->customPlot-> yAxis-> setTickPen (QPen (Qt :: white, 1)); // Перо отметки оси
+    ui->customPlot-> yAxis-> setSubTickPen (QPen (Qt :: white, 1)); // Перо отметки оси
+    ui->customPlot-> yAxis-> setTickLabelColor (Qt :: white); // цвет текста шкалы оси
+    ui->customPlot-> yAxis-> setLabelColor (Qt :: white); // Цвет метки оси
+    ui->customPlot-> yAxis-> setTickLengthIn (3); // Длина шкалы по оси
+    ui->customPlot-> yAxis-> setTickLengthOut (5); // Длина шкалы вне оси
 }
 
 MainWindow::~MainWindow()
@@ -133,6 +171,7 @@ void MainWindow::cancel_action() {
 void MainWindow::calc_expression() {
 
     if (this->isResult)
+        QString text = this->ui->expression->text().r;
         return;
 
     this->isResult = true;
@@ -141,7 +180,35 @@ void MainWindow::calc_expression() {
     QString text = this->ui->expression->text();
 
     if (text.indexOf("x") != -1) {
-        text.toStdString().c_str();
+        int N = abs(ui->max_x->value() - ui->min_x->value()) / ui->step_x->value();
+        QVector<double> x(N), y(N);
+        for (int i = 0; i < N; ++i) {
+          x[i] = ui->min_x->value() + ui->step_x->value() * i;
+
+          long double result;
+          char test2[text.size() + 1];
+          memcpy( test2, text.toStdString().c_str(), text.size());
+          test2[text.size()] = 0;
+
+          int error_code = calc((char *)test2, x[i], &result);
+          if (error_code) {
+              this->lastString = text;
+              this->ui->expression->setText(text + " = Ошибка");
+
+              ui->customPlot->clearGraphs();
+              ui->customPlot->replot();
+              return;
+          }
+          y[i] = (double)result; // exponentially decaying cosine
+        }
+
+        this->lastString = text;
+        this->ui->expression->setText(text + " = График построен");
+
+        ui->customPlot->graph(0)->setData(x, y);
+        ui->customPlot->replot();
+
+        ui->tabWidget->setCurrentWidget(ui->graph_grid);
     } else {
         long double result;
         char test2[text.size()];
