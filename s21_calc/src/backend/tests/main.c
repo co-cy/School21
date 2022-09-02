@@ -20,13 +20,10 @@ int main() {
     }
 
 //    long double res;
-//    long double v1 = -1;
-//    long double v2 = 1;
 //    char a[256];
-//    printf("AAA - %LF", strtold("-12", NULL));
-//    sprintf(a, "%Lf - %Lf", v1, v2);
+//    sprintf(a, "");
 //    calc(a, 0, &res);
-//    printf("RES - %Lf, TRUE - %Lf", res, v1 - v2);
+//    printf("RES - %Lf", res);
 
     if (failed_tests) {
         fprintf(stderr, "FAIL TEST: %d\n", failed_tests);

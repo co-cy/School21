@@ -66,7 +66,7 @@ START_TEST(sign_end_2){
     } elif (type_sign == 5) {
         strcat(string, " mod");
     } else {
-        strcat(string, "trash");
+        strcat(string, " trash");
     }
 
     long double res;
@@ -121,7 +121,8 @@ START_TEST(bad_more_numbers_1){
 
 START_TEST(bad_more_numbers_2){
     char string[256];
-    sprintf(string, "%LF %Lf +",
+    sprintf(string, "%LF %Lf %Lf +",
+            get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
