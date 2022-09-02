@@ -57,7 +57,7 @@ START_TEST(simple_int_mod){
 
 START_TEST(simple_int_degree){
     char string[256];
-    long int value = get_random(0, 1000), value2 = get_random(-10, 10);
+    long int value = get_random(0, 100), value2 = get_random(-10, 10);
     sprintf(string, "%ld ^ %ld", value, value2);
     long double true_result = powl(value, value2);
 
