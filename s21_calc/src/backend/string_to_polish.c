@@ -18,8 +18,6 @@ t_stack *string_to_polish(char *string) {
         char *word = calloc(strlen(tmp_world) + 1, sizeof(char));
         strcpy(word, tmp_world);
 
-        // TODO: delete debug print
-//        printf("WORD - %s\n", word);
         error_code = word_to_polish(word, &polish, &operators);
 
         tmp_world = strtok(NULL, " ");

@@ -7,8 +7,6 @@
 
 
 int calc(char *string, long double x, long double *result) {
-    // TODO: delete debug print
-//    printf("STRING: _%s_\n", string);
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
 
@@ -74,11 +72,8 @@ int calc(char *string, long double x, long double *result) {
                     }
                 }
 
-                if (error_code) {
-                    print_lex_stack(polish);
+                if (error_code)
                     break;
-                }
-
             }
 
             dump_lex_stack(&polish);
