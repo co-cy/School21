@@ -19,7 +19,7 @@ t_stack *string_to_polish(char *string) {
         strcpy(word, tmp_world);
 
         // TODO: delete debug print
-        printf("WORD - %s\n", word);
+//        printf("WORD - %s\n", word);
         error_code = word_to_polish(word, &polish, &operators);
 
         tmp_world = strtok(NULL, " ");

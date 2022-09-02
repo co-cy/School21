@@ -8,7 +8,7 @@
 
 int calc(char *string, long double x, long double *result) {
     // TODO: delete debug print
-    printf("STRING: _%s_\n", string);
+//    printf("STRING: _%s_\n", string);
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
 
@@ -56,17 +56,17 @@ int calc(char *string, long double x, long double *result) {
                             long double number2 = pop_ld_stack(&numbers);
 
                             if (!strcmp(polish->lexeme->string, "+")) {
-                                numbers = add_to_ld_stack(numbers, number1 + number2);
+                                numbers = add_to_ld_stack(numbers, number2 + number1);
                             } elif (!strcmp(polish->lexeme->string, "-")) {
-                                numbers = add_to_ld_stack(numbers, number1 - number2);
+                                numbers = add_to_ld_stack(numbers, number2 - number1);
                             } elif (!strcmp(polish->lexeme->string, "*")) {
-                                numbers = add_to_ld_stack(numbers, number1 * number2);
+                                numbers = add_to_ld_stack(numbers, number2 * number1);
                             } elif (!strcmp(polish->lexeme->string, "/")) {
-                                numbers = add_to_ld_stack(numbers, number1 / number2);
+                                numbers = add_to_ld_stack(numbers, number2 / number1);
                             } elif (!strcmp(polish->lexeme->string, "mod")) {
-                                numbers = add_to_ld_stack(numbers, fmodl(number1, number2));
+                                numbers = add_to_ld_stack(numbers, fmodl(number2, number1));
                             } elif (!strcmp(polish->lexeme->string, "^")) {
-                                numbers = add_to_ld_stack(numbers, powl(number1, number2));
+                                numbers = add_to_ld_stack(numbers, powl(number2, number1));
                             } else {
                                 error_code = 1;
                             }
