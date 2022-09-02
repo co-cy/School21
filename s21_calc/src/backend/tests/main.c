@@ -11,6 +11,8 @@ int main() {
             create_simple_int_testcase(),
             create_simple_float_testcase(),
             create_trigonometry_testcase(),
+            create_bad_testcase(),
+            create_hard_testcase(),
             NULL};
 
     for (Suite **testcase = list_cases; *testcase != NULL; testcase++) {

@@ -57,7 +57,7 @@ START_TEST(simple_float_mod){
 
 START_TEST(simple_float_degree){
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    long double value = get_random(0, 1000), value2 = get_random(0, 1000);
     sprintf(string, "%Lf ^ %Lf", value, value2);
     long double true_result = powl(value, value2);
 

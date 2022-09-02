@@ -15,6 +15,7 @@
 
 // Include custom library
 #include "../calculator.h"
+#include "../features.h"
 
 
 #define EPS 1e-5
@@ -26,6 +27,8 @@ void run_testcase(Suite *testcase);
 Suite *create_simple_float_testcase();
 Suite *create_simple_int_testcase();
 Suite *create_trigonometry_testcase();
+Suite *create_bad_testcase();
+Suite *create_hard_testcase();
 
 
 #endif //S21_CALC_MAIN_H
