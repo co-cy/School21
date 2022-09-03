@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-t_lexeme *pop_stack(t_stack **stack) {
+t_lexeme *pop_lex_stack(t_stack **stack) {
     /// Returns a pointer to the token that was on the stack
 
     t_lexeme *lexeme = NULL;

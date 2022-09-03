@@ -1,20 +1,33 @@
 //
-// Created by Nana Daughterless on 6/27/22.
+// Created by Nana Daughterless on 6/27/22. Created
 //
 
 #ifndef S21_CALC_S21_CALC_H
 #define S21_CALC_S21_CALC_H
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #include "structs/operators/operators.h"
 #include "structs/ld_stack/ld_stack.h"
 #include "structs/lexeme/lexem.h"
-#include "structs/stack/stack.h"
+#include "structs/lex_stack/lex_stack.h"
 
-
-t_stack *string_to_polish(char *string);
 
 int word_to_polish(char *word, t_stack **polish, t_stack **operators);
 
+t_stack *string_to_polish(char *string);
+
 int calc(char *string, long double x, long double *result);
 
+
+#ifdef __cplusplus
+}
+#endif
+
+
 #endif //S21_CALC_S21_CALC_H
+

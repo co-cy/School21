@@ -4,7 +4,7 @@
 
 #include "debug.h"
 
-void print_stack(t_stack *stack) {
+void print_lex_stack(t_stack *stack) {
     /// Displays the contents of the stack of lexemes
 
     short was = 0;

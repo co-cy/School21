@@ -2,20 +2,20 @@
 // Created by Nana Daughterless on 6/29/22.
 //
 
-#include "s21_calc.h"
+#include "calculator.h"
 #include "math.h"
 
 
 int calc(char *string, long double x, long double *result) {
-    printf("STRING: _%s_\n", string);
     *result = 0.0;
     t_stack *polish = string_to_polish(string);
 
-    int status = 0;
+    int error_code = 0;
     t_ld_stack *numbers = NULL;
     if (polish) {
-        polish = reverse_stack(polish);
+        polish = reverse_lex_stack(polish);
 
+        // TODO: Move logic to another function
         while (polish) {
             if (polish->lexeme->type == type_lexeme_number) {
                 long double value;
@@ -26,8 +26,8 @@ int calc(char *string, long double x, long double *result) {
 
                 numbers = add_to_ld_stack(numbers, value);
             } else {
-                status = numbers == NULL;
-                if (!status) {
+                error_code = numbers == NULL;
+                if (!error_code) {
                     long double number1 = pop_ld_stack(&numbers);
 
                     if (!strcmp(polish->lexeme->string, "cos")) {
@@ -49,58 +49,55 @@ int calc(char *string, long double x, long double *result) {
                     } elif (!strcmp(polish->lexeme->string, "log")) {
                         numbers = add_to_ld_stack(numbers, log10l(number1));
                     } else {
-                        status = numbers == NULL;
-                        if (!status) {
+                        error_code = numbers == NULL;
+                        if (!error_code) {
                             long double number2 = pop_ld_stack(&numbers);
 
                             if (!strcmp(polish->lexeme->string, "+")) {
-                                numbers = add_to_ld_stack(numbers, number1 + number2);
+                                numbers = add_to_ld_stack(numbers, number2 + number1);
                             } elif (!strcmp(polish->lexeme->string, "-")) {
-                                numbers = add_to_ld_stack(numbers, number1 - number2);
+                                numbers = add_to_ld_stack(numbers, number2 - number1);
                             } elif (!strcmp(polish->lexeme->string, "*")) {
-                                numbers = add_to_ld_stack(numbers, number1 * number2);
+                                numbers = add_to_ld_stack(numbers, number2 * number1);
                             } elif (!strcmp(polish->lexeme->string, "/")) {
-                                numbers = add_to_ld_stack(numbers, number1 / number2);
+                                numbers = add_to_ld_stack(numbers, number2 / number1);
                             } elif (!strcmp(polish->lexeme->string, "mod")) {
-                                numbers = add_to_ld_stack(numbers, fmodl(number1, number2));
+                                numbers = add_to_ld_stack(numbers, fmodl(number2, number1));
                             } elif (!strcmp(polish->lexeme->string, "^")) {
-                                numbers = add_to_ld_stack(numbers, powl(number1, number2));
+                                numbers = add_to_ld_stack(numbers, powl(number2, number1));
                             } else {
-                                status = 1;
+                                error_code = 1;
                             }
                         }
                     }
                 }
 
-                if (status) {
-                    print_stack(polish);
+                if (error_code)
                     break;
-                }
-
             }
 
-            dump_stack(&polish);
+            dump_lex_stack(&polish);
         }
     }
 
-    if (!status) {
+    if (!error_code) {
         if (numbers) {
             *result = pop_ld_stack(&numbers);
         } else {
-            status = 1;
+            error_code = 1;
         }
 
     }
 
     if (numbers) {
         free_ld_stack(&numbers);
-        status = 1;
+        error_code = 1;
     }
 
     if (polish) {
-        free_stack(&polish);
-        status = 1;
+        free_lex_stack(&polish);
+        error_code = 1;
     }
 
-    return status;
+    return error_code;
 }

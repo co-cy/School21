@@ -20,17 +20,17 @@ typedef struct s_stack {
 } t_stack;
 
 
-t_stack *create_stack(t_lexeme *lexeme);
+t_stack *create_lex_stack(t_lexeme *lexeme);
 
-void free_stack(t_stack **stack);
+void free_lex_stack(t_stack **stack);
 
-t_stack *add_to_stack(t_stack *stack, t_lexeme *lexeme);
+t_stack *add_to_lex_stack(t_stack *stack, t_lexeme *lexeme);
 
-void dump_stack(t_stack **stack);
+void dump_lex_stack(t_stack **stack);
 
-t_stack *reverse_stack(t_stack *stack);
+t_stack *reverse_lex_stack(t_stack *stack);
 
-t_lexeme *pop_stack(t_stack **stack);
+t_lexeme *pop_lex_stack(t_stack **stack);
 
 
 #endif //S21_CALC_STACK_CORE_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>390</height>
+    <width>467</width>
+    <height>440</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -643,40 +643,17 @@
        </attribute>
        <layout class="QVBoxLayout" name="graph_verticalLayout">
         <item>
+         <widget class="QCustomPlot" name="customPlot" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Max: x</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="max_x">
-              <property name="minimum">
-               <double>-100000000000.000000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>100000000000.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>100.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
           <item row="0" column="0">
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
@@ -731,7 +708,7 @@
             <item>
              <widget class="QDoubleSpinBox" name="step_x">
               <property name="minimum">
-               <double>-10000000.000000000000000</double>
+               <double>0.000000000000000</double>
               </property>
               <property name="maximum">
                <double>10000000.000000000000000</double>
@@ -741,6 +718,39 @@
               </property>
               <property name="value">
                <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Max: x</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="max_x">
+              <property name="minimum">
+               <double>-100000000000.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100000000000.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>100.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -759,10 +769,16 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>443</width>
-     <height>21</height>
+     <width>467</width>
+     <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuasdasd">
+    <property name="title">
+     <string>asdasd</string>
+    </property>
+   </widget>
+   <addaction name="menuasdasd"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -777,6 +793,14 @@
    </attribute>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

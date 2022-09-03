@@ -8,7 +8,7 @@
 
 typedef struct {
     char short_name;
-    char *long_name;
+    const char *long_name;
     int priority;
 } t_operator;
 
