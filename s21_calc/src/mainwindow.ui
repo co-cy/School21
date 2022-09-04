@@ -329,22 +329,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="4">
-           <widget class="QPushButton" name="exponent">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="text">
-             <string>e</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="2">
            <widget class="QPushButton" name="number_4">
             <property name="sizePolicy">
@@ -633,6 +617,22 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="4">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimum">
+             <double>-9999999999999999583119736832.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999999999999999583119736832.000000000000000</double>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -878,6 +878,11 @@
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="deposit_grid">
+       <attribute name="title">
+        <string>Депозитный</string>
+       </attribute>
       </widget>
      </widget>
     </item>
