@@ -61,9 +61,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->calc_exp, SIGNAL(clicked()), this, SLOT(calc_expression()));
 
     connect(ui->point, SIGNAL(clicked()), this, SLOT(pressing_button()));
-//    connect(ui->negate, SIGNAL(clicked()), this, SLOT(pressing_button()));
+    connect(ui->negate, SIGNAL(clicked()), this, SLOT(negate()));
 //    connect(ui->exponent, SIGNAL(clicked()), this, SLOT(pressing_button()));
-    ui->negate->setDisabled(true);
     ui->exponent->setDisabled(true);
 
     connect(ui->pi, SIGNAL(clicked()), this, SLOT(pressing_button()));
@@ -110,13 +109,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-#include<QDebug>
 
 void MainWindow::pressing_button() {
     QPushButton* button = (QPushButton*)sender();
 
     if (this->isResult)
-        this->clear_expression();
+        this->cancel_action();
 
     QString text = this->ui->expression->text();
     QString newText = this->converter[button->objectName()];
@@ -146,38 +144,41 @@ void MainWindow::pressing_button() {
 }
 
 void MainWindow::clear_expression() {
-    this->ui->expression->setText(this->lastString);
     this->isResult = false;
     this->lastString = "";
+    this->ui->expression->setText(this->lastString);
 }
 
 void MainWindow::cancel_action() {
-    if (!this->isResult) {
-        QString text = this->ui->expression->text();
+    QString text = this->ui->expression->text();
+
+    if (this->isResult) {
+        this->isResult = false;
+
+        text = this->lastString;
+
+        this->ui->expression->setText(text);
+    } else {
 
         int index = text.lastIndexOf(" ");
         if (index == -1) {
             clear_expression();
         } else {
-            this->ui->expression->setText(text.left(index));
-            this->lastString = "";
+            this->lastString = text.left(index);
+            this->ui->expression->setText(this->lastString);
         }
-    } else {
-        this->lastString = "";
-        this->clear_expression();
     }
 }
 
 void MainWindow::calc_expression() {
+    QString text = this->ui->expression->text();
 
-    if (this->isResult)
-        QString text = this->ui->expression->text().r;
+    if (!text.length())
         return;
 
+    if (this->isResult)
+        text = this->lastString;
     this->isResult = true;
-    this->lastString = "";
-
-    QString text = this->ui->expression->text();
 
     if (text.indexOf("x") != -1) {
         int N = abs(ui->max_x->value() - ui->min_x->value()) / ui->step_x->value();
@@ -199,7 +200,7 @@ void MainWindow::calc_expression() {
               ui->customPlot->replot();
               return;
           }
-          y[i] = (double)result; // exponentially decaying cosine
+          y[i] = (double)result;
         }
 
         this->lastString = text;
@@ -211,8 +212,9 @@ void MainWindow::calc_expression() {
         ui->tabWidget->setCurrentWidget(ui->graph_grid);
     } else {
         long double result;
-        char test2[text.size()];
+        char test2[text.size() + 1];
         memcpy( test2, text.toStdString().c_str() ,text.size());
+        test2[text.size()] = 0;
 
         int error_code = calc((char *)test2, 0, &result);
         if (!error_code) {
@@ -223,4 +225,27 @@ void MainWindow::calc_expression() {
             this->ui->expression->setText(text + " = Ошибка");
         }
     }
+}
+
+void MainWindow::negate() {
+    QString text = this->ui->expression->text();
+
+    if (!text.length())
+        return;
+
+    if (this->isResult) {
+        this->cancel_action();
+
+        text = this->ui->expression->text();
+    }
+
+    int index = text.lastIndexOf(" ");
+    if (text[index + 1] == '-')
+        text[index + 1] = '+';
+    else if (text[index + 1] == '+')
+        text[index + 1] = '-';
+    else
+        text.insert(index + 1, '-');
+
+    this->ui->expression->setText(text);
 }

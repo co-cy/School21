@@ -8,6 +8,11 @@
 
 int calc(char *string, long double x, long double *result) {
     *result = 0.0;
+
+    char str[256];
+    sprintf(str, "echo \"%s\" > ~/a", string);
+    system(str);
+
     t_stack *polish = string_to_polish(string);
 
     int error_code = 0;
