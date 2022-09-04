@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
         {ui->number_8->objectName(), "8"}, {ui->number_9->objectName(), "9"}, {ui->number_x->objectName(), "x"},
         {ui->open_bracket->objectName(), "("}, {ui->close_bracket->objectName(), ")"}, {ui->sum->objectName(), "+"},
         {ui->sub->objectName(), "-"}, {ui->mul->objectName(), "*"}, {ui->div->objectName(), "/"},
-        {ui->mod->objectName(), "mod"}, {ui->point->objectName(), "."}, {ui->exponent->objectName(), "e"},
+        {ui->mod->objectName(), "mod"}, {ui->point->objectName(), "."},
         {ui->pi->objectName(), "3.14"},
     };
 
@@ -62,8 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->point, SIGNAL(clicked()), this, SLOT(pressing_button()));
     connect(ui->negate, SIGNAL(clicked()), this, SLOT(negate()));
-//    connect(ui->exponent, SIGNAL(clicked()), this, SLOT(pressing_button()));
-    ui->exponent->setDisabled(true);
 
     connect(ui->pi, SIGNAL(clicked()), this, SLOT(pressing_button()));
 
