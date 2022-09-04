@@ -9,9 +9,9 @@
 int calc(char *string, long double x, long double *result) {
     *result = 0.0;
 
-    char str[256];
-    sprintf(str, "echo \"%s\" > ~/a", string);
-    system(str);
+//    char str[256];
+//    sprintf(str, "echo \"%s\" > ~/a", string);
+//    system(str);
 
     t_stack *polish = string_to_polish(string);
 
@@ -105,4 +105,16 @@ int calc(char *string, long double x, long double *result) {
     }
 
     return error_code;
+}
+
+double credit_calc_annuity(double loan_amount, int period, double percent) {
+    percent = percent / 1200; // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
+
+    return loan_amount * percent * powl((1 + percent), period) / (powl((1 + percent), period) - 1);
+}
+
+double credit_calc_differentiate(double loan_amount, int period, int cur_period, double percent) {
+    percent = percent / 1200; // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
+
+    return loan_amount / period + percent * (loan_amount - (loan_amount * (cur_period - 1) / period));
 }

@@ -22,7 +22,8 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators);
 t_stack *string_to_polish(char *string);
 
 int calc(char *string, long double x, long double *result);
-
+double credit_calc_annuity(double loan_amount, int period, double percent);
+double credit_calc_differentiate(double loan_amount, int period, int cur_period, double percent);
 
 #ifdef __cplusplus
 }

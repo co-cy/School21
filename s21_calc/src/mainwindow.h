@@ -25,6 +25,7 @@ private slots:
     void cancel_action();
     void calc_expression();
     void negate();
+    void calc_credit();
 
 private:
     Ui::MainWindow *ui;

@@ -67,6 +67,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pi, SIGNAL(clicked()), this, SLOT(pressing_button()));
 
+
+    connect(ui->calc_credit, SIGNAL(clicked()), this, SLOT(calc_credit()));
+
+
     ui->customPlot->addGraph();
     ui->customPlot->graph(0)->setPen(QPen(Qt::red)); // line color blue for first graph
     ui->customPlot->graph(0)->setLineStyle(QCPGraph::LineStyle::lsNone);
@@ -248,4 +252,41 @@ void MainWindow::negate() {
         text.insert(index + 1, '-');
 
     this->ui->expression->setText(text);
+}
+
+void MainWindow::calc_credit() {
+    if (this->ui->annuity->isChecked()) {
+        double loan = this->ui->loan_amount->value();
+        int period = this->ui->period->value();
+
+        double res = credit_calc_annuity(loan, period, this->ui->percent->value());
+        double all = res * period;
+
+        this->ui->label_mon_pay->setText("Ежемесячный платеж: " + QString::number(res));
+        this->ui->label_overpay->setText("Переплата по кредиту: " + QString::number(all - loan ));
+        this->ui->label_all_pay->setText("Общая выплата: " + QString::number(all));
+    } else {
+        double loan = this->ui->loan_amount->value();
+        int period = this->ui->period->value();
+
+
+        double start_res = credit_calc_differentiate(loan, period, 1, this->ui->percent->value());
+        double end_res = 0;
+        if (period > 1)
+            end_res = credit_calc_differentiate(loan, period, period, this->ui->percent->value());
+
+
+        double all = start_res + end_res;
+        for (int i = 2; i < period; i++)
+            all += credit_calc_differentiate(loan, period, i, this->ui->percent->value());
+
+
+        QString text = "Ежемесячный платеж: " + QString::number(start_res);
+        if (period > 1)
+            text +=  + " - " + QString::number(end_res);
+
+        this->ui->label_mon_pay->setText(text);
+        this->ui->label_overpay->setText("Переплата по кредиту: " + QString::number(all - loan));
+        this->ui->label_all_pay->setText("Общая выплата: " + QString::number(all));
+    }
 }
