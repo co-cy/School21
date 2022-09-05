@@ -618,7 +618,7 @@
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox">
+           <widget class="QDoubleSpinBox" name="value_x">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
@@ -894,7 +894,7 @@
      <x>0</x>
      <y>0</y>
      <width>467</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

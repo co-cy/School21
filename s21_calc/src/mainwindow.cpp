@@ -205,8 +205,16 @@ void MainWindow::calc_expression() {
           y[i] = (double)result;
         }
 
+        long double result;
+        char test2[text.size() + 1];
+        memcpy( test2, text.toStdString().c_str(), text.size());
+        test2[text.size()] = 0;
+
+        int error_code = calc((char *)test2, this->ui->value_x->value(), &result);
+
+
         this->lastString = text;
-        this->ui->expression->setText(text + " = График построен");
+        this->ui->expression->setText(text + " = " + QString::number((double) result));
 
         ui->customPlot->graph(0)->setData(x, y);
         ui->customPlot->replot();
