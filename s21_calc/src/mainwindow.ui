@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>440</height>
+    <width>466</width>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -883,6 +883,172 @@
        <attribute name="title">
         <string>Депозитный</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="10" column="0" colspan="2">
+         <widget class="QLabel" name="label_finaly_percent">
+          <property name="text">
+           <string>Начисленные проценты:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_deposit_tax_period">
+          <property name="text">
+           <string>Налоговая ставка:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="list_add"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="pay_period">
+          <item>
+           <property name="text">
+            <string>Ежемесячный</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ежеквартальный</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Полугодовой</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ежегодный</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="list_remove"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_capitalize">
+          <property name="text">
+           <string>Капитализация процентов:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0" colspan="2">
+         <widget class="QLabel" name="label_sum_tax">
+          <property name="text">
+           <string>Сумма налога:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="deposit_tax_percent">
+          <property name="minimum">
+           <double>0.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>999.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_list_add">
+          <property name="text">
+           <string>Список пополнений:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="deposit_percent">
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>999.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_deposit_period_2">
+          <property name="text">
+           <string>Процентная ставка:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_deposit_period_3">
+          <property name="text">
+           <string>Cрок:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_list_remove">
+          <property name="text">
+           <string>Список частичных снятий:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_deposit_period">
+          <property name="text">
+           <string>Периодичность выплат:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="deposit_amount">
+          <property name="minimum">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1000000000000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QPushButton" name="calc_deposit">
+          <property name="text">
+           <string>Посчитать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0" colspan="2">
+         <widget class="QLabel" name="label_deposit_sum">
+          <property name="text">
+           <string>Сумма на вкладе к концу срока:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_deposit_amount">
+          <property name="text">
+           <string>Cумма вклада:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QCheckBox" name="capitalize">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="deposit_period">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>600</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -893,7 +1059,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>467</width>
+     <width>466</width>
      <height>21</height>
     </rect>
    </property>

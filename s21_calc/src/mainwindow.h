@@ -26,6 +26,7 @@ private slots:
     void calc_expression();
     void negate();
     void calc_credit();
+    void calc_deposit();
 
 private:
     Ui::MainWindow *ui;
