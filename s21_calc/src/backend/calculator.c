@@ -118,3 +118,64 @@ double credit_calc_differentiate(double loan_amount, int period, int cur_period,
 
     return loan_amount / period + percent * (loan_amount - (loan_amount * (cur_period - 1) / period));
 }
+
+double a(char **list_add, int cur_time, int *error_code) {
+    char *pointer1 = NULL;
+    char *pointer2 = NULL;
+
+    double result = 0;
+
+    int period = strtol(*list_add, &pointer1, 10);
+    if (**list_add && *list_add == pointer1) {
+        *error_code = 1;
+    } else if (period >= cur_time) {
+        double value = strtold(pointer1, &pointer2);
+        if (*pointer1 && pointer1 == pointer2) {
+            *error_code = 1;
+        } else {
+            *list_add = pointer2;
+            result = value;
+        }
+    }
+
+    return result;
+}
+
+t_deposit deposit_calc(double deposit_amount, int period, double percent, double tax_percent, int pay_period, int capitalize, char* list_add, char* list_pop, int* error_code) {
+    tax_percent = tax_percent * pay_period / 1200;
+    percent = percent * pay_period / 1200;
+    *error_code = 0;
+
+    double tmp, added = 0;
+    t_deposit result = {0, 0};
+    for (int i = pay_period; i <= period; i += pay_period) {
+        tmp = deposit_amount * percent;
+        result.tax += tmp * (tax_percent);
+
+        if (capitalize)
+            deposit_amount += tmp * (1 - tax_percent);
+        else
+            added += tmp * (1 - tax_percent);
+
+        double value = a(&list_add, i, error_code);
+        if (!*error_code) {
+            deposit_amount += value;
+
+            value = a(&list_pop, i, error_code);
+            if (!*error_code)
+                deposit_amount -= value;
+        }
+
+        if (deposit_amount < 0)
+            *error_code = 1;
+
+        if (*error_code)
+            break;
+    }
+
+    result.contribution = deposit_amount;
+    if (!capitalize)
+        result.contribution += added;
+
+    return result;
+}
