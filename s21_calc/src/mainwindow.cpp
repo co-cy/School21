@@ -206,7 +206,13 @@ void MainWindow::calc_expression() {
   this->isResult = true;
 
   if (text.indexOf("x") != -1) {
-    int N = abs(ui->max_x->value() - ui->min_x->value()) / ui->step_x->value();
+    int N = ui->max_x->value() - ui->min_x->value() / ui->step_x->value();
+    if (N < 0)
+        N = 0;
+
+    if (N > 50000)
+        N = 50000;
+
     QVector<double> x(N), y(N);
     for (int i = 0; i < N; ++i) {
       x[i] = ui->min_x->value() + ui->step_x->value() * i;

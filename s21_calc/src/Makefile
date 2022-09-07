@@ -1,6 +1,10 @@
 .PHONY: all
-all: install
+all: install run
 
+.PHONY: run
+run:
+	cd build && make calculator && open calculator.app/Contents/MacOS/calculator
+	cd ..
 
 .PHONY: install
 install:
