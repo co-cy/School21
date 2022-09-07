@@ -34,15 +34,13 @@ set(PROJECT_SOURCES
         backend/structs/lex_stack/core/free_lex_stack.c
         backend/structs/lex_stack/core/pop_lex_stack.c
         backend/structs/lex_stack/core/reverse_stack.c
-        backend/structs/lex_stack/debug/print_lex_stack.c
-        backend/structs/lexeme/conversion/string_to_lexeme.c
         backend/structs/lexeme/core/create_lexeme.c
         backend/structs/lexeme/core/free_lexeme.c
         backend/structs/lexeme/core/get_type_lexeme_from_string.c
         backend/structs/operators/comparison/char_is_operator.c
         backend/structs/operators/comparison/string_is_command.c
         backend/structs/operators/conversion/char_to_priority_operator.c
-        backend/structs/operators/conversion/string_to_priority_operator.c
+        backend/structs/operators/core/core.c
         backend/word_to_polish.c
 
         backend/calculator.h
