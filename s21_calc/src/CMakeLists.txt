@@ -46,6 +46,15 @@ set(PROJECT_SOURCES
         backend/calculator.h
 )
 
+set(CPACK_SOURCE_GENERATOR "TGZ")
+add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+set(CPACK_SOURCE_IGNORE_FILES
+    ./CMakeFiles
+    ./calculator.app
+    ./_CPack_Packages
+)
+
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(calculator
         MANUAL_FINALIZATION
@@ -82,3 +91,5 @@ set_target_properties(calculator PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(calculator)
 endif()
+
+include(CPack)

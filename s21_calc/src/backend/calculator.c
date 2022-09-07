@@ -3,6 +3,7 @@
 //
 
 #include "calculator.h"
+
 #include "math.h"
 
 int cycle(t_stack **polish, t_ld_stack **numbers, long double x) {
@@ -167,10 +168,10 @@ t_deposit deposit_calc(double deposit_amount, int period, double percent,
   percent = percent * pay_period / 1200;
   *error_code = 0;
 
-  double tmp, added = 0;
+  double added = 0;
   t_deposit result = {0, 0};
   for (int i = pay_period; i <= period; i += pay_period) {
-    tmp = deposit_amount * percent;
+    double tmp = deposit_amount * percent;
     result.tax += tmp * (tax_percent);
 
     if (capitalize)

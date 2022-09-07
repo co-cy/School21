@@ -30,7 +30,6 @@ START_TEST(hard_3) {
 }
 END_TEST
 
-
 START_TEST(hard_4) {
   char string[256] = "( x = x )";
 
@@ -48,12 +47,12 @@ START_TEST(hard_5) {
 END_TEST
 
 START_TEST(hard_6) {
-    char string[256] = "x + x * x ^ 1 + 1";
-    long double true_result = 111;
+  char string[256] = "x + x * x ^ 1 + 1";
+  long double true_result = 111;
 
-    long double result;
-    ck_assert_int_eq(calc(string, 10, &result), 0);
-    ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
+  long double result;
+  ck_assert_int_eq(calc(string, 10, &result), 0);
+  ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 }
 END_TEST
 
