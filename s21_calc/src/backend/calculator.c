@@ -20,7 +20,7 @@ int calc(char *string, long double x, long double *result) {
     if (polish) {
         polish = reverse_lex_stack(polish);
 
-        // TODO: Move logic to another function
+        // TODO(nanadaug): Move logic to another function
         while (polish) {
             if (polish->lexeme->type == type_lexeme_number) {
                 long double value;
@@ -86,12 +86,10 @@ int calc(char *string, long double x, long double *result) {
     }
 
     if (!error_code) {
-        if (numbers) {
+        if (numbers)
             *result = pop_ld_stack(&numbers);
-        } else {
+        else
             error_code = 1;
-        }
-
     }
 
     if (numbers) {
@@ -108,13 +106,13 @@ int calc(char *string, long double x, long double *result) {
 }
 
 double credit_calc_annuity(double loan_amount, int period, double percent) {
-    percent = percent / 1200; // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
+    percent = percent / 1200;  // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
 
     return loan_amount * percent * powl((1 + percent), period) / (powl((1 + percent), period) - 1);
 }
 
 double credit_calc_differentiate(double loan_amount, int period, int cur_period, double percent) {
-    percent = percent / 1200; // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
+    percent = percent / 1200;  // convert % -> value (/ 100) and convert year percent -> month percent (/ 12)
 
     return loan_amount / period + percent * (loan_amount - (loan_amount * (cur_period - 1) / period));
 }
@@ -141,7 +139,8 @@ double a(char **list_add, int cur_time, int *error_code) {
     return result;
 }
 
-t_deposit deposit_calc(double deposit_amount, int period, double percent, double tax_percent, int pay_period, int capitalize, char* list_add, char* list_pop, int* error_code) {
+t_deposit deposit_calc(double deposit_amount, int period, double percent, double tax_percent,
+                       int pay_period, int capitalize, char* list_add, char* list_pop, int* error_code) {
     tax_percent = tax_percent * pay_period / 1200;
     percent = percent * pay_period / 1200;
     *error_code = 0;

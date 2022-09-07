@@ -9,7 +9,7 @@ t_lexeme *create_lexeme(char *string, type_lexeme type) {
     /// "string" - pointer to the allocated string in memory
     /// "type" - the type of the new lexeme
 
-    // TODO: Take out a normal error code handler
+    // TODO(nanadaug): Take out a normal error code handler
     t_lexeme *new_lexeme = malloc(sizeof(t_lexeme));
     if (!new_lexeme)
         exit(1);

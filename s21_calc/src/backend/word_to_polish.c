@@ -42,5 +42,8 @@ int word_to_polish(char *word, t_stack **polish, t_stack **operators) {
         error_code = 1;
     }
 
+    if (error_code)
+        free(lexeme);
+
     return error_code;
 }

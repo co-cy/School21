@@ -15,15 +15,15 @@ int main() {
             create_hard_testcase(),
             NULL};
 
-//    for (Suite **testcase = list_cases; *testcase != NULL; testcase++) {
-//        run_testcase(*testcase);
-//    }
+    for (Suite **testcase = list_cases; *testcase != NULL; testcase++) {
+        run_testcase(*testcase);
+    }
 
-    long double res;
-    char a[256];
-    sprintf(a, "log ( 5 )");
-    int g = calc(a, 0, &res);
-    printf("%d, RES - %Lf", g, res);
+//    long double res;
+//    char a[256];
+//    sprintf(a, "log ( 5 )");
+//    int g = calc(a, 0, &res);
+//    printf("%d, RES - %Lf", g, res);
 
     if (failed_tests) {
         fprintf(stderr, "FAIL TEST: %d\n", failed_tests);

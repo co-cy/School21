@@ -1,9 +1,10 @@
 #include "main.h"
 
-START_TEST(simple_float_sum){
+START_TEST(simple_float_sum) {
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
-    sprintf(string, "%Lf + %Lf", value, value2);
+    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2),
+    value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    snprintf(string, sizeof (string), "%Lf + %Lf", value, value2);
     long double true_result = value + value2;
 
     long double result = 0;
@@ -11,10 +12,11 @@ START_TEST(simple_float_sum){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_float_sub){
+START_TEST(simple_float_sub) {
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
-    sprintf(string, "%Lf - %Lf", value, value2);
+    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2),
+    value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    snprintf(string, sizeof (string), "%Lf - %Lf", value, value2);
     long double true_result = value - value2;
 
     long double result = 0;
@@ -22,10 +24,11 @@ START_TEST(simple_float_sub){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_float_mul){
+START_TEST(simple_float_mul) {
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
-    sprintf(string, "%Lf * %Lf", value, value2);
+    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2),
+    value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    snprintf(string, sizeof (string), "%Lf * %Lf", value, value2);
     long double true_result = value * value2;
 
     long double result = 0;
@@ -33,10 +36,11 @@ START_TEST(simple_float_mul){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_float_div){
+START_TEST(simple_float_div) {
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
-    sprintf(string, "%Lf / %Lf", value, value2);
+    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2),
+    value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    snprintf(string, sizeof (string), "%Lf / %Lf", value, value2);
     long double true_result = value / value2;
 
     long double result = 0;
@@ -44,10 +48,11 @@ START_TEST(simple_float_div){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_float_mod){
+START_TEST(simple_float_mod) {
     char string[256];
-    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2), value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
-    sprintf(string, "%Lf mod %Lf", value, value2);
+    long double value = get_random(-RAND_MAX / 2, RAND_MAX / 2),
+    value2 = get_random(-RAND_MAX / 2, RAND_MAX / 2);
+    snprintf(string, sizeof (string), "%Lf mod %Lf", value, value2);
     long double true_result = fmodl(value, value2);
 
     long double result = 0;

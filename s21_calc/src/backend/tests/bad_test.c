@@ -1,97 +1,97 @@
 #include "main.h"
 
-START_TEST(sign_end_1){
+START_TEST(sign_end_1) {
     char string[256];
-    sprintf(string, "%LF ", get_random(-RAND_MAX / 2, RAND_MAX / 2));
+    snprintf(string, sizeof (string), "%LF ", get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
     int type_sign = get_random(0, 7);
 
     if (type_sign == 0) {
-        strcat(string, "-");
+        snprintf(string, sizeof (string), "-");
     } elif (type_sign == 1) {
-        strcat(string, "+");
+        snprintf(string, sizeof (string), "+");
     } elif (type_sign == 2) {
-        strcat(string, "*");
+        snprintf(string, sizeof (string), "*");
     } elif (type_sign == 3) {
-        strcat(string, "/");
+        snprintf(string, sizeof (string), "/");
     } elif (type_sign == 4) {
-        strcat(string, "^");
+        snprintf(string, sizeof (string), "^");
     } elif (type_sign == 5) {
-        strcat(string, "mod");
+        snprintf(string, sizeof (string), "mod");
     } else {
-        strcat(string, "trash");
+        snprintf(string, sizeof (string), "trash");
     }
 
     long double res;
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(sign_end_2){
+START_TEST(sign_end_2) {
     char string[256];
-    sprintf(string, "%LF ", get_random(-RAND_MAX / 2, RAND_MAX / 2));
+    snprintf(string, sizeof (string), "%LF ", get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
     int type_sign = get_random(0, 7);
 
     if (type_sign == 0) {
-        strcat(string, "- ");
+        snprintf(string, sizeof (string), "- ");
     } elif (type_sign == 1) {
-        strcat(string, "+ ");
+        snprintf(string, sizeof (string), "+ ");
     } elif (type_sign == 2) {
-        strcat(string, "* ");
+        snprintf(string, sizeof (string), "* ");
     } elif (type_sign == 3) {
-        strcat(string, "/ ");
+        snprintf(string, sizeof (string), "/ ");
     } elif (type_sign == 4) {
-        strcat(string, "^ ");
+        snprintf(string, sizeof (string), "^ ");
     } elif (type_sign == 5) {
-        strcat(string, "mod ");
+        snprintf(string, sizeof (string), "mod ");
     } else {
-        strcat(string, "trash ");
+        snprintf(string, sizeof (string), "trash ");
     }
 
     char tmp_string[256];
-    sprintf(tmp_string, "%Lf", get_random(-RAND_MAX / 2, RAND_MAX / 2));
-    strcat(string, tmp_string);
+    snprintf(tmp_string, sizeof(tmp_string), "%Lf", get_random(-RAND_MAX / 2, RAND_MAX / 2));
+    snprintf(string, sizeof (string), "%s", tmp_string);
 
     type_sign = get_random(0, 7);
     if (type_sign == 0) {
-        strcat(string, " -");
+        snprintf(string, sizeof (string), " -");
     } elif (type_sign == 1) {
-        strcat(string, " +");
+        snprintf(string, sizeof (string), " +");
     } elif (type_sign == 2) {
-        strcat(string, " *");
+        snprintf(string, sizeof (string), " *");
     } elif (type_sign == 3) {
-        strcat(string, " /");
+        snprintf(string, sizeof (string), " /");
     } elif (type_sign == 4) {
-        strcat(string, " ^");
+        snprintf(string, sizeof (string), " ^");
     } elif (type_sign == 5) {
-        strcat(string, " mod");
+        snprintf(string, sizeof (string), " mod");
     } else {
-        strcat(string, " trash");
+        snprintf(string, sizeof (string), " trash");
     }
 
     long double res;
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_brackets_1){
+START_TEST(bad_brackets_1) {
     char string[256];
-    sprintf(string, "( %LF", get_random(-RAND_MAX / 2, RAND_MAX / 2));
+    snprintf(string, sizeof (string), "( %LF", get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
     long double res;
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_brackets_2){
+START_TEST(bad_brackets_2) {
     char string[256];
-    sprintf(string, "%LF )", get_random(-RAND_MAX / 2, RAND_MAX / 2));
+    snprintf(string, sizeof (string), "%LF )", get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
     long double res;
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_brackets_3){
+START_TEST(bad_brackets_3) {
     char string[256];
-    sprintf(string, "( %LF + %Lf  ) )",
+    snprintf(string, sizeof (string), "( %LF + %Lf  ) )",
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
@@ -99,9 +99,9 @@ START_TEST(bad_brackets_3){
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_brackets_4){
+START_TEST(bad_brackets_4) {
     char string[256];
-    sprintf(string, "( ( %LF + %Lf )",
+    snprintf(string, sizeof (string), "( ( %LF + %Lf )",
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
@@ -109,9 +109,9 @@ START_TEST(bad_brackets_4){
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_more_numbers_1){
+START_TEST(bad_more_numbers_1) {
     char string[256];
-    sprintf(string, "%LF %Lf",
+    snprintf(string, sizeof (string), "%LF %Lf",
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2));
 
@@ -119,9 +119,9 @@ START_TEST(bad_more_numbers_1){
     ck_assert_int_eq(calc(string, 0, &res), 1);
 } END_TEST
 
-START_TEST(bad_more_numbers_2){
+START_TEST(bad_more_numbers_2) {
     char string[256];
-    sprintf(string, "%LF %Lf %Lf +",
+    snprintf(string, sizeof (string), "%LF %Lf %Lf +",
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2),
             get_random(-RAND_MAX / 2, RAND_MAX / 2));

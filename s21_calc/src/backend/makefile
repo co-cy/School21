@@ -1,11 +1,6 @@
 CC := gcc
 CFLAGS := -c -std=c11 -lcheck --coverage
-
-ifdef DEV
-CFLAGS += -Wall -Wextra -Werror -fanalyzer -g -fsanitize=address
-endif
-
-FLAGS := -g -fsanitize=address -std=c11 -lcheck --coverage
+FLAGS := -Wall -Wextra -Werror -fanalyzer -g -std=c11 -lcheck --coverage
 
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := final_program

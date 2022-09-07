@@ -1,9 +1,9 @@
 #include "main.h"
 
-START_TEST(simple_low_random_cos){
+START_TEST(simple_low_random_cos) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "cos ( %Lf )", value);
+    snprintf(string, sizeof (string), "cos ( %Lf )", value);
     long double true_result = cosl(value);
 
     long double result = 0;
@@ -12,10 +12,10 @@ START_TEST(simple_low_random_cos){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_acos){
+START_TEST(simple_low_random_acos) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "acos ( %Lf )", value);
+    snprintf(string, sizeof (string), "acos ( %Lf )", value);
     long double true_result = acosl(value);
 
     long double result = 0;
@@ -24,10 +24,10 @@ START_TEST(simple_low_random_acos){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_sin){
+START_TEST(simple_low_random_sin) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "sin ( %Lf )", value);
+    snprintf(string, sizeof (string), "sin ( %Lf )", value);
     long double true_result = sinl(value);
 
     long double result = 0;
@@ -36,10 +36,10 @@ START_TEST(simple_low_random_sin){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_asin){
+START_TEST(simple_low_random_asin) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "asin ( %Lf )", value);
+    snprintf(string, sizeof (string), "asin ( %Lf )", value);
     long double true_result = asinl(value);
 
     long double result = 0;
@@ -48,10 +48,10 @@ START_TEST(simple_low_random_asin){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_tan){
+START_TEST(simple_low_random_tan) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "tan ( %Lf )", value);
+    snprintf(string, sizeof (string), "tan ( %Lf )", value);
     long double true_result = tanl(value);
 
     long double result = 0;
@@ -61,10 +61,10 @@ START_TEST(simple_low_random_tan){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_atan){
+START_TEST(simple_low_random_atan) {
     char string[256];
     long double value = get_random(-1, 1);
-    sprintf(string, "atan ( %Lf )", value);
+    snprintf(string, sizeof (string), "atan ( %Lf )", value);
     long double true_result = atanl(value);
 
     long double result = 0;
@@ -74,10 +74,10 @@ START_TEST(simple_low_random_atan){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_sqrt){
+START_TEST(simple_low_random_sqrt) {
     char string[256];
     long double value = get_random(0, RAND_MAX / 2);
-    sprintf(string, "sqrt ( %Lf )", value);
+    snprintf(string, sizeof (string), "sqrt ( %Lf )", value);
     long double true_result = sqrtl(value);
 
     long double result = 0;
@@ -86,10 +86,10 @@ START_TEST(simple_low_random_sqrt){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_ln){
+START_TEST(simple_low_random_ln) {
     char string[256];
     long double value = get_random(0e-7, RAND_MAX / 2);
-    sprintf(string, "ln ( %Lf )", value);
+    snprintf(string, sizeof (string), "ln ( %Lf )", value);
     long double true_result = logl(value);
 
     long double result = 0;
@@ -98,10 +98,10 @@ START_TEST(simple_low_random_ln){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(simple_low_random_log){
+START_TEST(simple_low_random_log) {
     char string[256];
     long double value = get_random(0e-7, RAND_MAX / 2);
-    sprintf(string, "log ( %Lf )", value);
+    snprintf(string, sizeof (string), "log ( %Lf )", value);
     long double true_result = log10l(value);
 
     long double result = 0;

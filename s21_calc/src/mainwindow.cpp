@@ -211,7 +211,7 @@ void MainWindow::calc_expression() {
         memcpy( test2, text.toStdString().c_str(), text.size());
         test2[text.size()] = 0;
 
-        int error_code = calc((char *)test2, this->ui->value_x->value(), &result);
+        calc((char *)test2, this->ui->value_x->value(), &result);
 
 
         this->lastString = text;

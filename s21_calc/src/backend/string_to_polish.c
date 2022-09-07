@@ -13,14 +13,16 @@ t_stack *string_to_polish(char *string) {
     t_stack *operators = NULL;
 
     int error_code = 0;
-    char *tmp_world = strtok(string, " ");
+    char *tmp_world = strtok_r(string, " ", &string);
     while (!error_code && tmp_world) {
         char *word = calloc(strlen(tmp_world) + 1, sizeof(char));
-        strcpy(word, tmp_world);
+        snprintf(word, strlen(tmp_world) + 1, "%s", tmp_world);
 
         error_code = word_to_polish(word, &polish, &operators);
+        if (error_code)
+            free(word);
 
-        tmp_world = strtok(NULL, " ");
+        tmp_world = strtok_r(NULL, " ", &string);
     }
 
     if (error_code) {

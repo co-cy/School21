@@ -1,6 +1,6 @@
 #include "main.h"
 
-START_TEST(hard_1){
+START_TEST(hard_1) {
     char string[256] = "( 2 + 2 * 2 )";
     long double true_result = 6;
 
@@ -9,7 +9,7 @@ START_TEST(hard_1){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(hard_2){
+START_TEST(hard_2) {
     char string[256] = "( 2 + 2 * ( 1 + 1 ) )";
     long double true_result = 6;
 
@@ -18,7 +18,7 @@ START_TEST(hard_2){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(hard_3){
+START_TEST(hard_3) {
     char string[256] = "( x + x * ( x + x ) )";
     long double true_result = 210;
 
@@ -27,14 +27,14 @@ START_TEST(hard_3){
     ck_assert_double_eq_tol(result, true_result, get_EPS(true_result, result));
 } END_TEST
 
-START_TEST(hard_4){
+START_TEST(hard_4) {
     char string[256] = "( x = x )";
 
     long double result;
     ck_assert_int_eq(calc(string, 10, &result), 1);
 } END_TEST
 
-START_TEST(hard_5){
+START_TEST(hard_5) {
     char string[256] = "( x boba x )";
 
     long double result;
