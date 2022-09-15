@@ -60,3 +60,81 @@ Impossible:
 - 10.10.100.1
 
 ## Part 2
+
+ip a (ws1)
+![](images/part2/ip_a_ws1.png)
+
+ip a (ws2)
+![](images/part2/ip_a_ws2.png)
+
+etc/netplan/00-installer-config.yaml (ws1)
+![](images/part2/netplan_ws1.png)
+
+etc/netplan/00-installer-config.yaml (ws2)
+![](images/part2/netplan_ws2.png)
+
+sudo netplan apply (ws1)
+![](images/part2/netplan_apply_ws1.png)
+
+sudo netplan apply (ws2)
+![](images/part2/netplan_apply_ws2.png)
+
+### Part 2.1
+
+ip r add (ws1)
+![](images/part2/ping_ws1_ws2.png)
+
+ip r add (ws2)
+![](images/part2/ping_ws2_ws1.png)
+
+### Part 2.2
+
+new_netplan (ws1)
+![](images/part2/new_netplan_ws1.png)
+
+ping new_netplan
+![](images/part2/ping_new_netplan_ws1.png)
+
+new_netplan (ws2)
+![](images/part2/new_netplan_ws2.png)
+
+ping new_netplan
+![](images/part2/ping_new_netplan_ws2.png)
+
+
+## Part 3
+
+### Part 3.1
+8 Mbps в MB/s = 1MB/s, <br/>
+100 MB/s в Kbps = 800 000 Kbps, <br/>
+1 Gbps в Mbps = 1000 Mbps <br/>
+
+### Part 3.2
+
+iperf3 -s - Создание сервера
+iperf3 -c <ip> - Подключиться к серверу тестирования
+![](images/part3/iperf3.png)
+
+## Part 4
+
+firewall for ws1
+![](images/part4/firewall_ws1.png)
+
+firewall for ws2
+![](images/part4/firewall_ws2.png)
+
+Apply firewall ws1
+![](images/part4/apply_firewall_ws1.png)
+
+Apply firewall ws2
+![](images/part4/apply_firewall_ws2.png)
+
+Разница между стратегиями: <br/>
+В 1-й стратегии мы разрешаем, а потом пытаемся перезаписать запрещающим правилом. (Но этого не происходит, потому что перезаписывать нельзя)<br/>
+Во 2-й мы с начало запрещаем, а потом разрешаем (Но этого не происходит, потому что перезаписывать нельзя)<br/>
+
+### Part 4.2
+nmap
+![](images/part4/nmap.png)
+
+## Part 5 
