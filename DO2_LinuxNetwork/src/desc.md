@@ -1,4 +1,15 @@
 # Linux Network
+
+5.1 - [Инструмент ipcalc](#part-1) \
+5.2 - [Статическая маршрутизация между двумя машинами](#part-2) \
+5.3 - [Утилита iperf3](#part-3) \
+5.4 - [Сетевой экран](#part-4) \
+5.5 - [Статическая маршрутизация сети](#part-5) \
+5.6 - [Динамическая настройка IP с помощью DHCP](#part-6) \
+5.7 - [NAT](#part-7-nat) \
+5.8 - [Допополнительно. Знакомство с SSH Tunnels](#part-8)
+
+
 ## Part 1
 
 ### 1.1
@@ -138,3 +149,66 @@ nmap
 ![](images/part4/nmap.png)
 
 ## Part 5 
+
+### Part 5.1
+etc/netplan/00-installer-config.yaml для всех машин
+![](images/part5/netplan.png)
+![](images/part5/netplan2.png)
+
+ws11 ip -4 a
+![](images/part5/ip_4_a_ws11.png)
+r1 ip -4 a
+![](images/part5/ip_4_a_r1.png)
+r2 ip -4 a
+![](images/part5/ip_4_a_r2.png)
+ws21 ip -4 a
+![](images/part5/ip_4_a_ws21.png)
+ws22 ip -4 a
+![](images/part5/ip_4_a_ws22.png)
+
+### Part 5.2
+sudo sysctl -w net.ipv4.ip_forward=1
+![](images/part5/sysctl_w_net.png)
+
+sudo vim /etc/sysctl.conf
+![](images/part5/edit_conf.png)
+
+### Part 5.3
+etc/netplan/00-installer-config.yaml для всех машин
+(nameservers в ws21 ненужны, а скрин менять мне лень)
+![](images/part5/netplan.png)
+![](images/part5/netplan2.png)
+
+ip r
+![](images/part5/ip_r.png)
+
+tcpdump
+![](images/part5/tcpdump.png)
+
+### Part 5.4
+etc/netplan/00-installer-config.yaml для всех машин
+(nameservers в ws21 ненужны, а скрин менять мне лень)
+![](images/part5/netplan.png)
+![](images/part5/netplan2.png)
+
+ip r
+![](images/part5/ip_r.png)
+
+ip r list 10.10.0.0/[маска сети] и ip r list 0.0.0.0/0
+![](images/part5/ip_r_list.png)
+Если есть какой-то другой путь до сети, путь по умолчанию не будет выбран
+
+### Part 5.5
+traceroute
+![](images/part5/traceroute.png)
+Как работает traceroute. \
+1. Traceroute отправляет пакет к точке назначения, устанавливая TTL равным 1;
+2. Каждый роутер в маршруте уменьшает значение TTL на единицу, пока TTL не достингнет нуля;
+3. Когда TTL становится == 0 то роутер, который отбрасывает этот пакет, отправляет отправителю сообщение ICMP TTL Exceeded , в которое включаются первые 28 байт оригинального “зондирующего” пакета; 
+4. Traceroute получает это сообщение и использует разницу во времени между отправкой оригинального пакета и полученным в ответ пакетом ICMP для посчета задержки доставки к этому роутеру/хопу;
+5. Процесс повторяется с п. 1, но с TTL увеличенным на 1, пока…. 
+6. Окончательный получатель получает пакет от traceroute и отправляет в ответ сообщение, отличное от ICMP TTL Exceeded . Тогда traceroute считает, что трассировка завершена и заверает процесс. 
+
+### Part 5.6
+ping -c 1 10.30.0.111
+![](images/part5/ping_c.png)
