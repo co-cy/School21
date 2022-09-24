@@ -212,3 +212,26 @@ traceroute
 ### Part 5.6
 ping -c 1 10.30.0.111
 ![](images/part5/ping_c.png)
+
+## Part 6
+/etc/dhcp/dhcpd.conf
+![](images/part6/dhcpd.png)
+resolv.conf
+![](images/part6/resolv.png)
+systemctl restart isc-dhcp-server && ip a
+![](images/part6/systemctl.png)
+ping ws21 - ws22
+![](images/part6/ping21-22.png)
+macaddress: 10:10:10:10:10:BA, dhcp4: true
+![](images/part6/fixed_mac.png)
+
+r1 dhcp
+![](images/part6/r1_dhcp.png)
+r1 resolv
+![](images/part6/r1_resolve.png)
+
+r1 restart and ws11 ip a
+![](images/part6/r1_restart_ws11_ip_a.png)
+
+ws11 dhcp update
+![](images/part6/ws11_dhcp_update.png)
