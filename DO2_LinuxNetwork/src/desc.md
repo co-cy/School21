@@ -252,3 +252,13 @@ SNAT and DNAT
 
 telnet
 ![](images/part7/telnet.png)
+
+## Part 8
+update apache2
+![](images/part8/apache.png)
+
+local ssh
+![](images/part8/local_ssh.png)
+
+remote ssh
+![](images/part8/remote_ssh.png)
