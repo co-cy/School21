@@ -5,16 +5,15 @@
 #include "core.h"
 
 t_stack *create_lex_stack(t_lexeme *lexeme) {
-    ///    Creates a stack and returns a pointer to it,
-    ///    "lexeme" - pointer to the allocated memory containing the lexeme
+  ///    Creates a stack and returns a pointer to it,
+  ///    "lexeme" - pointer to the allocated memory containing the lexeme
 
-    t_stack *new_stack = malloc(sizeof(t_stack));
+  t_stack *new_stack = malloc(sizeof(t_stack));
 
-    if (!new_stack)
-        exit(666);
+  if (!new_stack) exit(666);
 
-    new_stack->lexeme = lexeme;
-    new_stack->lower = NULL;
+  new_stack->lexeme = lexeme;
+  new_stack->lower = NULL;
 
-    return new_stack;
+  return new_stack;
 }

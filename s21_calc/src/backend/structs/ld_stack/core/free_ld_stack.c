@@ -5,13 +5,13 @@
 #include "core.h"
 
 void free_ld_stack(t_ld_stack **stack) {
-    /// The function cleans up the entire stack except for its segments
+  /// The function cleans up the entire stack except for its segments
 
-    while (*stack) {
-        t_ld_stack *tmp = (*stack)->lower;
+  while (*stack) {
+    t_ld_stack *tmp = (*stack)->lower;
 
-        free(*stack);
+    free(*stack);
 
-        *stack = tmp;
-    }
+    *stack = tmp;
+  }
 }

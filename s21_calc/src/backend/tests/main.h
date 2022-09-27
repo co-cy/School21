@@ -18,7 +18,7 @@
 #include "../features.h"
 
 
-#define EPS 1e-5
+#define EPS 1e-4
 
 long double get_EPS(long double true_result, long double result);
 long double get_random(long double start, long double stop);
@@ -29,6 +29,8 @@ Suite *create_simple_int_testcase();
 Suite *create_trigonometry_testcase();
 Suite *create_bad_testcase();
 Suite *create_hard_testcase();
+Suite *create_credit();
+Suite *create_deposit_testcase();
 
 
 #endif //S21_CALC_MAIN_H

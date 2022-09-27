@@ -12,6 +12,7 @@ extern "C" {
 
 
 #include <string.h>
+#include <stdio.h>
 
 
 #include "structs/operators/operators.h"

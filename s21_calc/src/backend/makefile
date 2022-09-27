@@ -1,11 +1,6 @@
 CC := gcc
 CFLAGS := -c -std=c11 -lcheck --coverage
-
-ifdef DEV
-CFLAGS += -Wall -Wextra -Werror -fanalyzer -g -fsanitize=address
-endif
-
-FLAGS := -g -fsanitize=address -std=c11 -lcheck --coverage
+FLAGS := -Wall -Wextra -Werror -fanalyzer -g -fsanitize=address -std=c11 -lcheck --coverage
 
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := final_program
@@ -34,13 +29,13 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 # These files will have .d instead of .o as the output.
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
-.PHONY : test
-test: CFLAGS+=$(FLAGS)
-test: clean $(BUILD_DIR)/$(TARGET_EXEC)
+.PHONY : tests
+tests: CFLAGS+=$(FLAGS)
+tests: clean $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC)
 
 .PHONY : gcov_report
-gcov_report: test
+gcov_report: tests
 	geninfo $(shell find . -name '*.gcda' -or -name '*.gcno') -b . -o bebra
 	genhtml bebra -o coverage
 
