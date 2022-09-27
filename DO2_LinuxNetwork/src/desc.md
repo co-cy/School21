@@ -235,3 +235,20 @@ r1 restart and ws11 ip a
 
 ws11 dhcp update
 ![](images/part6/ws11_dhcp_update.png)
+
+## Part 7
+
+apache2 ws22 && r1
+![](images/part7/apache.png)
+
+ping ws22 && r1
+![](images/part7/ping.png)
+
+apply icmp
+![](images/part7/apply_ping.png)
+
+SNAT and DNAT
+![](images/part7/snat_dnat.png)
+
+telnet
+![](images/part7/telnet.png)
