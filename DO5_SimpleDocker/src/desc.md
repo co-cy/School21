@@ -31,3 +31,40 @@
     <img alt="docker restart" src="images/part1/docker_restart.png"/>
     <figcaption style="text-align: center">docker restart</figcaption>
 </figure>
+
+## Part 2
+
+<figure>
+    <img alt="docker exec cat nginx" src="images/part2/exec_cat_nginx.png"/>
+    <figcaption style="text-align: center">docker exec cat nginx</figcaption>
+</figure>
+
+<figure>
+    <img alt="docker copy nginx.conf" src="images/part2/docker_nginx.png"/>
+    <figcaption style="text-align: center">docker copy nginx.conf</figcaption>
+</figure>
+
+<figure>
+    <img alt="nginx.conf" src="images/part2/nginx.conf.png"/>
+    <figcaption style="text-align: center">nginx.conf</figcaption>
+</figure>
+
+<figure>
+    <img alt="nginx status page" src="images/part2/docker_nginx.png"/>
+    <figcaption style="text-align: center">nginx status page</figcaption>
+</figure>
+
+<figure>
+    <img alt="docker export and stop" src="images/part2/docker_export_and_stop.png"/>
+    <figcaption style="text-align: center">docker export and stop</figcaption>
+</figure>
+
+<figure>
+    <img alt="docker rmi and docker rm" src="images/part2/docker_rmi_rm.png"/>
+    <figcaption style="text-align: center">docker rmi and docker rm</figcaption>
+</figure>
+
+<figure>
+    <img alt="docker import and run" src="images/part2/docker_import_and_run.png"/>
+    <figcaption style="text-align: center">docker import and run</figcaption>
+</figure>
