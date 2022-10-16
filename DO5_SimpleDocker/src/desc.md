@@ -68,3 +68,11 @@
     <img alt="docker import and run" src="images/part2/docker_import_and_run.png"/>
     <figcaption style="text-align: center">docker import and run</figcaption>
 </figure>
+
+## Task 3
+
+<figure>
+    <img alt="create fcgi" src="images/part2/fcgi.png"/>
+    <figcaption style="text-align: center">create fcgi</figcaption>
+</figure>
+
