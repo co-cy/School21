@@ -72,7 +72,19 @@
 ## Task 3
 
 <figure>
-    <img alt="create fcgi" src="images/part2/fcgi.png"/>
+    <img alt="create fcgi" src="images/part3/fcgi.png"/>
     <figcaption style="text-align: center">create fcgi</figcaption>
+</figure>
+
+## Task 4
+
+<figure>
+    <img alt="build docker and run fcgi" src="images/part4/docker_fcgi_start.png"/>
+    <figcaption style="text-align: center">build docker and run fcgi</figcaption>
+</figure>
+
+<figure>
+    <img alt="build docker and run fcgi" src="images/part4/docker_fcgi_end.png"/>
+    <figcaption style="text-align: center">build docker and run fcgi</figcaption>
 </figure>
 
