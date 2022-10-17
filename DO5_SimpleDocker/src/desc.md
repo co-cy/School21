@@ -88,3 +88,16 @@
     <figcaption style="text-align: center">build docker and run fcgi</figcaption>
 </figure>
 
+## Task 4
+
+<figure>
+    <img alt="dockle before" src="images/part5/dockle_fcgi_before.png"/>
+    <figcaption style="text-align: center">dockle before</figcaption>
+</figure>
+
+<figure>
+    <img alt="dockle after" src="images/part5/dockle_fcgi_after.png"/>
+    <figcaption style="text-align: center">dockle after</figcaption>
+</figure>
+
+
