@@ -100,4 +100,16 @@
     <figcaption style="text-align: center">dockle after</figcaption>
 </figure>
 
+## Task 6
 
+<figure>
+    <img alt="docker-compose build" src="images/part6/docker_compose_build.png"/>
+    <figcaption style="text-align: center">docker-compose build</figcaption>
+</figure>
+
+
+
+<figure>
+    <img alt="docker-compose up" src="images/part6/docker_compose_up.png"/>
+    <figcaption style="text-align: center">docker-compose up</figcaption>
+</figure>

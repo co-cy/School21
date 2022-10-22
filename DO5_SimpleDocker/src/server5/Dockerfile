@@ -8,7 +8,7 @@ COPY start.sh ./start.sh
 
 RUN apt-get update -y && \
     apt-get install -y gcc spawn-fcgi libfcgi-dev && \
-    rm -rf /var/lib/apt/lists; \
+    rm -rf /var/lib/apt/lists && \
     gcc server.c -lfcgi -o server; \
     # Make him the owner of the copied files
     chown -R nginx:nginx /etc/nginx/nginx.conf; \
