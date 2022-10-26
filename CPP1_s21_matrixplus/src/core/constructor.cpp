@@ -19,6 +19,4 @@ S21Matrix::S21Matrix(S21Matrix &&other) {
     cols_ = other.GetCols();
     matrix_ = other.matrix_;
   }
-
-  return *this;
 }
