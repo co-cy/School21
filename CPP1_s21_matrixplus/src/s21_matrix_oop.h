@@ -21,7 +21,7 @@ public:
   S21Matrix();              // Default constructor
   S21Matrix(int rows, int cols);
   S21Matrix(const S21Matrix& other);
-  S21Matrix(S21Matrix&& other);
+  S21Matrix(S21Matrix&& other) noexcept;
   ~S21Matrix();             // Destructor
 
   bool EqMatrix(const S21Matrix& other);
@@ -35,9 +35,6 @@ public:
   S21Matrix CalcComplements();
   double Determinant();
   S21Matrix InverseMatrix();
-
-  double* operator[](int y);
-  double* const operator[](int y) const;
 
   bool IsSquare() const;
   int GetRows() const;
