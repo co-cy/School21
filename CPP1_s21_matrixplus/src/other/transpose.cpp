@@ -9,7 +9,7 @@ S21Matrix S21Matrix::Transpose() {
 
   for (int y = 0; GetRows(); y++)
     for (int x = 0; GetCols(); x++)
-      newMatrix[x][y] = matrix_[y][x];
+      newMatrix(x, y) = matrix_[y][x];
 
   return newMatrix;
 }

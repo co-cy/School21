@@ -42,6 +42,17 @@ public:
   void Resize(int rows, int cols, S21Matrix const *copy_matrix = nullptr);
   void SetRows(int rows);
   void SetCols(int cols);
+
+  S21Matrix operator+(const S21Matrix &other);
+  S21Matrix operator-(const S21Matrix &other);
+  S21Matrix operator*(const S21Matrix &other);
+  bool operator==(S21Matrix const& lhs, S21Matrix const& rhs);
+  S21Matrix operator=(const S21Matrix &other);
+  S21Matrix operator+=(const S21Matrix &other);
+  S21Matrix operator-=(const S21Matrix &other);
+  S21Matrix operator*=(const S21Matrix &other);
+  double& operator()(int i, int j);
+  double operator()(int i, int j) const;
 };
 
 

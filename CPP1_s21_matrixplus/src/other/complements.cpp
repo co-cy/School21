@@ -10,7 +10,7 @@ S21Matrix S21Matrix::CalcComplements() {
   S21Matrix newMatrix(GetRows(), GetCols());
   for (int y = 0; y < GetRows(); y++)
     for (int x = 0; x < GetCols(); x++)
-      newMatrix[y][x] = Crop(y, x).Determinant() * ((y + x) % 2? -1 : 1);
+      newMatrix(y, x) = Crop(y, x).Determinant() * ((y + x) % 2? -1 : 1);
 
   return newMatrix;
 }

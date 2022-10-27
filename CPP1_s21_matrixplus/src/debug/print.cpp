@@ -10,7 +10,7 @@ void print(S21Matrix &matrix) {
 
   for (int y = 0; y < matrix.GetRows(); y++) {
     for (int x = 0; x < matrix.GetCols(); x++) {
-      std::cout << matrix[y][x] << "\t";
+      std::cout << matrix(y, x) << "\t";
     }
     std::cout << "\n";
   }

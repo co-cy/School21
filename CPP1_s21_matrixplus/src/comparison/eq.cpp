@@ -10,7 +10,7 @@ bool S21Matrix::EqMatrix(const S21Matrix &other) {
 
   for (int y = 0; y < GetRows(); y++)
     for (int x = 0; x < GetCols(); x++)
-      if (fabs(matrix_[y][x] - other[y][x]) > EPS) return false;
+      if (fabs(matrix_[y][x] - other(y, x)) > EPS) return false;
 
   return true;
 }

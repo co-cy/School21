@@ -12,7 +12,7 @@ S21Matrix S21Matrix::Crop(int i, int j) {
     if (y == i) continue;
     for (int x = 0; x < GetCols(); x++) {
       if (x == j) continue;
-      newMatrix[new_y][new_x] = matrix_[y][x];
+      newMatrix(new_y, new_x) = matrix_[y][x];
       new_x++;
     }
     new_y++;

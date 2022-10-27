@@ -15,7 +15,7 @@ void S21Matrix::Resize(int rows, int cols, S21Matrix const *copy_matrix) {
         for (int x = 0; x < cols; x++) {
           if (copy_matrix && copy_matrix->GetRows() > y &&
               copy_matrix->GetCols() > x)
-            new_matrix_[y][x] = (*copy_matrix)[y][x];
+            new_matrix_[y][x] = (*copy_matrix)(y, x);
           else
             new_matrix_[y][x] = 0;
         }
