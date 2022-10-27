@@ -24,33 +24,37 @@ public:
   S21Matrix(S21Matrix&& other) noexcept;
   ~S21Matrix();             // Destructor
 
-  bool EqMatrix(const S21Matrix& other);
+  [[nodiscard]] bool EqMatrix(const S21Matrix& other) const;
   void MergeMatrix(const S21Matrix &other, int sign);
   void SumMatrix(const S21Matrix& other);
   void SubMatrix(const S21Matrix& other);
-  void MulNumber(const double num);
+  void MulNumber(double num);
   void MulMatrix(const S21Matrix& other);
-  S21Matrix Crop(int i, int j);
-  S21Matrix Transpose();
-  S21Matrix CalcComplements();
-  double Determinant();
-  S21Matrix InverseMatrix();
+  [[nodiscard]] S21Matrix Crop(int i, int j) const;
+  [[nodiscard]] S21Matrix Transpose() const;
+  [[nodiscard]] S21Matrix CalcComplements() const;
+  [[nodiscard]] double Determinant() const;
+  [[nodiscard]] S21Matrix InverseMatrix() const;
 
-  bool IsSquare() const;
-  int GetRows() const;
-  int GetCols() const;
+  [[nodiscard]] bool IsSquare() const;
+  [[nodiscard]] bool IsEqSize(const S21Matrix &other) const;
+  [[nodiscard]] int GetRows() const;
+  [[nodiscard]] int GetCols() const;
   void Resize(int rows, int cols, S21Matrix const *copy_matrix = nullptr);
   void SetRows(int rows);
   void SetCols(int cols);
 
-  S21Matrix operator+(const S21Matrix &other);
-  S21Matrix operator-(const S21Matrix &other);
-  S21Matrix operator*(const S21Matrix &other);
-  bool operator==(S21Matrix const& lhs, S21Matrix const& rhs);
-  S21Matrix operator=(const S21Matrix &other);
+  S21Matrix operator+(const S21Matrix &other) const;
+  S21Matrix operator-(const S21Matrix &other) const;
+  S21Matrix operator*(double num) const;
+  S21Matrix operator*(const S21Matrix &other) const;
+  bool operator==(S21Matrix const& other) const;
+  S21Matrix& operator=(const S21Matrix &other);
   S21Matrix operator+=(const S21Matrix &other);
   S21Matrix operator-=(const S21Matrix &other);
+  S21Matrix operator*=(double num);
   S21Matrix operator*=(const S21Matrix &other);
+
   double& operator()(int i, int j);
   double operator()(int i, int j) const;
 };

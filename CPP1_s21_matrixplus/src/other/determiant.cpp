@@ -4,7 +4,7 @@
 
 #include "s21_matrix_oop.h"
 
-double S21Matrix::Determinant() {
+double S21Matrix::Determinant() const{
   if (!IsSquare()) throw std::logic_error("The matrix is not square");
 
   double result = 0;

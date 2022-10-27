@@ -4,7 +4,7 @@
 
 #include "s21_matrix_oop.h"
 
-S21Matrix S21Matrix::Transpose() {
+S21Matrix S21Matrix::Transpose() const{
   S21Matrix newMatrix(GetCols(), GetRows());
 
   for (int y = 0; GetRows(); y++)

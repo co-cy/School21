@@ -5,7 +5,7 @@
 #include "s21_matrix_oop.h"
 
 void S21Matrix::MergeMatrix(const S21Matrix &other, int sign) {
-  if (GetRows() != other.GetRows() || GetCols() != other.GetCols())
+  if (!IsEqSize(other))
     throw std::logic_error("Different dimension of matrices");
 
   for (int y = 0; y < GetRows(); y++)

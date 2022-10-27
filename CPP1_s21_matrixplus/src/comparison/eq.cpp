@@ -4,8 +4,8 @@
 
 #include "s21_matrix_oop.h"
 
-bool S21Matrix::EqMatrix(const S21Matrix &other) {
-  if (GetRows() != other.GetRows() || GetCols() != other.GetCols())
+bool S21Matrix::EqMatrix(const S21Matrix &other) const{
+  if (!IsEqSize(other))
     return false;
 
   for (int y = 0; y < GetRows(); y++)

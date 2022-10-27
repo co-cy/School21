@@ -4,7 +4,7 @@
 
 #include "s21_matrix_oop.h"
 
-S21Matrix S21Matrix::Crop(int i, int j) {
+S21Matrix S21Matrix::Crop(int i, int j) const{
   S21Matrix newMatrix(GetRows() - 1, GetCols() - 1);
 
   int new_y = 0, new_x = 0;
