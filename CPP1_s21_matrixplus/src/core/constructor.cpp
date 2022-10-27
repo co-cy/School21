@@ -12,16 +12,6 @@ S21Matrix::S21Matrix(const S21Matrix &other) {
   Resize(other.GetRows(), other.GetCols(), &other);
 }
 S21Matrix::S21Matrix(S21Matrix &&other) noexcept{
-  if (this != &other) {
-    DeleteMatrix();
-
-    rows_ = other.GetRows();
-    cols_ = other.GetCols();
-    matrix_ = other.matrix_;
-
-    other.rows_ = 0;
-    other.cols_ = 0;
-    other.matrix_ = nullptr;
-  }
+  *this = other;
 }
 

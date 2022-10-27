@@ -20,12 +20,5 @@ void S21Matrix::MulMatrix(const S21Matrix &other) {
       for (int x_a = 0, y_b = 0; x_a < GetCols() && y_b < other.GetRows(); x_a++, y_b++)
         tmpMatrix(y, x) += matrix_[y][x_a] * other(y_b, x);
 
-  DeleteMatrix();
-  rows_ = tmpMatrix.GetRows();
-  cols_ = tmpMatrix.GetCols();
-  matrix_ = tmpMatrix.matrix_;
-
-  tmpMatrix.rows_ = 0;
-  tmpMatrix.cols_ = 0;
-  tmpMatrix.matrix_ = nullptr;
+  *this = std::move(tmpMatrix);
 }

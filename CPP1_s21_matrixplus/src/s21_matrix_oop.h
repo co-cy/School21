@@ -50,6 +50,7 @@ public:
   S21Matrix operator*(const S21Matrix &other) const;
   bool operator==(S21Matrix const& other) const;
   S21Matrix& operator=(const S21Matrix &other);
+  S21Matrix& operator=(S21Matrix&& other) noexcept;
   S21Matrix operator+=(const S21Matrix &other);
   S21Matrix operator-=(const S21Matrix &other);
   S21Matrix operator*=(double num);

@@ -33,6 +33,20 @@ S21Matrix& S21Matrix::operator=(const S21Matrix &other) {
     Resize(other.GetRows(), other.GetCols(), &other);
 }
 
+S21Matrix& S21Matrix::operator=(S21Matrix&& other)  noexcept {
+  if (this != &other) {
+    DeleteMatrix();
+
+    rows_ = other.GetRows();
+    cols_ = other.GetCols();
+    matrix_ = other.matrix_;
+
+    other.rows_ = 0;
+    other.cols_ = 0;
+    other.matrix_ = nullptr;
+  }
+}
+
 S21Matrix S21Matrix::operator+=(const S21Matrix &other) {
   MergeMatrix(other, 1);
   return *this;
