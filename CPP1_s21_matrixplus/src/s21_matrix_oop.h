@@ -44,11 +44,6 @@ public:
   void SetRows(int rows);
   void SetCols(int cols);
 
-  S21Matrix operator+(const S21Matrix &other) const;
-  S21Matrix operator-(const S21Matrix &other) const;
-  S21Matrix operator*(double num) const;
-  S21Matrix operator*(const S21Matrix &other) const;
-  bool operator==(S21Matrix const& other) const;
   S21Matrix& operator=(const S21Matrix &other);
   S21Matrix& operator=(S21Matrix&& other) noexcept;
   S21Matrix operator+=(const S21Matrix &other);
@@ -60,5 +55,11 @@ public:
   double operator()(int i, int j) const;
 };
 
+S21Matrix operator+(const S21Matrix &a, const S21Matrix &b);
+S21Matrix operator-(const S21Matrix &a, const S21Matrix &b);
+S21Matrix operator*(const S21Matrix &a, double num);
+S21Matrix operator*(double num, const S21Matrix &a);
+S21Matrix operator*(const S21Matrix &a, const S21Matrix &b);
+bool operator==(const S21Matrix &a, const S21Matrix &b);
 
 #endif // CPP1_S21_MATRIXPLUS_S21_MATRIX_H

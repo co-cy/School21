@@ -11,7 +11,7 @@ S21Matrix S21Matrix::InverseMatrix() const{
 
   if (GetRows() == 1) {
     S21Matrix newMatrix(GetRows(), GetCols());
-    newMatrix(0, 0) = 1;
+    newMatrix(0, 0) = 1.0 / newMatrix(0, 0);
     return newMatrix;
   } else {
     S21Matrix newMatrix = CalcComplements().Transpose();

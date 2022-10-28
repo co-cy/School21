@@ -12,6 +12,6 @@ S21Matrix::S21Matrix(const S21Matrix &other) {
   Resize(other.GetRows(), other.GetCols(), &other);
 }
 S21Matrix::S21Matrix(S21Matrix &&other) noexcept{
-  *this = other;
+  *this = std::move(other);
 }
 
