@@ -32,6 +32,7 @@ S21Matrix operator*(const S21Matrix &a, const S21Matrix &b) {
 S21Matrix& S21Matrix::operator=(const S21Matrix &other) {
   if (this != &other)
     Resize(other.GetRows(), other.GetCols(), &other);
+  return *this;
 }
 S21Matrix& S21Matrix::operator=(S21Matrix&& other)  noexcept {
   if (this != &other) {
@@ -45,6 +46,7 @@ S21Matrix& S21Matrix::operator=(S21Matrix&& other)  noexcept {
     other.cols_ = 0;
     other.matrix_ = nullptr;
   }
+  return *this;
 }
 
 S21Matrix S21Matrix::operator+=(const S21Matrix &other) {
@@ -71,9 +73,13 @@ bool operator==(const S21Matrix &a, const S21Matrix &b) {
 
 
 double& S21Matrix::operator() (int i, int j) {
+  if (i < 0 || i > GetRows() || j < 0 || j > GetCols())
+    throw std::out_of_range("Index outside the matrix");
   return matrix_[i][j];
 }
 
 double S21Matrix::operator()(int i, int j) const {
+  if (i < 0 || i > GetRows() || j < 0 || j > GetCols())
+    throw std::out_of_range("Index outside the matrix");
   return matrix_[i][j];
 }

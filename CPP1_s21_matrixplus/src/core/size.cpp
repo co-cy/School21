@@ -13,8 +13,8 @@ int S21Matrix::GetRows() const { return rows_; }
 int S21Matrix::GetCols() const { return cols_; }
 
 void S21Matrix::SetRows(int rows) {
-  Resize(rows, GetCols());
+  Resize(rows, GetCols(), this);
 }
 void S21Matrix::SetCols(int cols) {
-  Resize(GetRows(), cols);
+  Resize(GetRows(), cols, this);
 }
