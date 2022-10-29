@@ -14,8 +14,8 @@ set(FLAGS "" CACHE STRING "Флаги по умолчанию")
 set(TEST_FLAGS -Wall -Werror -Wextra -Wpedantic -fsanitize=address -g CACHE STRING "Аргументы для тестов")
 set(COVERAGE_FLAGS --coverage CACHE STRING "Флаги для генерации покрытия")
 
-set(SOURCE s21_matrix_oop.h core/constructor.cpp core/destructor.cpp arithmetic/merge.cpp arithmetic/mult.cpp comparison/eq.cpp other/transpose.cpp other/crop.cpp core/resize.cpp operators/operators.cpp other/determiant.cpp other/complements.cpp other/inverse.cpp)
-file(GLOB TEST_SOURCE test/*.cpp)
+set(SOURCE ./s21_matrix_oop.h core/constructor.cpp core/destructor.cpp arithmetic/merge.cpp arithmetic/mult.cpp comparison/eq.cpp other/transpose.cpp other/crop.cpp core/resize.cpp operators/operators.cpp other/determiant.cpp other/complements.cpp other/inverse.cpp)
+set(TEST_SOURCE test/calc_matrix.cpp test/construct.cpp test/det_matrix.cpp test/eq_test.cpp test/inverse_matrix.cpp test/mul_matrix.cpp test/mul_num.cpp test/other.cpp test/sub_matrix.cpp test/sum_matrix.cpp)
 
 if(CMAKE_BUILD_TYPE STREQUAL "TEST")
     set(FLAGS ${FLAGS} ${TEST_FLAGS})
@@ -34,14 +34,14 @@ target_link_options(${TARGET_LIBRARY} PRIVATE ${FLAGS})
 
 
 
-#find_package(GTest REQUIRED)
-#include(GoogleTest)
+find_package(GTest REQUIRED)
+include(GoogleTest)
 #enable_testing()
 #
-#add_executable(${TARGET_TEST} ${TEST_SOURCE})
-#target_compile_options(${TARGET_TEST} PRIVATE ${TEST_FLAGS})
-#target_link_options(${TARGET_TEST} PRIVATE  -lgtest ${FLAGS})
+add_executable(${TARGET_TEST} ${TEST_SOURCE})
+target_compile_options(${TARGET_TEST} PRIVATE ${TEST_FLAGS})
+#target_link_options(${TARGET_TEST} PRIVATE  -lgtest -lgtest_main ${FLAGS})
 #
-#target_link_libraries(${TARGET_TEST} GTest::gtest_main ${TARGET_LIBRARY})
+target_link_libraries(${TARGET_TEST} GTest::gtest_main ${TARGET_LIBRARY})
 #
 #gtest_discover_tests(tests)
