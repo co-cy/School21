@@ -26,8 +26,12 @@ public:
 
   [[nodiscard]] bool EqMatrix(const S21Matrix& other) const;
   void MergeMatrix(const S21Matrix &other, int sign);
-  void SumMatrix(const S21Matrix& other);
-  void SubMatrix(const S21Matrix& other);
+  void SumMatrix(const S21Matrix& other)  {
+    MergeMatrix(other, 1);
+  }
+  void SubMatrix(const S21Matrix& other) {
+    MergeMatrix(other, -1);
+  }
   void MulNumber(double num);
   void MulMatrix(const S21Matrix& other);
   [[nodiscard]] S21Matrix Crop(int i, int j) const;
@@ -36,13 +40,19 @@ public:
   [[nodiscard]] double Determinant() const;
   [[nodiscard]] S21Matrix InverseMatrix() const;
 
-  [[nodiscard]] bool IsSquare() const;
-  [[nodiscard]] bool IsEqSize(const S21Matrix &other) const;
-  [[nodiscard]] int GetRows() const;
-  [[nodiscard]] int GetCols() const;
+  [[nodiscard]] bool IsSquare() const{ return GetRows() == GetCols();}
+  [[nodiscard]] bool IsEqSize(const S21Matrix &other) const {
+    return GetRows() == other.GetRows() && GetCols() == other.GetCols();
+  }
+  [[nodiscard]] int GetRows() const { return rows_; }
+  [[nodiscard]] int GetCols() const { return cols_; }
   void Resize(int rows, int cols, S21Matrix const *copy_matrix = nullptr);
-  void SetRows(int rows);
-  void SetCols(int cols);
+  void SetRows(int rows) {
+    Resize(rows, GetCols(), this);
+  }
+  void SetCols(int cols) {
+    Resize(GetRows(), cols, this);
+  };
 
   S21Matrix& operator=(const S21Matrix &other);
   S21Matrix& operator=(S21Matrix&& other) noexcept;
