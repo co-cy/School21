@@ -6,8 +6,8 @@
 
 void S21Matrix::DeleteMatrix() {
   for (rows_--; rows_ >= 0; rows_--)
-    delete matrix_[rows_];
-  delete matrix_;
+    delete[] matrix_[rows_];
+  delete[] matrix_;
 
   // rows is already 0
   cols_ = 0;

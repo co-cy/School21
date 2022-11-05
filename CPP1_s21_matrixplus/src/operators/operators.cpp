@@ -73,13 +73,13 @@ bool operator==(const S21Matrix &a, const S21Matrix &b) {
 
 
 double& S21Matrix::operator() (int i, int j) {
-  if (i < 0 || i > GetRows() || j < 0 || j > GetCols())
+  if (i < 0 || i >= GetRows() || j < 0 || j >= GetCols())
     throw std::out_of_range("Index outside the matrix");
   return matrix_[i][j];
 }
 
 double S21Matrix::operator()(int i, int j) const {
-  if (i < 0 || i > GetRows() || j < 0 || j > GetCols())
+  if (i < 0 || i >= GetRows() || j < 0 || j >= GetCols())
     throw std::out_of_range("Index outside the matrix");
   return matrix_[i][j];
 }

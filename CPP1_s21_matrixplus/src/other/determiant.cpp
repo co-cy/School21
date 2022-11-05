@@ -16,7 +16,7 @@ double S21Matrix::Determinant() const{
     result = matrix_[0][0] * matrix_[1][1] - matrix_[0][1] * matrix_[1][0];
   else
     for (int y = 0; y < GetRows(); y++)
-      result += Crop(y, 0).Determinant();
+      result += Crop(y, 0).Determinant() * matrix_[y][0] * ((y % 2) ? -1:1);
 
   return result;
 }

@@ -7,11 +7,11 @@
 
 class SubMatrix1 : public ::testing::Test {
  protected:
-  S21Matrix matrixA = S21Matrix(2, 2);
-  S21Matrix matrixB = S21Matrix(2, 2);
-  S21Matrix matrixC = S21Matrix(2, 2);
+  S21Matrix matrixA = S21Matrix(3, 3);
+  S21Matrix matrixB = S21Matrix(3, 3);
+  S21Matrix matrixC = S21Matrix(3, 3);
 
-  virtual void SetUp() {
+  void SetUp() override {
     matrixA(0, 0) = 0;
     matrixA(0, 1) = 0;
     matrixA(0, 2) = 0;
@@ -51,4 +51,10 @@ TEST_F(SubMatrix1, test1) {
 
 TEST_F(SubMatrix1, test2) {
   ASSERT_TRUE((matrixA - matrixB).EqMatrix(matrixC));
+}
+
+TEST(SubErrorTest, test1) {
+  S21Matrix matrixA = S21Matrix(2, 3);
+  S21Matrix matrixB = S21Matrix(3, 3);
+  ASSERT_ANY_THROW(matrixA - matrixB);
 }
