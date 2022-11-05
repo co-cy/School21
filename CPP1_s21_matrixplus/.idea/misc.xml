@@ -24,48 +24,34 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="827" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Makefile" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
           <option name="caretOffset" value="287" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/sum_matrix.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="376" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/transpose_matrix.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1085" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/inverse_matrix.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="490" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/other/inverse.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="110" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/other/determiant.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="652" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/other.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="498" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/s21_matrix_oop.h" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="219" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/core/constructor.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="974" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/sub_matrix.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="416" />
+          <option name="caretOffset" value="417" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/mul_matrix.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="fileUrl" value="mock:///Diff" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1865" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/CMakeLists.txt" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="fileUrl" value="mock:///DiffPreview" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/CMakeCache.txt" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="10223" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/build/compile_commands.json" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="175" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Makefile" />
         </OpenedFileInfo>
       </list>
     </option>
