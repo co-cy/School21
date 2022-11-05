@@ -20,3 +20,6 @@ s21_matrix_oop.a:
 	cmake -S . -B $(BUILD_DIR) -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 	make -C $(BUILD_DIR) s21_matrix_oop
 .PHONY: s21_matrix_oop.a
+
+lint:
+	clang-format -n $(shell find . -name "*\.cpp")

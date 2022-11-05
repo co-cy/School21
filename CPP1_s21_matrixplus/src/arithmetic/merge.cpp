@@ -9,6 +9,5 @@ void S21Matrix::MergeMatrix(const S21Matrix &other, int sign) {
     throw std::logic_error("Different dimension of matrices");
 
   for (int y = 0; y < GetRows(); y++)
-    for (int x = 0; x < GetCols(); x++)
-      matrix_[y][x] += other(y, x) * sign;
+    for (int x = 0; x < GetCols(); x++) matrix_[y][x] += other(y, x) * sign;
 }

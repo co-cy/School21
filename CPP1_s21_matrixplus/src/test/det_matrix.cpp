@@ -2,8 +2,8 @@
 // Created by Nana Daughterless on 10/29/22.
 //
 
-#include "s21_matrix_oop.h"
 #include "gtest/gtest.h"
+#include "s21_matrix_oop.h"
 
 TEST(DetTest, test1) {
   S21Matrix matrix(1, 1);
@@ -31,11 +31,11 @@ TEST(DetTest, test2) {
 TEST(ErrorDetTest, test1) {
   S21Matrix matrix(0, 0);
 
-  ASSERT_ANY_THROW((void) matrix.Determinant());
+  ASSERT_ANY_THROW((void)matrix.Determinant());
 }
 
 TEST(ErrorDetTest, test2) {
   S21Matrix matrix(3, 2);
 
-  ASSERT_ANY_THROW((void) matrix.Determinant());
+  ASSERT_ANY_THROW((void)matrix.Determinant());
 }

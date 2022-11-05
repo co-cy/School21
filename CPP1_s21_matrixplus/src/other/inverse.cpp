@@ -4,10 +4,11 @@
 
 #include "s21_matrix_oop.h"
 
-S21Matrix S21Matrix::InverseMatrix() const{
+S21Matrix S21Matrix::InverseMatrix() const {
   double det = Determinant();
 
-  if (fabs(det) < EPS) throw std::logic_error("The determinant of the matrix is 0");
+  if (fabs(det) < EPS)
+    throw std::logic_error("The determinant of the matrix is 0");
 
   if (GetRows() == 1) {
     S21Matrix newMatrix(GetRows(), GetCols());

@@ -24,18 +24,7 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="287" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/sum_matrix.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="417" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/test/mul_matrix.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="fileUrl" value="mock:///Diff" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1865" />
+          <option name="caretOffset" value="93" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/CMakeLists.txt" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -50,7 +39,25 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/build/compile_commands.json" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="175" />
+          <option name="caretOffset" value="1739" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/s21_matrix_oop.h" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="128" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/comparison/eq.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1639" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/operators/operators.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="fileUrl" value="mock:///Diff" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="fileUrl" value="mock:///Diff" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="468" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Makefile" />
         </OpenedFileInfo>
       </list>

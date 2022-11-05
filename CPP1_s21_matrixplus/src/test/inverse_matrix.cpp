@@ -2,9 +2,8 @@
 // Created by Nana Daughterless on 10/29/22.
 //
 
-#include "s21_matrix_oop.h"
 #include "gtest/gtest.h"
-
+#include "s21_matrix_oop.h"
 
 TEST(InverseTest, test1) {
   S21Matrix matrixA(1, 1);
@@ -40,19 +39,18 @@ TEST(InverseTest, test2) {
   matrixB(2, 1) = -29;
   matrixB(2, 2) = 24;
 
-
   ASSERT_TRUE(matrixA.InverseMatrix().EqMatrix(matrixB));
 }
 
 TEST(ErrorInverseTest, test1) {
   S21Matrix matrixA(1, 3);
 
-  ASSERT_ANY_THROW((void) matrixA.InverseMatrix());
+  ASSERT_ANY_THROW((void)matrixA.InverseMatrix());
 }
 
 TEST(ErrorInverseTest, test2) {
   S21Matrix matrixA(0, 0);
   S21Matrix matrixB(0, 0);
 
-  ASSERT_ANY_THROW((void) matrixA.InverseMatrix());
+  ASSERT_ANY_THROW((void)matrixA.InverseMatrix());
 }

@@ -2,8 +2,8 @@
 // Created by Nana Daughterless on 10/29/22.
 //
 
-#include "s21_matrix_oop.h"
 #include "gtest/gtest.h"
+#include "s21_matrix_oop.h"
 
 TEST(ComplementsTest, test1) {
   S21Matrix matrixA(3, 3);
@@ -51,5 +51,5 @@ TEST(ComplementsTest, test3) {
 
 TEST(ErrorComplementsTest, test1) {
   S21Matrix matrix(2, 1);
-  ASSERT_ANY_THROW((void) matrix.CalcComplements());
+  ASSERT_ANY_THROW((void)matrix.CalcComplements());
 }

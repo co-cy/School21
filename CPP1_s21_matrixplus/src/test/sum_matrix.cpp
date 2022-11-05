@@ -2,8 +2,8 @@
 // Created by Nana Daughterless on 10/29/22.
 //
 
-#include "s21_matrix_oop.h"
 #include "gtest/gtest.h"
+#include "s21_matrix_oop.h"
 
 class SumMatrix1 : public ::testing::Test {
  protected:
@@ -58,4 +58,3 @@ TEST(SumErrorTest, test1) {
   S21Matrix matrixB = S21Matrix(3, 3);
   ASSERT_ANY_THROW(matrixA + matrixB);
 }
-

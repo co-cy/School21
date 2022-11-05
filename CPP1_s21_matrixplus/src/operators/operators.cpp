@@ -8,7 +8,6 @@ S21Matrix operator+(const S21Matrix &a, const S21Matrix &b) {
   S21Matrix tmp = a;
   tmp.MergeMatrix(b, 1);
   return tmp;
-
 }
 S21Matrix operator-(const S21Matrix &a, const S21Matrix &b) {
   S21Matrix tmp = a;
@@ -20,21 +19,18 @@ S21Matrix operator*(const S21Matrix &a, double num) {
   tmp.MulNumber(num);
   return tmp;
 }
-S21Matrix operator*(double num, const S21Matrix &a) {
-    return a * num;
-}
+S21Matrix operator*(double num, const S21Matrix &a) { return a * num; }
 S21Matrix operator*(const S21Matrix &a, const S21Matrix &b) {
   S21Matrix tmp = a;
   tmp.MulMatrix(b);
   return tmp;
 }
 
-S21Matrix& S21Matrix::operator=(const S21Matrix &other) {
-  if (this != &other)
-    Resize(other.GetRows(), other.GetCols(), &other);
+S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
+  if (this != &other) Resize(other.GetRows(), other.GetCols(), &other);
   return *this;
 }
-S21Matrix& S21Matrix::operator=(S21Matrix&& other)  noexcept {
+S21Matrix &S21Matrix::operator=(S21Matrix &&other) noexcept {
   if (this != &other) {
     DeleteMatrix();
 
@@ -66,13 +62,11 @@ S21Matrix S21Matrix::operator*=(const S21Matrix &other) {
   return *this;
 }
 
-
 bool operator==(const S21Matrix &a, const S21Matrix &b) {
   return a.EqMatrix(b);
 }
 
-
-double& S21Matrix::operator() (int i, int j) {
+double &S21Matrix::operator()(int i, int j) {
   if (i < 0 || i >= GetRows() || j < 0 || j >= GetCols())
     throw std::out_of_range("Index outside the matrix");
   return matrix_[i][j];

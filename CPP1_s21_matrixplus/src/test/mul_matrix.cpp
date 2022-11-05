@@ -2,8 +2,8 @@
 // Created by Nana Daughterless on 10/29/22.
 //
 
-#include "s21_matrix_oop.h"
 #include "gtest/gtest.h"
+#include "s21_matrix_oop.h"
 
 class MulMatrix1x1 : public ::testing::Test {
  protected:
@@ -32,13 +32,9 @@ class ErrorMulMatrix : public ::testing::Test {
   S21Matrix matrixB = S21Matrix(1, 1);
 };
 
-TEST_F(ErrorMulMatrix, test1) {
-  ASSERT_ANY_THROW(matrixA * matrixB);
-}
+TEST_F(ErrorMulMatrix, test1) { ASSERT_ANY_THROW(matrixA * matrixB); }
 
-TEST_F(ErrorMulMatrix, test2) {
-  ASSERT_ANY_THROW(matrixA *= matrixB);
-}
+TEST_F(ErrorMulMatrix, test2) { ASSERT_ANY_THROW(matrixA *= matrixB); }
 
 class MulMatrix2x3 : public ::testing::Test {
  protected:

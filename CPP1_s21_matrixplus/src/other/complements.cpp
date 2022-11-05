@@ -4,7 +4,7 @@
 
 #include "s21_matrix_oop.h"
 
-S21Matrix S21Matrix::CalcComplements() const{
+S21Matrix S21Matrix::CalcComplements() const {
   if (!IsSquare()) throw std::logic_error("The matrix is not square");
 
   S21Matrix newMatrix(GetRows(), GetCols());

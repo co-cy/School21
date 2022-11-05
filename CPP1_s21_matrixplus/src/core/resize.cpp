@@ -5,9 +5,9 @@
 #include "s21_matrix_oop.h"
 
 void S21Matrix::Resize(int rows, int cols, S21Matrix const *copy_matrix) {
-  double ** new_matrix_ = nullptr;
+  double **new_matrix_ = nullptr;
   if (rows) {
-     new_matrix_ = new double*[rows];
+    new_matrix_ = new double *[rows];
 
     for (int y = 0; y < rows; y++) {
       if (cols) {
