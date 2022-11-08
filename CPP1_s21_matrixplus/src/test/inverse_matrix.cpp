@@ -54,3 +54,8 @@ TEST(ErrorInverseTest, test2) {
 
   ASSERT_ANY_THROW((void)matrixA.InverseMatrix());
 }
+
+TEST(ErrorInverseTest, test3) {
+  S21Matrix matrixA(2, 2);
+  ASSERT_ANY_THROW((void)matrixA.InverseMatrix());
+}

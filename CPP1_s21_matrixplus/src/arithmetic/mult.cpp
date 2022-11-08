@@ -4,7 +4,7 @@
 
 #include "s21_matrix_oop.h"
 
-void S21Matrix::MulNumber(const double num) {
+void S21Matrix::MulNumber(const double num) noexcept {
   for (int y = 0; y < GetRows(); y++)
     for (int x = 0; x < GetCols(); x++) matrix_[y][x] *= num;
 }

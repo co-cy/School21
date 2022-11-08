@@ -14,19 +14,19 @@ S21Matrix operator-(const S21Matrix &a, const S21Matrix &b) {
   tmp.MergeMatrix(b, -1);
   return tmp;
 }
-S21Matrix operator*(const S21Matrix &a, double num) {
+S21Matrix operator*(const S21Matrix &a, double num) noexcept {
   S21Matrix tmp = a;
   tmp.MulNumber(num);
   return tmp;
 }
-S21Matrix operator*(double num, const S21Matrix &a) { return a * num; }
+S21Matrix operator*(double num, const S21Matrix &a) noexcept { return a * num; }
 S21Matrix operator*(const S21Matrix &a, const S21Matrix &b) {
   S21Matrix tmp = a;
   tmp.MulMatrix(b);
   return tmp;
 }
 
-S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
+S21Matrix &S21Matrix::operator=(const S21Matrix &other) noexcept {
   if (this != &other) Resize(other.GetRows(), other.GetCols(), &other);
   return *this;
 }
@@ -53,7 +53,7 @@ S21Matrix S21Matrix::operator-=(const S21Matrix &other) {
   MergeMatrix(other, -1);
   return *this;
 }
-S21Matrix S21Matrix::operator*=(double const num) {
+S21Matrix S21Matrix::operator*=(double const num) noexcept {
   MulNumber(num);
   return *this;
 }
@@ -62,7 +62,7 @@ S21Matrix S21Matrix::operator*=(const S21Matrix &other) {
   return *this;
 }
 
-bool operator==(const S21Matrix &a, const S21Matrix &b) {
+bool operator==(const S21Matrix &a, const S21Matrix &b) noexcept {
   return a.EqMatrix(b);
 }
 

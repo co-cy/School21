@@ -22,4 +22,4 @@ s21_matrix_oop.a:
 .PHONY: s21_matrix_oop.a
 
 lint:
-	clang-format -n $(shell find . -name "*\.cpp")
+	clang-format -n $(shell find . -name "*\.cpp" -or -name "*\.h")

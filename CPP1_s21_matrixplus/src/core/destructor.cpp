@@ -13,4 +13,4 @@ void S21Matrix::DeleteMatrix() {
   matrix_ = nullptr;
 }
 
-S21Matrix::~S21Matrix() { DeleteMatrix(); }
+S21Matrix::~S21Matrix() noexcept { DeleteMatrix(); }
