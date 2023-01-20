@@ -1,0 +1,6 @@
+cmake-build-debug
+*.out
+*.a
+.idea
+coverage
+bebra
